@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?DocumentTerm Catalogue?>
+<?Property key="sch:prefix" PEPPOL-T19?>
+<?Property key="sch:identifier" T19-basic?>
+<!--
+    Sample Output Preview
+    
+    This shows what the XSLT transformation generates from one IfcWall
+    element in the A-40-V-000_BIM2BOM.ifc.xml file.
+    
+    Wall: Basic Wall:YV01 350:1295992
+    Properties: From BIP PropertySet
+-->
+<Catalogue xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2" 
+           xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" 
+           xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+    
+    <!-- Catalogue Header -->
+    <cbc:CustomizationID>urn:fdc:peppol.eu:poacc:trns:catalogue:3</cbc:CustomizationID>
+    <cbc:ProfileID>urn:fdc:peppol.eu:poacc:bis:catalogue_only:3</cbc:ProfileID>
+    <cbc:ID>934567923</cbc:ID>
+    <cbc:ActionCode>Add</cbc:ActionCode>
+    <cbc:Name>Tillämpningsanvisningar BIM</cbc:Name>
+    <cbc:IssueDate>2025-10-28</cbc:IssueDate>
+    
+    <cac:ValidityPeriod>
+        <cbc:StartDate>2025-10-28</cbc:StartDate>
+    </cac:ValidityPeriod>
+    
+    <cac:ReferencedContract>
+        <cbc:ID>CONTRACT-934567923</cbc:ID>
+    </cac:ReferencedContract>
+    
+    <!-- Provider Party (from IFC Organization) -->
+    <cac:ProviderParty>
+        <cbc:EndpointID schemeID="0007">0000000000</cbc:EndpointID>
+        <cac:PartyIdentification>
+            <cbc:ID schemeID="0007">0000000000</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>ÖBO</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:ProviderParty>
+    
+    <!-- Receiver Party (placeholder) -->
+    <cac:ReceiverParty>
+        <cbc:EndpointID schemeID="0007">0000000000</cbc:EndpointID>
+        <cac:PartyIdentification>
+            <cbc:ID schemeID="0007">0000000000</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>Receiver Organization (TBD)</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:ReceiverParty>
+    
+    <!-- CATALOGUE LINE #1 - Wall: YV01 350 -->
+    <cac:CatalogueLine>
+        <cbc:ID>1</cbc:ID>
+        <cbc:ActionCode>Add</cbc:ActionCode>
+        <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
+        
+        <cac:Item>
+            <cbc:Name>Basic Wall:YV01 350:1295992</cbc:Name>
+            <cbc:Description>Yttre bärande yttervägg, 350 mm. Materials: Tegel fasad 110 / Luft 30 / Vindskydd 9 / Regelstomme C24 195 + mineralull / Ångbroms / Installationsregel 45 + isolering / Gips 13</cbc:Description>
+            
+            <cac:SellersItemIdentification>
+                <cbc:ID>1295992</cbc:ID>
+            </cac:SellersItemIdentification>
+            
+            <cac:ManufacturersItemIdentification>
+                <cbc:ID>YV01</cbc:ID>
+            </cac:ManufacturersItemIdentification>
+            
+            <cac:CommodityClassification>
+                <cbc:ItemClassificationCode listID="BSAB">42.A</cbc:ItemClassificationCode>
+            </cac:CommodityClassification>
+            
+            <!-- BIP Property: type name id -->
+            <cac:AdditionalItemProperty>
+                <cbc:Name>type name id</cbc:Name>
+                <cbc:NameCode listID="SE:BIP">type name id</cbc:NameCode>
+                <cbc:Value>YV01</cbc:Value>
+            </cac:AdditionalItemProperty>
+            
+            <!-- BIP Property: TypeDescription -->
+            <cac:AdditionalItemProperty>
+                <cbc:Name>TypeDescription</cbc:Name>
+                <cbc:NameCode listID="SE:BIP">TypeDescription</cbc:NameCode>
+                <cbc:Value>Yttre bärande yttervägg, 350 mm</cbc:Value>
+            </cac:AdditionalItemProperty>
+            
+            <!-- BIP Property: BSAB 96 -->
+            <cac:AdditionalItemProperty>
+                <cbc:Name>BSAB 96</cbc:Name>
+                <cbc:NameCode listID="SE:BIP">BSAB 96</cbc:NameCode>
+                <cbc:Value>42.A</cbc:Value>
+            </cac:AdditionalItemProperty>
+            
+            <!-- BIP Property: materials/components -->
+            <cac:AdditionalItemProperty>
+                <cbc:Name>materials/components</cbc:Name>
+                <cbc:NameCode listID="SE:BIP">materials/components</cbc:NameCode>
+                <cbc:Value>Tegel fasad 110 / Luft 30 / Vindskydd 9 / Regelstomme C24 195 + mineralull / Ångbroms / Installationsregel 45 + isolering / Gips 13</cbc:Value>
+            </cac:AdditionalItemProperty>
+            
+            <!-- BIP Property: thickness (with unit) -->
+            <cac:AdditionalItemProperty>
+                <cbc:Name>thickness</cbc:Name>
+                <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
+                <cbc:Value>350 mm</cbc:Value>
+                <cbc:ValueQuantity unitCode="MMT">350</cbc:ValueQuantity>
+            </cac:AdditionalItemProperty>
+            
+            <!-- BIP Property: is load bearing (boolean) -->
+            <cac:AdditionalItemProperty>
+                <cbc:Name>is load bearing</cbc:Name>
+                <cbc:NameCode listID="SE:BIP">is load bearing</cbc:NameCode>
+                <cbc:Value>Yes</cbc:Value>
+            </cac:AdditionalItemProperty>
+            
+            <!-- BIP Property: is external (boolean) -->
+            <cac:AdditionalItemProperty>
+                <cbc:Name>is external</cbc:Name>
+                <cbc:NameCode listID="SE:BIP">is external</cbc:NameCode>
+                <cbc:Value>Yes</cbc:Value>
+            </cac:AdditionalItemProperty>
+            
+            <!-- BIP Property: height (with unit) -->
+            <cac:AdditionalItemProperty>
+                <cbc:Name>height</cbc:Name>
+                <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
+                <cbc:Value>4377 mm</cbc:Value>
+                <cbc:ValueQuantity unitCode="MMT">4377</cbc:ValueQuantity>
+            </cac:AdditionalItemProperty>
+            
+            <!-- BIP Property: length (with unit) -->
+            <cac:AdditionalItemProperty>
+                <cbc:Name>length</cbc:Name>
+                <cbc:NameCode listID="SE:BIP">length</cbc:NameCode>
+                <cbc:Value>28070 mm</cbc:Value>
+                <cbc:ValueQuantity unitCode="MMT">28070</cbc:ValueQuantity>
+            </cac:AdditionalItemProperty>
+            
+            <!-- BIP Property: net area (with unit) -->
+            <cac:AdditionalItemProperty>
+                <cbc:Name>net area</cbc:Name>
+                <cbc:NameCode listID="SE:BIP">net area</cbc:NameCode>
+                <cbc:Value>93.846679773150981 m²</cbc:Value>
+                <cbc:ValueQuantity unitCode="MTK">93.846679773150981</cbc:ValueQuantity>
+            </cac:AdditionalItemProperty>
+            
+            <!-- BIP Property: net volume (with unit) -->
+            <cac:AdditionalItemProperty>
+                <cbc:Name>net volume</cbc:Name>
+                <cbc:NameCode listID="SE:BIP">net volume</cbc:NameCode>
+                <cbc:Value>32.697795293235401 m³</cbc:Value>
+                <cbc:ValueQuantity unitCode="MTQ">32.697795293235401</cbc:ValueQuantity>
+            </cac:AdditionalItemProperty>
+            
+            <!-- BIP Property: weight (with unit) -->
+            <cac:AdditionalItemProperty>
+                <cbc:Name>weight</cbc:Name>
+                <cbc:NameCode listID="SE:BIP">weight</cbc:NameCode>
+                <cbc:Value>63760.699999999997 kg</cbc:Value>
+                <cbc:ValueQuantity unitCode="KGM">63760.699999999997</cbc:ValueQuantity>
+            </cac:AdditionalItemProperty>
+            
+            <!-- BIP Property: floor -->
+            <cac:AdditionalItemProperty>
+                <cbc:Name>floor</cbc:Name>
+                <cbc:NameCode listID="SE:BIP">floor</cbc:NameCode>
+                <cbc:Value>011</cbc:Value>
+            </cac:AdditionalItemProperty>
+            
+            <!-- BIP Property: renovation component status -->
+            <cac:AdditionalItemProperty>
+                <cbc:Name>renovation component status</cbc:Name>
+                <cbc:NameCode listID="SE:BIP">renovation component status</cbc:NameCode>
+                <cbc:Value>Ny</cbc:Value>
+            </cac:AdditionalItemProperty>
+            
+        </cac:Item>
+    </cac:CatalogueLine>
+    
+    <!-- Additional walls would follow as separate CatalogueLines... -->
+    
+</Catalogue>
+

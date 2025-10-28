@@ -1,0 +1,14 @@
+# BIM2BOM Validation Framework Requirements
+
+# Testing framework
+behave==1.2.6
+
+# IFC parsing
+ifcopenshell
+
+# Standard library (no install needed, listed for reference)
+# - xml.etree.ElementTree
+# - csv
+# - json
+# - pathlib
+
