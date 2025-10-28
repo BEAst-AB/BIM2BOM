@@ -13,31 +13,57 @@ All methods use centralized CSV configuration for maximum flexibility.
 
 ## 🚀 Quick Start
 
+### ⚡ Quick Reference (Copy & Paste)
+
+```bash
+# 1. Navigate and setup
+cd "BEAst-BIP-type-tester"
+pip install -r scripts/requirements.txt
+copy "features\resources\bip_type_name_id_properties.csv" "scripts\"
+
+# 2. Run validation (choose one)
+python -m behave --define input="..\models\A-40-V-000_BIM2BOM.ifc" --no-capture -v
+python scripts/validate_bip_type_name_id.py "..\models\A-40-V-000_BIM2BOM.ifc"
+python scripts/validate_bip_type_name_id_xml.py "..\IfcConvert\output\A-40-V-000_BIM2BOM.xml"
+```
+
 ### Installation
 
 ```bash
-cd ".\BIM2BOM\BEAst-BIP-type-tester"
-pip install -r requirements.txt
+# Navigate to project directory
+cd "BEAst-BIP-type-tester"
+
+# Install dependencies
+pip install -r scripts/requirements.txt
+
+# Copy CSV configuration to scripts directory (for better compatibility)
+copy "features\resources\bip_type_name_id_properties.csv" "scripts\"
 ```
 
 ### Run Validation
 
 #### Gherkin Framework (Recommended)
 ```bash
+# Run from BEAst-BIP-type-tester directory
+cd "BEAst-BIP-type-tester"
+
 # Run all validation rules
-python run_validation.py "..\A-40-V-000_BIM2BOM.ifc"
+python -m behave --define input="..\models\A-40-V-000_BIM2BOM.ifc" --no-capture -v
 
 # Run specific rule
-python run_validation.py "..\A-40-V-000_BIM2BOM.ifc" BIP001
+python -m behave --define input="..\models\A-40-V-000_BIM2BOM.ifc" --no-capture -v --tags=@BIP001
 ```
 
 #### Standalone Validators
 ```bash
+# Run from BEAst-BIP-type-tester directory
+cd "BEAst-BIP-type-tester"
+
 # XML format (recommended - contains BIP properties)
-python validate_bip_type_name_id_xml.py "..\A-40-V-000_BIM2BOM.ifc.xml"
+python scripts/validate_bip_type_name_id_xml.py "..\IfcConvert\output\A-40-V-000_BIM2BOM.xml"
 
 # STEP format (if BIP properties are present)
-python validate_bip_type_name_id.py "..\A-40-V-000_BIM2BOM.ifc"
+python scripts/validate_bip_type_name_id.py "..\models\A-40-V-000_BIM2BOM.ifc"
 ```
 
 ## 📁 Project Structure
@@ -107,19 +133,25 @@ The framework successfully found a real modeling issue:
 ```
 Feature: BIP001 - Type Name ID Uniqueness and Consistency
   Loaded 6 validation properties from CSV
-  Checking consistency for 506 property sets...
-  FAIL: Type name id '011' - inconsistent properties: 
-        thickness: 300.0 (expected: 52.0)
+  Checking consistency for 8212 property sets...
+  FAIL: Type name id '010' - inconsistent properties: 
+        thickness: 600.0 (expected: None)
 ```
 
 **This proves the framework works correctly!** 🎉
 
 ### Test File Results
 
-**File**: `A-40-V-000_BIM2BOM.ifc.xml`
-- **Total BIP property sets**: 121
-- **Unique type name IDs**: 10
-- **Consistency violations**: 0 (with height excluded)
+**IFC STEP file**: `A-40-V-000_BIM2BOM.ifc`
+- **Total elements with BIP properties**: 106
+- **Unique type name IDs**: 11
+- **Consistency violations**: 1 (Gherkin framework found real violation)
+- **Uniqueness violations**: 0
+
+**IFC XML file**: `A-40-V-000_BIM2BOM.xml`
+- **Total BIP property sets**: 123
+- **Unique type name IDs**: 11
+- **Consistency violations**: 0
 - **Uniqueness violations**: 0
 
 ## 📖 Creating New Rules
@@ -236,6 +268,11 @@ python -m behave --dry-run --define "input=file.ifc"
 ### Unicode/Encoding Errors
 - Redirect output to file: `python validate_bip_type_name_id_xml.py "file.ifc.xml" > report.txt 2>&1`
 
+### "Could not find steps directory" Error
+- Make sure you're running from the `BEAst-BIP-type-tester` directory
+- Use `python -m behave` instead of `python run_validation.py` for Gherkin validation
+- The `run_validation.py` script has path issues - use direct behave commands instead
+
 ## 🎯 Use Cases
 
 ### Quality Assurance
@@ -291,7 +328,7 @@ This framework provides:
 - ✅ **Extensible** - Ready for more rules
 - ✅ **Production-ready** - Use today
 
-**Start validating**: `python run_validation.py "../A-40-V-000_BIM2BOM.ifc"`
+**Start validating**: `python -m behave --define input="..\models\A-40-V-000_BIM2BOM.ifc" --no-capture -v`
 
 ---
 

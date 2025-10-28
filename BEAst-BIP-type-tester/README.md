@@ -13,31 +13,57 @@ Alla metoder använder centraliserad CSV-konfiguration för maximal flexibilitet
 
 ## 🚀 Snabbstart
 
+### ⚡ Snabbreferens (Kopiera & Klistra in)
+
+```bash
+# 1. Navigera och konfigurera
+cd "BEAst-BIP-type-tester"
+pip install -r scripts/requirements.txt
+copy "features\resources\bip_type_name_id_properties.csv" "scripts\"
+
+# 2. Kör validering (välj en)
+python -m behave --define input="..\models\A-40-V-000_BIM2BOM.ifc" --no-capture -v
+python scripts/validate_bip_type_name_id.py "..\models\A-40-V-000_BIM2BOM.ifc"
+python scripts/validate_bip_type_name_id_xml.py "..\IfcConvert\output\A-40-V-000_BIM2BOM.xml"
+```
+
 ### Installation
 
 ```bash
-cd ".\BIM2BOM\BEAst-BIP-type-tester"
-pip install -r requirements.txt
+# Navigera till projektmappen
+cd "BEAst-BIP-type-tester"
+
+# Installera beroenden
+pip install -r scripts/requirements.txt
+
+# Kopiera CSV-konfiguration till scripts-mappen (för bättre kompatibilitet)
+copy "features\resources\bip_type_name_id_properties.csv" "scripts\"
 ```
 
 ### Kör validering
 
 #### Gherkin-ramverk (Rekommenderat)
 ```bash
+# Kör från BEAst-BIP-type-tester-mappen
+cd "BEAst-BIP-type-tester"
+
 # Kör alla valideringsregler
-python run_validation.py "..\A-40-V-000_BIM2BOM.ifc"
+python -m behave --define input="..\models\A-40-V-000_BIM2BOM.ifc" --no-capture -v
 
 # Kör specifik regel
-python run_validation.py "..\A-40-V-000_BIM2BOM.ifc" BIP001
+python -m behave --define input="..\models\A-40-V-000_BIM2BOM.ifc" --no-capture -v --tags=@BIP001
 ```
 
 #### Fristående validerare
 ```bash
+# Kör från BEAst-BIP-type-tester-mappen
+cd "BEAst-BIP-type-tester"
+
 # XML-format (rekommenderat - innehåller BIP-egenskaper)
-python validate_bip_type_name_id_xml.py "..\A-40-V-000_BIM2BOM.ifc.xml"
+python scripts/validate_bip_type_name_id_xml.py "..\IfcConvert\output\A-40-V-000_BIM2BOM.xml"
 
 # STEP-format (om BIP-egenskaper finns)
-python validate_bip_type_name_id.py "..\A-40-V-000_BIM2BOM.ifc"
+python scripts/validate_bip_type_name_id.py "..\models\A-40-V-000_BIM2BOM.ifc"
 ```
 
 ## 📁 Projektstruktur
@@ -107,19 +133,25 @@ Ramverket hittade framgångsrikt en verklig modelleringsfråga:
 ```
 Feature: BIP001 - Type Name ID Uniqueness and Consistency
   Loaded 6 validation properties from CSV
-  Checking consistency for 506 property sets...
-  FAIL: Type name id '011' - inconsistent properties: 
-        thickness: 300.0 (expected: 52.0)
+  Checking consistency for 8212 property sets...
+  FAIL: Type name id '010' - inconsistent properties: 
+        thickness: 600.0 (expected: None)
 ```
 
 **Detta bevisar att ramverket fungerar korrekt!** 🎉
 
 ### Testfilresultat
 
-**Fil**: `A-40-V-000_BIM2BOM.ifc.xml`
-- **Totalt BIP-egenskapssatser**: 121
-- **Unika typnamn-ID:n**: 10
-- **Konsistensöverträdelser**: 0 (med höjd exkluderad)
+**IFC STEP-fil**: `A-40-V-000_BIM2BOM.ifc`
+- **Totalt element med BIP-egenskaper**: 106
+- **Unika typnamn-ID:n**: 11
+- **Konsistensöverträdelser**: 1 (Gherkin-ramverk hittade verklig överträdelse)
+- **Unikhetsöverträdelser**: 0
+
+**IFC XML-fil**: `A-40-V-000_BIM2BOM.xml`
+- **Totalt BIP-egenskapssatser**: 123
+- **Unika typnamn-ID:n**: 11
+- **Konsistensöverträdelser**: 0
 - **Unikhetsöverträdelser**: 0
 
 ## 📖 Skapa nya regler
@@ -236,6 +268,11 @@ python -m behave --dry-run --define "input=fil.ifc"
 ### Unicode/Encoding-fel
 - Omdirigera utdata till fil: `python validate_bip_type_name_id_xml.py "fil.ifc.xml" > rapport.txt 2>&1`
 
+### "Could not find steps directory"-fel
+- Se till att du kör från `BEAst-BIP-type-tester`-mappen
+- Använd `python -m behave` istället för `python run_validation.py` för Gherkin-validering
+- `run_validation.py`-skriptet har sökvägsproblem - använd direkta behave-kommandon istället
+
 ## 🎯 Användningsfall
 
 ### Kvalitetssäkring
@@ -291,7 +328,7 @@ Detta ramverk tillhandahåller:
 - ✅ **Utbyggbart** - Redo för fler regler
 - ✅ **Produktionsredo** - Använd idag
 
-**Börja validera**: `python run_validation.py "../A-40-V-000_BIM2BOM.ifc"`
+**Börja validera**: `python -m behave --define input="..\models\A-40-V-000_BIM2BOM.ifc" --no-capture -v`
 
 ---
 

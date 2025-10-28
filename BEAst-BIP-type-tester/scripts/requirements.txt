@@ -3,12 +3,22 @@
 # Testing framework
 behave==1.2.6
 
-# IFC parsing
+# IFC parsing and dependencies
 ifcopenshell
+numpy
+shapely
+isodate
+lark
+python-dateutil
+typing-extensions
 
 # Standard library (no install needed, listed for reference)
-# - xml.etree.ElementTree
-# - csv
+# - sys
+# - collections
+# - dataclasses
+# - typing
 # - json
+# - csv
 # - pathlib
+# - xml.etree.ElementTree
 

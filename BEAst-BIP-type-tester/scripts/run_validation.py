@@ -24,6 +24,10 @@ def run_validation(ifc_file, rules=None, verbose=True):
     """
     script_dir = Path(__file__).parent
     
+    # Ensure output directory exists
+    output_dir = script_dir.parent / "output"
+    output_dir.mkdir(exist_ok=True)
+    
     # Build behave command
     cmd = [
         sys.executable, "-m", "behave",
@@ -58,6 +62,8 @@ def main():
         print('  python run_validation.py "path/to/file.ifc" BIP001 BIP002  # Run multiple rules')
         print("\nAvailable Rules:")
         print("  BIP001 - Type Name ID Uniqueness and Consistency")
+        print("\nOutput:")
+        print("  Reports are saved to: ../output/")
         sys.exit(1)
     
     ifc_file = sys.argv[1]

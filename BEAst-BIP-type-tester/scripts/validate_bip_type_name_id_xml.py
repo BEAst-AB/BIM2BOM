@@ -455,12 +455,17 @@ def main():
         print("\n")
         print(report)
         
-        # Save reports
-        base_name = xml_file_path.rsplit('.', 1)[0]
-        if base_name.endswith('.ifc'):
-            base_name = base_name[:-4]
-        txt_report_path = f"{base_name}_BIP_validation_report.txt"
-        json_report_path = f"{base_name}_BIP_validation_report.json"
+        # Save reports to output folder
+        script_dir = Path(__file__).parent
+        output_dir = script_dir.parent / "output"
+        output_dir.mkdir(exist_ok=True)
+        
+        # Extract filename without path and extension
+        input_filename = Path(xml_file_path).stem
+        if input_filename.endswith('.ifc'):
+            input_filename = input_filename[:-4]
+        txt_report_path = output_dir / f"{input_filename}_BIP_validation_report.txt"
+        json_report_path = output_dir / f"{input_filename}_BIP_validation_report.json"
         
         with open(txt_report_path, 'w', encoding='utf-8') as f:
             f.write(report)
