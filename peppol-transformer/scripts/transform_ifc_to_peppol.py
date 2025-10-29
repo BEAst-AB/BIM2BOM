@@ -151,15 +151,28 @@ def generate_excel_from_catalogue(xml_path, excel_path):
 def _populate_catalogue_sheet(sheet, lines, ns, header_fill, header_font, header_alignment):
     """Helper function to populate a catalogue sheet with lines."""
     
-    # Column headers
-    columns = [
+    # First pass: collect all unique property names
+    all_property_names = set()
+    for line in lines:
+        for prop in line.xpath('.//cac:AdditionalItemProperty', namespaces=ns):
+            prop_name = prop.xpath('./cbc:Name/text()', namespaces=ns)
+            if prop_name:
+                all_property_names.add(prop_name[0])
+    
+    # Sort property names for consistent column order
+    sorted_property_names = sorted(all_property_names)
+    
+    # Base columns
+    base_columns = [
         "Line ID", "Name", "Description", "Brand Name", "Keywords",
-        "Manufacturer ID", "Manufacturer Name", "Lot Number",
-        "Properties (Name: Value)"
+        "Manufacturer ID", "Manufacturer Name", "Lot Number"
     ]
     
+    # Create header row with base columns + property columns
+    all_columns = base_columns + sorted_property_names
+    
     # Write headers
-    for col_idx, col_name in enumerate(columns, 1):
+    for col_idx, col_name in enumerate(all_columns, 1):
         cell = sheet.cell(row=1, column=col_idx, value=col_name)
         cell.fill = header_fill
         cell.font = header_font
@@ -199,25 +212,30 @@ def _populate_catalogue_sheet(sheet, lines, ns, header_fill, header_font, header
         lot = line.xpath('.//cac:ItemInstance/cac:LotIdentification/cbc:LotNumberID/text()', namespaces=ns)[0] if line.xpath('.//cac:ItemInstance/cac:LotIdentification/cbc:LotNumberID/text()', namespaces=ns) else ""
         sheet.cell(row=row_idx, column=8, value=lot)
         
-        # Properties (concatenated)
-        properties = []
+        # Properties - create a dictionary for this line's properties
+        line_properties = {}
         for prop in line.xpath('.//cac:AdditionalItemProperty', namespaces=ns):
             prop_name = prop.xpath('./cbc:Name/text()', namespaces=ns)[0] if prop.xpath('./cbc:Name/text()', namespaces=ns) else ""
             prop_value = prop.xpath('./cbc:Value/text()', namespaces=ns)[0] if prop.xpath('./cbc:Value/text()', namespaces=ns) else ""
-            if prop_name and prop_value:
-                properties.append(f"{prop_name}: {prop_value}")
+            if prop_name:
+                line_properties[prop_name] = prop_value
         
-        sheet.cell(row=row_idx, column=10, value="\n".join(properties[:10]))  # Limit to first 10 properties
+        # Write property values in corresponding columns
+        for prop_idx, prop_name in enumerate(sorted_property_names):
+            col_idx = len(base_columns) + prop_idx + 1
+            value = line_properties.get(prop_name, "")
+            sheet.cell(row=row_idx, column=col_idx, value=value)
     
     # Auto-size columns
-    for col_idx in range(1, 11):
+    total_columns = len(all_columns)
+    for col_idx in range(1, total_columns + 1):
         column_letter = get_column_letter(col_idx)
-        if col_idx == 10:
-            sheet.column_dimensions[column_letter].width = 60
-        elif col_idx in [2, 3]:
+        if col_idx in [2, 3]:  # Name, Description
             sheet.column_dimensions[column_letter].width = 40
-        elif col_idx == 5:
+        elif col_idx == 5:  # Keywords
             sheet.column_dimensions[column_letter].width = 30
+        elif col_idx > len(base_columns):  # Property columns
+            sheet.column_dimensions[column_letter].width = 20
         else:
             sheet.column_dimensions[column_letter].width = 20
 

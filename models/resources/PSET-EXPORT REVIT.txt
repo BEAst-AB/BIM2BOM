@@ -44,3 +44,4 @@ PropertySet:		BIP				I					IfcElement, IfcElementType
 	floor							Label				Base Constraint
 	floor							Label				Reference Level
 	renovation component status		Label				Phase Created
+	LotNumberID						Label				LotNumberID
