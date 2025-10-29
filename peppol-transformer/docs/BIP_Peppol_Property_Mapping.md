@@ -1,272 +1,223 @@
-# BIP to Peppol Property Mapping
+# BIP till Peppol Egenskapsmappning
 
-## Introduction
+## Introduktion
 
-This document provides a comprehensive mapping between **BIP (BIM In Production)** properties and **Peppol's `cac:AdditionalItemProperty`** structure as implemented in the BEAst Supply specification. This mapping enables standardized exchange of product properties in construction supply chain transactions.
+Detta dokument ger en omfattande mappning mellan **BIP**-egenskaper och **Peppols `cac:AdditionalItemProperty`**-struktur enligt BEAst Supply-specifikationen. Denna mappning möjliggör standardiserat utbyte av produktegenskaper i byggbranschens leveranskedjetransaktioner.
 
-The BIP property set is a Swedish standard for BIM properties used across Architecture, Structural, MEP (Mechanical, Electrical, Plumbing), and other construction disciplines. The Peppol BIS (Business Interoperability Specifications) provides a standardized format for electronic business documents.
+BIP-egenskapsuppsättningen är en svensk standard för BIM-egenskaper som används inom arkitektur, konstruktion, VVS och andra byggdiscipliner. Peppol BIS (Business Interoperability Specifications) tillhandahåller ett standardiserat format för elektroniska affärsdokument.
 
-### Key Mapping Principles
+### Viktiga Mappningsprinciper
 
-1. **Property Identification**: BIP property names are used in both `cbc:Name` and `cbc:NameCode` with the list identifier `SE:BIP`
-2. **Value Representation**: 
-   - Text/Label values use `cbc:Value`
-   - Numeric values with units use `cbc:ValueQuantity` with appropriate `@unitCode`
-3. **Unit Codes**: Following UN/CEFACT Recommendation 20 standards (e.g., MMT for millimeter)
-4. **Context**: Use `cbc:ValueQualifier` for additional classification when needed
+1. **Egenskapsidentifiering**: BIP-egenskapsnamn används i både `cbc:Name` och `cbc:NameCode` med listidentifieraren `SE:BIP`
+2. **Värderepresentation**: 
+   - Text/Label-värden använder `cbc:Value`
+   - Numeriska värden med enheter använder `cbc:ValueQuantity` med lämplig `@unitCode`
+3. **Enhetskoder**: Följer UN/CEFACT Recommendation 20-standarder (t.ex. MMT för millimeter)
+4. **Kontext**: Använd `cbc:ValueQualifier` för ytterligare klassificering vid behov
 
-## Property Mapping Table
+## Särskilda Mappningar
 
-The following table shows the mapping for commonly used properties across different disciplines:
+### BrandName (Varumärke)
+- **Källa**: Primärt från `BIP.Manufacturer` om tillgänglig
+- **Fallback**: `BIP.type name id` om Manufacturer saknas
+- **XML-element**: `<cbc:BrandName>`
 
-| Discipline | BIP Property | BIP DataType | cbc:Name | cbc:NameCode | cbc:Value Example | cbc:ValueQuantity | @unitCode | Notes |
-|------------|--------------|--------------|----------|--------------|-------------------|-------------------|-----------|-------|
-| **Common** | TypeID | Label | TypeID | TypeID (@listID="SE:BIP") | TD100 | - | - | Product type designation |
-| **Common** | ObjectID | Identifier | ObjectID | ObjectID (@listID="SE:BIP") | 52-LB200-LA01 | - | - | Unique object ID |
-| **Common** | Manufacturer | Label | Manufacturer | Manufacturer (@listID="SE:BIP") | Lindab | - | - | Manufacturer name |
-| **Common** | StatusConstruction | Label | StatusConstruction | StatusConstruction (@listID="SE:BIP") | NYTT | - | - | Construction phase status |
-| **Architect** | Height | PositiveLength | Height | Height (@listID="SE:BIP") | 600 mm | 600 | MMT | Height dimension |
-| **Architect** | FireRating | Label | FireRating | FireRating (@listID="SE:BIP") | EI60 | - | - | Fire resistance class |
-| **Architect** | AcousticRating | Label | AcousticRating | AcousticRating (@listID="SE:BIP") | 38 | - | - | Sound reduction Rw [dB] |
-| **Architect** | Colour | Label | Colour | Colour (@listID="SE:BIP") | RAL 9005 | - | - | Color specification |
-| **Structural** | BSABwr | Label | BSABwr | BSABwr (@listID="SE:BIP") | PDB.3 | - | - | BSAB Work Result code |
-| **Structural** | Material | Label | Material | Material (@listID="SE:BIP") | 1 | - | - | Material code |
-| **Structural** | Weight | Real | Weight | Weight (@listID="SE:BIP") | 20 kg | 20 | KGM | Object weight |
-| **Structural** | FireSeparating | Boolean | FireSeparating | FireSeparating (@listID="SE:BIP") | Yes | - | - | Fire separating (Yes/No) |
-| **Mechanical** | SystemName | Label | SystemName | SystemName (@listID="SE:BIP") | Tilluft LB101 | - | - | System designation |
-| **Mechanical** | Flow_l/s | VolumetricFlowRate | Flow_l/s | Flow_l/s (@listID="SE:BIP") | 5,2 l/s | 5.2 | E97 | Flow rate (E97=liters/second) |
-| **Mechanical** | InsulationThickness | PositiveLength | InsulationThickness | InsulationThickness (@listID="SE:BIP") | 40 mm | 40 | MMT | Insulation thickness |
-| **Mechanical** | HeatingPower_W | Power | HeatingPower_W | HeatingPower_W (@listID="SE:BIP") | 1500 W | 1500 | WTT | Heating power in Watts |
-| **Electrical** | Voltage_V | ElectricVoltage | Voltage_V | Voltage_V (@listID="SE:BIP") | 230 V | 230 | VLT | Voltage |
-| **Electrical** | Current_A | ElectricCurrent | Current_A | Current_A (@listID="SE:BIP") | 3 A | 3 | AMP | Current |
-| **Electrical** | PowerElectrical_W | Power | PowerElectrical_W | PowerElectrical_W (@listID="SE:BIP") | 500 W | 500 | WTT | Electrical power |
-| **Electrical** | IPClass | Label | IPClass | IPClass (@listID="SE:BIP") | IP48 | - | - | IP protection class |
+### ManufacturerParty (Tillverkarpart)
+- **Villkor**: Inkluderas ENDAST om `BIP.Manufacturer` finns
+- **Källa**: `BIP.Manufacturer`
+- **XML-struktur**:
+```xml
+<cac:ManufacturerParty>
+  <cac:PartyName>
+    <cbc:Name>Tillverkarens Namn</cbc:Name>
+  </cac:PartyName>
+</cac:ManufacturerParty>
+```
 
-## XML Structure Examples
+## Egenskapsmappningstabell
 
-### Example 1: Simple Text Property (TypeID)
+Följande tabell visar mappningen för vanligt använda egenskaper inom olika discipliner:
+
+| Disciplin | BIP-egenskap | BIP DataType | cbc:Name | cbc:NameCode | cbc:Value Exempel | cbc:ValueQuantity | @unitCode | Anteckningar |
+|-----------|--------------|--------------|----------|--------------|-------------------|-------------------|-----------|--------------|
+| **Gemensamt** | type name id | Label | type name id | type name id (@listID="SE:BIP") | TD100 | - | - | Produkttypbeteckning, fallback för BrandName |
+| **Gemensamt** | Manufacturer | Label | Manufacturer | Manufacturer (@listID="SE:BIP") | Lindab | - | - | Tillverkarnamn, används för BrandName och ManufacturerParty |
+| **Gemensamt** | TypeDescription | Label | TypeDescription | TypeDescription (@listID="SE:BIP") | Yttervägg 350mm | - | - | Typbeskrivning |
+| **Gemensamt** | BSAB 96 | Label | BSAB 96 | BSAB 96 (@listID="SE:BIP") | 42.A | - | - | BSAB-klassifikation, används som Keyword |
+| **Gemensamt** | materials/components | Label | materials/components | materials/components (@listID="SE:BIP") | Tegel fasad 110 / Luft 30 | - | - | Materialsammansättning |
+| **Gemensamt** | StatusConstruction | Label | StatusConstruction | StatusConstruction (@listID="SE:BIP") | NYTT | - | - | Byggfasstatus |
+| **Arkitekt** | thickness | PositiveLength | thickness | thickness (@listID="SE:BIP") | 350 mm | 350 | MMT | Tjocklek |
+| **Arkitekt** | height | PositiveLength | height | height (@listID="SE:BIP") | 2100 mm | 2100 | MMT | Höjd |
+| **Arkitekt** | width | PositiveLength | width | width (@listID="SE:BIP") | 900 mm | 900 | MMT | Bredd |
+| **Arkitekt** | length | PositiveLength | length | length (@listID="SE:BIP") | 16060 mm | 16060 | MMT | Längd |
+| **Arkitekt** | FireRating | Label | FireRating | FireRating (@listID="SE:BIP") | EI60 | - | - | Brandklass |
+| **Arkitekt** | AcousticRating | Label | AcousticRating | AcousticRating (@listID="SE:BIP") | 38 | - | - | Ljudreduktion Rw [dB] |
+| **Arkitekt** | Colour | Label | Colour | Colour (@listID="SE:BIP") | RAL 9005 | - | - | Färgspecifikation |
+| **Konstruktion** | is load bearing | Boolean | is load bearing | is load bearing (@listID="SE:BIP") | Ja | - | - | Bärande (Ja/Nej) |
+| **Konstruktion** | is external | Boolean | is external | is external (@listID="SE:BIP") | Ja | - | - | Yttervägg (Ja/Nej), används för Keyword |
+| **Konstruktion** | Material | Label | Material | Material (@listID="SE:BIP") | Betong C30/37 | - | - | Materialkod |
+| **Konstruktion** | weight | Real | weight | weight (@listID="SE:BIP") | 54467.20 kg | 54467.20 | KGM | Objektvikt |
+| **Konstruktion** | net area | Area | net area | net area (@listID="SE:BIP") | 79.81 m² | 79.81 | MTK | Nettoyta |
+| **Konstruktion** | net volume | Volume | net volume | net volume (@listID="SE:BIP") | 27.93 m³ | 27.93 | MTQ | Nettovolym |
+| **Allmänt** | floor | Label | floor | floor (@listID="SE:BIP") | 010 | - | - | Våningsbeteckning |
+| **Allmänt** | renovation component status | Label | renovation component status | renovation component status (@listID="SE:BIP") | Ny | - | - | Ny/Befintlig/Rivs |
+| **VVS** | SystemName | Label | SystemName | SystemName (@listID="SE:BIP") | Tilluft LB101 | - | - | Systembeteckning |
+| **VVS** | Flow_l/s | VolumetricFlowRate | Flow_l/s | Flow_l/s (@listID="SE:BIP") | 5,2 l/s | 5.2 | E97 | Flöde (E97=liter/sekund) |
+| **VVS** | InsulationThickness | PositiveLength | InsulationThickness | InsulationThickness (@listID="SE:BIP") | 40 mm | 40 | MMT | Isoleringstjocklek |
+| **VVS** | HeatingPower_W | Power | HeatingPower_W | HeatingPower_W (@listID="SE:BIP") | 1500 W | 1500 | WTT | Värmeeffekt i Watt |
+| **El** | Voltage_V | ElectricVoltage | Voltage_V | Voltage_V (@listID="SE:BIP") | 230 V | 230 | VLT | Spänning |
+| **El** | Current_A | ElectricCurrent | Current_A | Current_A (@listID="SE:BIP") | 3 A | 3 | AMP | Ström |
+| **El** | PowerElectrical_W | Power | PowerElectrical_W | PowerElectrical_W (@listID="SE:BIP") | 500 W | 500 | WTT | Elektrisk effekt |
+| **El** | IPClass | Label | IPClass | IPClass (@listID="SE:BIP") | IP48 | - | - | IP-klass |
+
+## XML-strukturexempel
+
+### Exempel 1: Enkel Textegenskap (type name id)
 
 ```xml
 <cac:Item>
-    <cbc:Name>Ventilation Diffuser IRIS-125</cbc:Name>
-    <cac:AdditionalItemProperty>
-        <cbc:Name>TypeID</cbc:Name>
-        <cbc:NameCode listID="SE:BIP">TypeID</cbc:NameCode>
-        <cbc:Value>TD100</cbc:Value>
-    </cac:AdditionalItemProperty>
+  <cac:AdditionalItemProperty>
+    <cbc:Name>type name id</cbc:Name>
+    <cbc:NameCode listID="SE:BIP">type name id</cbc:NameCode>
+    <cbc:Value>YV01</cbc:Value>
+  </cac:AdditionalItemProperty>
 </cac:Item>
 ```
 
-### Example 2: Numeric Property with Units (Height)
+### Exempel 2: Tillverkaregenskap (Påverkar BrandName och ManufacturerParty)
 
 ```xml
 <cac:Item>
-    <cbc:Name>Door 10M</cbc:Name>
-    <cac:AdditionalItemProperty>
-        <cbc:Name>Height</cbc:Name>
-        <cbc:NameCode listID="SE:BIP">Height</cbc:NameCode>
-        <cbc:Value>2100 mm</cbc:Value>
-        <cbc:ValueQuantity unitCode="MMT">2100</cbc:ValueQuantity>
-    </cac:AdditionalItemProperty>
+  <cbc:BrandName>Lindab AB</cbc:BrandName>  <!-- Från BIP.Manufacturer -->
+  
+  <cac:ManufacturerParty>  <!-- Endast inkluderad om BIP.Manufacturer finns -->
+    <cac:PartyName>
+      <cbc:Name>Lindab AB</cbc:Name>
+    </cac:PartyName>
+  </cac:ManufacturerParty>
+  
+  <cac:AdditionalItemProperty>
+    <cbc:Name>Manufacturer</cbc:Name>
+    <cbc:NameCode listID="SE:BIP">Manufacturer</cbc:NameCode>
+    <cbc:Value>Lindab AB</cbc:Value>
+  </cac:AdditionalItemProperty>
 </cac:Item>
 ```
 
-### Example 3: Discipline-Specific Property (SystemName for MEP)
+### Exempel 3: Dimensionsegenskap med Enhet (thickness)
 
 ```xml
 <cac:Item>
-    <cbc:Name>Supply Air Damper</cbc:Name>
-    <cac:AdditionalItemProperty>
-        <cbc:Name>SystemName</cbc:Name>
-        <cbc:NameCode listID="SE:BIP">SystemName</cbc:NameCode>
-        <cbc:Value>Tilluft LB101</cbc:Value>
-        <cbc:ValueQualifier>MEP System</cbc:ValueQualifier>
-    </cac:AdditionalItemProperty>
-    <cac:AdditionalItemProperty>
-        <cbc:Name>Flow_l/s</cbc:Name>
-        <cbc:NameCode listID="SE:BIP">Flow_l/s</cbc:NameCode>
-        <cbc:Value>5.2 l/s</cbc:Value>
-        <cbc:ValueQuantity unitCode="E97">5.2</cbc:ValueQuantity>
-    </cac:AdditionalItemProperty>
+  <cac:AdditionalItemProperty>
+    <cbc:Name>thickness</cbc:Name>
+    <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
+    <cbc:Value>350 mm</cbc:Value>
+    <cbc:ValueQuantity unitCode="MMT">350</cbc:ValueQuantity>
+  </cac:AdditionalItemProperty>
 </cac:Item>
 ```
 
-### Example 4: Boolean Property (FireSeparating)
+### Exempel 4: Boolesk Egenskap (is load bearing)
 
 ```xml
 <cac:Item>
-    <cbc:Name>Fire Door EI60</cbc:Name>
-    <cac:AdditionalItemProperty>
-        <cbc:Name>FireSeparating</cbc:Name>
-        <cbc:NameCode listID="SE:BIP">FireSeparating</cbc:NameCode>
-        <cbc:Value>Yes</cbc:Value>
-    </cac:AdditionalItemProperty>
-    <cac:AdditionalItemProperty>
-        <cbc:Name>FireRating</cbc:Name>
-        <cbc:NameCode listID="SE:BIP">FireRating</cbc:NameCode>
-        <cbc:Value>EI60</cbc:Value>
-    </cac:AdditionalItemProperty>
+  <cac:AdditionalItemProperty>
+    <cbc:Name>is load bearing</cbc:Name>
+    <cbc:NameCode listID="SE:BIP">is load bearing</cbc:NameCode>
+    <cbc:Value>Ja</cbc:Value>  <!-- Översatt från true/false -->
+  </cac:AdditionalItemProperty>
 </cac:Item>
 ```
 
-### Example 5: Multiple Properties for Electrical Equipment
+### Exempel 5: Ytaegenskap (net area)
 
 ```xml
 <cac:Item>
-    <cbc:Name>LED Panel Light</cbc:Name>
-    <cac:AdditionalItemProperty>
-        <cbc:Name>Voltage_V</cbc:Name>
-        <cbc:NameCode listID="SE:BIP">Voltage_V</cbc:NameCode>
-        <cbc:Value>230 V</cbc:Value>
-        <cbc:ValueQuantity unitCode="VLT">230</cbc:ValueQuantity>
-    </cac:AdditionalItemProperty>
-    <cac:AdditionalItemProperty>
-        <cbc:Name>PowerElectrical_W</cbc:Name>
-        <cbc:NameCode listID="SE:BIP">PowerElectrical_W</cbc:NameCode>
-        <cbc:Value>36 W</cbc:Value>
-        <cbc:ValueQuantity unitCode="WTT">36</cbc:ValueQuantity>
-    </cac:AdditionalItemProperty>
-    <cac:AdditionalItemProperty>
-        <cbc:Name>IPClass</cbc:Name>
-        <cbc:NameCode listID="SE:BIP">IPClass</cbc:NameCode>
-        <cbc:Value>IP44</cbc:Value>
-    </cac:AdditionalItemProperty>
+  <cac:AdditionalItemProperty>
+    <cbc:Name>net area</cbc:Name>
+    <cbc:NameCode listID="SE:BIP">net area</cbc:NameCode>
+    <cbc:Value>79.81 m²</cbc:Value>
+    <cbc:ValueQuantity unitCode="MTK">79.81</cbc:ValueQuantity>
+  </cac:AdditionalItemProperty>
 </cac:Item>
 ```
 
-### Example 6: Complete Item with Multiple Properties
+## Enhetskoder (UN/CEFACT)
 
-```xml
-<cac:CatalogueLine>
-    <cbc:ID>Item-12345</cbc:ID>
-    <cac:Item>
-        <cbc:Description>Rectangular ventilation duct with insulation</cbc:Description>
-        <cbc:Name>Duct 400x200</cbc:Name>
-        
-        <!-- Common Properties -->
-        <cac:AdditionalItemProperty>
-            <cbc:Name>TypeID</cbc:Name>
-            <cbc:NameCode listID="SE:BIP">TypeID</cbc:NameCode>
-            <cbc:Value>KR-400x200</cbc:Value>
-        </cac:AdditionalItemProperty>
-        
-        <cac:AdditionalItemProperty>
-            <cbc:Name>Manufacturer</cbc:Name>
-            <cbc:NameCode listID="SE:BIP">Manufacturer</cbc:NameCode>
-            <cbc:Value>Lindab</cbc:Value>
-        </cac:AdditionalItemProperty>
-        
-        <!-- Dimensional Properties -->
-        <cac:AdditionalItemProperty>
-            <cbc:Name>Height</cbc:Name>
-            <cbc:NameCode listID="SE:BIP">Height</cbc:NameCode>
-            <cbc:Value>200 mm</cbc:Value>
-            <cbc:ValueQuantity unitCode="MMT">200</cbc:ValueQuantity>
-        </cac:AdditionalItemProperty>
-        
-        <cac:AdditionalItemProperty>
-            <cbc:Name>Width</cbc:Name>
-            <cbc:NameCode listID="SE:BIP">Width</cbc:NameCode>
-            <cbc:Value>400 mm</cbc:Value>
-            <cbc:ValueQuantity unitCode="MMT">400</cbc:ValueQuantity>
-        </cac:AdditionalItemProperty>
-        
-        <!-- MEP-specific Properties -->
-        <cac:AdditionalItemProperty>
-            <cbc:Name>SystemName</cbc:Name>
-            <cbc:NameCode listID="SE:BIP">SystemName</cbc:NameCode>
-            <cbc:Value>Tilluft LB101</cbc:Value>
-        </cac:AdditionalItemProperty>
-        
-        <cac:AdditionalItemProperty>
-            <cbc:Name>InsulationThickness</cbc:Name>
-            <cbc:NameCode listID="SE:BIP">InsulationThickness</cbc:NameCode>
-            <cbc:Value>40 mm</cbc:Value>
-            <cbc:ValueQuantity unitCode="MMT">40</cbc:ValueQuantity>
-        </cac:AdditionalItemProperty>
-        
-        <cac:AdditionalItemProperty>
-            <cbc:Name>InsulationMaterial</cbc:Name>
-            <cbc:NameCode listID="SE:BIP">InsulationMaterial</cbc:NameCode>
-            <cbc:Value>Glasull</cbc:Value>
-        </cac:AdditionalItemProperty>
-    </cac:Item>
-</cac:CatalogueLine>
+| Enhet | Kod | Beskrivning |
+|-------|-----|-------------|
+| Millimeter | MMT | Längd |
+| Kvadratmeter | MTK | Yta |
+| Kubikmeter | MTQ | Volym |
+| Kilogram | KGM | Vikt/Massa |
+| Watt | WTT | Effekt |
+| Volt | VLT | Spänning |
+| Ampere | AMP | Ström |
+| Liter/sekund | E97 | Volymflöde |
+
+## Transformationsregler
+
+### Booleska Värden
+- `true` / `1` → `Ja`
+- `false` / `0` → `Nej`
+
+### Dimensioner
+- Automatisk tillägg av enhetsuffix (mm, m², m³, kg)
+- Numeriskt värde i `ValueQuantity` med lämplig `unitCode`
+- Läsbart värde med enhet i `Value`
+
+### Nyckelord (Keywords)
+Genereras automatiskt från:
+- BSAB 96-kod
+- ObjectType
+- Väggklassificering (external wall / internal wall baserat på `is external`)
+
+### BrandName-logik
+```
+IF BIP.Manufacturer EXISTS THEN
+    BrandName = BIP.Manufacturer
+ELSE IF BIP.type name id EXISTS THEN
+    BrandName = BIP.type name id
+END IF
 ```
 
-## Common Unit Codes
+### ManufacturerParty-logik
+```
+IF BIP.Manufacturer EXISTS THEN
+    Include ManufacturerParty with BIP.Manufacturer value
+ELSE
+    Do not include ManufacturerParty
+END IF
+```
 
-The following UN/CEFACT unit codes are commonly used with BIP properties:
+## Användning i XSLT
 
-| Unit Code | Description | Used For |
-|-----------|-------------|----------|
-| MMT | Millimeter | Length, Height, Width, Thickness |
-| MTR | Meter | Large dimensions |
-| MTK | Square meter | Area |
-| MTQ | Cubic meter | Volume |
-| KGM | Kilogram | Weight |
-| VLT | Volt | Voltage |
-| AMP | Ampere | Current |
-| WTT | Watt | Power |
-| E97 | Liters per second | Flow rate (ventilation, water) |
-| MQH | Cubic meters per hour | Flow rate |
-| CEL | Degree Celsius | Temperature |
-| PAL | Pascal | Pressure |
-| KPA | Kilopascal | Pressure |
-| 2N | Decibel | Sound levels |
+Referensimplementering finns i:
+```
+peppol-transformer/stylesheets/default-stylesheet-bip_to_peppol.xslt
+```
 
-## Implementation Notes
+Nyckelvariabel för tillverkare:
+```xml
+<xsl:variable name="manufacturer" select="$propSet/IfcPropertySingleValue[@Name='Manufacturer']/@NominalValue"/>
+```
 
-### Data Type Mapping
+## Validering
 
-BIP DataType → Peppol Representation:
+Validera genererade kataloger mot:
+- **Peppol BIS 3.0** standard
+- **BEAst Supply** valideringsregler
+- **UBL 2.1** schema
 
-- **Label, Text, String, Identifier**: Use `cbc:Value` only
-- **PositiveLength, Real, Integer**: Use both `cbc:Value` (with unit) and `cbc:ValueQuantity` (with unitCode)
-- **Boolean**: Use `cbc:Value` with "Yes"/"No" or "True"/"False"
-- **Area, Volume, Power, etc.**: Use both `cbc:Value` and `cbc:ValueQuantity` with appropriate unit codes
+Använd BEAst Supply validator: https://bis.beast.se/
 
-### Best Practices
+## Referenser
 
-1. **Always include the listID**: `cbc:NameCode listID="SE:BIP"` ensures proper identification of the BIP property set
-2. **Provide human-readable values**: `cbc:Value` should include units for clarity (e.g., "600 mm", "5.2 l/s")
-3. **Use standard unit codes**: Follow UN/CEFACT Recommendation 20 for unit codes in `cbc:ValueQuantity`
-4. **Context matters**: Use `cbc:ValueQualifier` to provide additional classification when properties need context (e.g., "Object eller Data template referens")
-
-### Property Priority Classes
-
-BIP properties have priority levels (1-6) indicating their importance:
-- **Priority 1-2**: Critical properties, should be included when relevant
-- **Priority 3-4**: Standard properties, commonly used
-- **Priority 5-6**: Optional properties, use as needed
-
-## References
-
-### Documentation Links
-
-- [BEAst Supply - Peppol Catalogue AdditionalItemProperty](https://bis.beast.se/syntax/Catalogue/cac-CatalogueLine/cac-Item/cac-AdditionalItemProperty/)
-- [BEAst Supply - Item Property Name Code](https://bis.beast.se/syntax/Catalogue/cac-CatalogueLine/cac-Item/cac-AdditionalItemProperty/cbc-NameCode/)
-- [BIP (BIM In Production) - Property Specification](http://www.bipkoder.se/)
-- [UN/CEFACT Recommendation 20 - Unit Codes](https://unece.org/trade/uncefact/cl-recommendations)
-
-### Standards
-
-- **BIP (BIM In Production)**: Swedish standard for BIM properties (version 1.8+)
-- **Peppol BIS**: Business Interoperability Specifications for e-procurement
-- **BEAst Supply**: Swedish extension of Peppol BIS for construction supply chain
-- **UBL 2.1**: Universal Business Language - base for Peppol transactions
-- **ISO 12006-2**: Building construction — Organization of information about construction works
-
-### Property Source
-
-Complete BIP property definitions are available in:
-- [`property.json`](./property.json) - Comprehensive BIP property database with descriptions, examples, and discipline mappings
+- **BIP Dokumentation**: https://www.bimalliance.se/
+- **Peppol BIS**: https://peppol.eu/
+- **UN/CEFACT Codes**: https://unece.org/trade/uncefact/cl-recommendations
 
 ---
 
-**Document Version**: 1.0  
-**Last Updated**: 2025-10-17  
-**Author**: BIP-Peppol Integration Working Group  
-**License**: CC BY 4.0
-
-
+**Senast Uppdaterad:** 2025-10-29  
+**Version:** 1.2

@@ -64,6 +64,14 @@
             <ids:simpleValue>BSAB 96</ids:simpleValue>
           </ids:baseName>
         </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="optional" instructions="Batch/Lot nummer för produktspårning (valfritt) | Revit: Lägg till parameter 'LotNumberID' på Type eller Instance. Fyll i batch/lot-nummer som text (t.ex. 'B-2024-001'). | Archicad: Skapa Text-property 'LotNumberID' i BIP, fyll i batch/lot-nummer som text. Används för att gruppera produkter från samma tillverkningssats i Peppol-katalog.">
+          <ids:propertySet>
+            <ids:simpleValue>BIP</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>LotNumberID</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
       </ids:requirements>
     </ids:specification>
     <ids:specification ifcVersion="IFC4 IFC4X3_ADD2" name="Våningsbenämningar" description="Alla våningar i modellen ska ha grundläggande attribut på varje våning." instructions="Ange Name i tresiffrig kod, Elevation samt Description. ">
@@ -173,7 +181,7 @@
             <ids:simpleValue>thickness</ids:simpleValue>
           </ids:baseName>
         </ids:property>
-        <ids:property dataType="IFCAREAMEASURE" cardinality="required" instructions="Bruttoarea (inkl. öppningar) | Revit: Lägg till parameter 'gross area' på Instance. För Walls: använd Area-parameter. För Floors/Roofs/Ceilings: mappas från Area-parameter automatiskt. | Archicad: Skapa Number-property 'gross area' i BIP, använd expression =AREA_GROSS.">
+        <ids:property dataType="IFCAREAMEASURE" cardinality="optional" instructions="Bruttoarea (inkl. öppningar) | Revit: Lägg till parameter 'gross area' på Instance. För Walls: använd Area-parameter. För Floors/Roofs/Ceilings: mappas från Area-parameter automatiskt. | Archicad: Skapa Number-property 'gross area' i BIP, använd expression =AREA_GROSS.">
           <ids:propertySet>
             <ids:simpleValue>BIP</ids:simpleValue>
           </ids:propertySet>
@@ -189,7 +197,7 @@
             <ids:simpleValue>net area</ids:simpleValue>
           </ids:baseName>
         </ids:property>
-        <ids:property dataType="IFCVOLUMEMEASURE" cardinality="required" instructions="Bruttovolym (inkl. öppningar) | Revit: Lägg till parameter 'gross volume' på Instance. För Walls: mappas från Volume-parameter automatiskt. | Archicad: Skapa Number-property 'gross volume' i BIP.">
+        <ids:property dataType="IFCVOLUMEMEASURE" cardinality="optional" instructions="Bruttovolym (inkl. öppningar) | Revit: Lägg till parameter 'gross volume' på Instance. För Walls: mappas från Volume-parameter automatiskt. | Archicad: Skapa Number-property 'gross volume' i BIP.">
           <ids:propertySet>
             <ids:simpleValue>BIP</ids:simpleValue>
           </ids:propertySet>
@@ -323,7 +331,7 @@
             <ids:simpleValue>thickness</ids:simpleValue>
           </ids:baseName>
         </ids:property>
-        <ids:property dataType="IFCAREAMEASURE" cardinality="required" instructions="Bruttoarea (inkl. öppningar) | Revit: Lägg till parameter 'gross area' på Instance. För Walls: använd Area-parameter. För Floors/Roofs/Ceilings: mappas från Area-parameter automatiskt. | Archicad: Skapa Number-property 'gross area' i BIP, använd expression =AREA_GROSS.">
+        <ids:property dataType="IFCAREAMEASURE" cardinality="optional" instructions="Bruttoarea (inkl. öppningar) | Revit: Lägg till parameter 'gross area' på Instance. För Walls: använd Area-parameter. För Floors/Roofs/Ceilings: mappas från Area-parameter automatiskt. | Archicad: Skapa Number-property 'gross area' i BIP, använd expression =AREA_GROSS.">
           <ids:propertySet>
             <ids:simpleValue>BIP</ids:simpleValue>
           </ids:propertySet>
@@ -339,7 +347,7 @@
             <ids:simpleValue>net area</ids:simpleValue>
           </ids:baseName>
         </ids:property>
-        <ids:property dataType="IFCVOLUMEMEASURE" cardinality="required" instructions="Bruttovolym (inkl. öppningar) | Revit: Lägg till parameter 'gross volume' på Instance. För Walls: mappas från Volume-parameter automatiskt. | Archicad: Skapa Number-property 'gross volume' i BIP.">
+        <ids:property dataType="IFCVOLUMEMEASURE" cardinality="optional" instructions="Bruttovolym (inkl. öppningar) | Revit: Lägg till parameter 'gross volume' på Instance. För Walls: mappas från Volume-parameter automatiskt. | Archicad: Skapa Number-property 'gross volume' i BIP.">
           <ids:propertySet>
             <ids:simpleValue>BIP</ids:simpleValue>
           </ids:propertySet>

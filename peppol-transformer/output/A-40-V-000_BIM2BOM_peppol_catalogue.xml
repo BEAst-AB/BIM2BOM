@@ -34,21 +34,18 @@
     </cac:PartyLegalEntity>
   </cac:ReceiverParty>
   <cac:CatalogueLine>
-    <cbc:ID>1</cbc:ID>
+    <cbc:ID>3pLKJPvHT21uNqX1l9FcUN</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Yttre bärande yttervägg, 350 mm. Materials: Tegel fasad 110 / Luft 30 / Vindskydd 9 / Regelstomme C24 195 + mineralull / Ångbroms / Installationsregel 45 + isolering / Gips 13</cbc:Description>
       <cbc:Name>Basic Wall:YV01 350:1192287</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1192287</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Yttre bärande yttervägg, 350 mm. Materials: Tegel fasad 110 / Luft 30 / Vindskydd 9 / Regelstomme C24 195 + mineralull / Ångbroms / Installationsregel 45 + isolering / Gips 13</cbc:Description>
+      <cbc:Keyword>42.A</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:YV01 350</cbc:Keyword>
+      <cbc:Keyword>external wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>YV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">42.A</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>type name id</cbc:Name>
         <cbc:NameCode listID="SE:BIP">type name id</cbc:NameCode>
@@ -128,21 +125,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>2</cbc:ID>
+    <cbc:ID>3pOreDpW51RRsIbQ7_dW1k</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1193894</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1193894</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>type name id</cbc:Name>
         <cbc:NameCode listID="SE:BIP">type name id</cbc:NameCode>
@@ -222,21 +216,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>3</cbc:ID>
+    <cbc:ID>3pOreDpW51RRsIbQ7_dW$e</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm Bärande. Materials: Betongvägg 200mm</cbc:Description>
       <cbc:Name>Basic Wall:IV02 Innervägg 200 mm Bärande:1194016</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1194016</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm Bärande. Materials: Betongvägg 200mm</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV02 Innervägg 200 mm Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV02</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>is load bearing</cbc:Name>
         <cbc:NameCode listID="SE:BIP">is load bearing</cbc:NameCode>
@@ -316,21 +307,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>4</cbc:ID>
+    <cbc:ID>3pOreDpW51RRsIbQ7_dW_k</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1194086</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1194086</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -410,21 +398,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>5</cbc:ID>
+    <cbc:ID>3pOreDpW51RRsIbQ7_dWzX</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1194153</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1194153</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -504,21 +489,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>6</cbc:ID>
+    <cbc:ID>3pOreDpW51RRsIbQ7_dWxa</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1194284</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1194284</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -598,21 +580,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>7</cbc:ID>
+    <cbc:ID>3pOreDpW51RRsIbQ7_dWwk</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm Bärande. Materials: Betongvägg 200mm</cbc:Description>
       <cbc:Name>Basic Wall:IV02 Innervägg 200 mm Bärande:1194342</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1194342</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm Bärande. Materials: Betongvägg 200mm</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV02 Innervägg 200 mm Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV02</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>is load bearing</cbc:Name>
         <cbc:NameCode listID="SE:BIP">is load bearing</cbc:NameCode>
@@ -692,21 +671,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>8</cbc:ID>
+    <cbc:ID>3pOreDpW51RRsIbQ7_dWvn</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1194425</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1194425</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -786,21 +762,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>9</cbc:ID>
+    <cbc:ID>3pOreDpW51RRsIbQ7_dWu_</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1194486</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1194486</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -880,21 +853,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>10</cbc:ID>
+    <cbc:ID>3pOreDpW51RRsIbQ7_dWsr</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1194621</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1194621</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -974,21 +944,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>11</cbc:ID>
+    <cbc:ID>3pOreDpW51RRsIbQ7_dWrw</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1194674</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1194674</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -1068,21 +1035,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>12</cbc:ID>
+    <cbc:ID>3pOreDpW51RRsIbQ7_dWqe</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1194720</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1194720</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -1162,21 +1126,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>13</cbc:ID>
+    <cbc:ID>3pOreDpW51RRsIbQ7_dWp6</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1194766</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1194766</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -1256,21 +1217,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>14</cbc:ID>
+    <cbc:ID>3pOreDpW51RRsIbQ7_dWoE</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1194822</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1194822</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -1350,21 +1308,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>15</cbc:ID>
+    <cbc:ID>2y1Avj7i9EagxIU4cB0FXI</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Yttre bärande yttervägg, 350 mm. Materials: Tegel fasad 110 / Luft 30 / Vindskydd 9 / Regelstomme C24 195 + mineralull / Ångbroms / Installationsregel 45 + isolering / Gips 13</cbc:Description>
       <cbc:Name>Basic Wall:YV01 350:1198285</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1198285</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Yttre bärande yttervägg, 350 mm. Materials: Tegel fasad 110 / Luft 30 / Vindskydd 9 / Regelstomme C24 195 + mineralull / Ångbroms / Installationsregel 45 + isolering / Gips 13</cbc:Description>
+      <cbc:Keyword>42.A</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:YV01 350</cbc:Keyword>
+      <cbc:Keyword>external wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>YV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">42.A</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -1444,21 +1399,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>16</cbc:ID>
+    <cbc:ID>0GlWxWeKX07uIRw_0_l_ol</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1202458</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1202458</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -1538,21 +1490,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>17</cbc:ID>
+    <cbc:ID>1JGLV8WLP4Phk0cWa_9ITy</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1208775</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1208775</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -1632,21 +1581,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>18</cbc:ID>
+    <cbc:ID>36zRbvK3LDxuWwi9IQZSmW</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Yttre bärande yttervägg, 350 mm. Materials: Tegel fasad 110 / Luft 30 / Vindskydd 9 / Regelstomme C24 195 + mineralull / Ångbroms / Installationsregel 45 + isolering / Gips 13</cbc:Description>
       <cbc:Name>Basic Wall:YV01 350:1230753</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1230753</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Yttre bärande yttervägg, 350 mm. Materials: Tegel fasad 110 / Luft 30 / Vindskydd 9 / Regelstomme C24 195 + mineralull / Ångbroms / Installationsregel 45 + isolering / Gips 13</cbc:Description>
+      <cbc:Keyword>42.A</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:YV01 350</cbc:Keyword>
+      <cbc:Keyword>external wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>YV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">42.A</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -1726,21 +1672,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>19</cbc:ID>
+    <cbc:ID>23s3xwq$v3m8qkELtbhlRz</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1247605</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1247605</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -1820,21 +1763,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>20</cbc:ID>
+    <cbc:ID>0mDgEmh6z909j1IGJwgDQl</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1294794</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1294794</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -1914,21 +1854,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>21</cbc:ID>
+    <cbc:ID>0mDgEmh6z909j1IGJwgDLa</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1294849</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1294849</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -2008,21 +1945,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>22</cbc:ID>
+    <cbc:ID>0mDgEmh6z909j1IGJwgDJT</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Yttre bärande yttervägg, 350 mm. Materials: Tegel fasad 110 / Luft 30 / Vindskydd 9 / Regelstomme C24 195 + mineralull / Ångbroms / Installationsregel 45 + isolering / Gips 13</cbc:Description>
       <cbc:Name>Basic Wall:YV01 350:1295288</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1295288</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Yttre bärande yttervägg, 350 mm. Materials: Tegel fasad 110 / Luft 30 / Vindskydd 9 / Regelstomme C24 195 + mineralull / Ångbroms / Installationsregel 45 + isolering / Gips 13</cbc:Description>
+      <cbc:Keyword>42.A</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:YV01 350</cbc:Keyword>
+      <cbc:Keyword>external wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>YV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">42.A</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -2102,21 +2036,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>23</cbc:ID>
+    <cbc:ID>1IADKg$ZPBHuhT24sMhURv</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1305299</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1305299</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -2196,21 +2127,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>24</cbc:ID>
+    <cbc:ID>1IADKg$ZPBHuhT24sMhURN</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1305341</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1305341</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -2290,14 +2218,12 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>25</cbc:ID>
+    <cbc:ID>0Ysg7vrTj4vwIFDGslIlTU</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
       <cbc:Name>Basic Wall:Kakel:1313305</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1313305</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Keyword>Basic Wall:Kakel</cbc:Keyword>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -2347,14 +2273,12 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>26</cbc:ID>
+    <cbc:ID>0Ysg7vrTj4vwIFDGslIlPs</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
       <cbc:Name>Basic Wall:Kakel:1313585</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1313585</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Keyword>Basic Wall:Kakel</cbc:Keyword>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -2404,14 +2328,12 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>27</cbc:ID>
+    <cbc:ID>0Ysg7vrTj4vwIFDGslIlRx</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
       <cbc:Name>Basic Wall:Kakel:1313724</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1313724</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Keyword>Basic Wall:Kakel</cbc:Keyword>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -2461,14 +2383,12 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>28</cbc:ID>
+    <cbc:ID>0Ysg7vrTj4vwIFDGslIl5x</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
       <cbc:Name>Basic Wall:Kakel:1313852</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1313852</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Keyword>Basic Wall:Kakel</cbc:Keyword>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -2518,14 +2438,12 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>29</cbc:ID>
+    <cbc:ID>0Ysg7vrTj4vwIFDGslIl15</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
       <cbc:Name>Basic Wall:Kakel:1314050</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1314050</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Keyword>Basic Wall:Kakel</cbc:Keyword>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -2575,14 +2493,12 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>30</cbc:ID>
+    <cbc:ID>0Ysg7vrTj4vwIFDGslIl3o</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
       <cbc:Name>Basic Wall:Kakel:1314229</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1314229</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Keyword>Basic Wall:Kakel</cbc:Keyword>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -2632,14 +2548,12 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>31</cbc:ID>
+    <cbc:ID>0Ysg7vrTj4vwIFDGslIlDo</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
       <cbc:Name>Basic Wall:Kakel:1314357</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1314357</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Keyword>Basic Wall:Kakel</cbc:Keyword>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -2689,14 +2603,12 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>32</cbc:ID>
+    <cbc:ID>0Ysg7vrTj4vwIFDGslIlE0</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
       <cbc:Name>Basic Wall:Kakel:1314503</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1314503</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Keyword>Basic Wall:Kakel</cbc:Keyword>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -2746,14 +2658,12 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>33</cbc:ID>
+    <cbc:ID>0Ysg7vrTj4vwIFDGslIl9x</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
       <cbc:Name>Basic Wall:Kakel:1314620</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1314620</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Keyword>Basic Wall:Kakel</cbc:Keyword>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -2803,14 +2713,12 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>34</cbc:ID>
+    <cbc:ID>0Ysg7vrTj4vwIFDGslIlBF</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
       <cbc:Name>Basic Wall:Kakel:1314696</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1314696</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Keyword>Basic Wall:Kakel</cbc:Keyword>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -2860,14 +2768,12 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>35</cbc:ID>
+    <cbc:ID>0Ysg7vrTj4vwIFDGslIlAM</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
       <cbc:Name>Basic Wall:Kakel:1314769</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1314769</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Keyword>Basic Wall:Kakel</cbc:Keyword>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -2917,14 +2823,12 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>36</cbc:ID>
+    <cbc:ID>0Ysg7vrTj4vwIFDGslIkr8</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
       <cbc:Name>Basic Wall:Kakel:1314831</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1314831</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Keyword>Basic Wall:Kakel</cbc:Keyword>
       <cac:AdditionalItemProperty>
         <cbc:Name>height</cbc:Name>
         <cbc:NameCode listID="SE:BIP">height</cbc:NameCode>
@@ -2974,21 +2878,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>37</cbc:ID>
+    <cbc:ID>2nnMrPO955r9KCMxlego6Y</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1318986</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1318986</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -3068,21 +2969,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>38</cbc:ID>
+    <cbc:ID>2nnMrPO955r9KCMxlego23</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1319275</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1319275</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -3162,21 +3060,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>39</cbc:ID>
+    <cbc:ID>2nnMrPO955r9KCMxlegoFO</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1319472</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1319472</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -3256,21 +3151,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>40</cbc:ID>
+    <cbc:ID>2y1Avj7i9EagxIU4cB0FEQ</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1196805</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1196805</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -3350,21 +3242,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>41</cbc:ID>
+    <cbc:ID>2y1Avj7i9EagxIU4cB0FEP</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1196806</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1196806</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -3444,21 +3333,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>42</cbc:ID>
+    <cbc:ID>2y1Avj7i9EagxIU4cB0FEO</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1196807</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1196807</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -3538,21 +3424,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>43</cbc:ID>
+    <cbc:ID>2y1Avj7i9EagxIU4cB0FEN</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1196808</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1196808</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -3632,21 +3515,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>44</cbc:ID>
+    <cbc:ID>2y1Avj7i9EagxIU4cB0FEL</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1196810</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1196810</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -3726,21 +3606,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>45</cbc:ID>
+    <cbc:ID>2y1Avj7i9EagxIU4cB0FEK</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1196811</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1196811</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -3820,21 +3697,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>46</cbc:ID>
+    <cbc:ID>2y1Avj7i9EagxIU4cB0FEJ</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Icke Bärande innervägg, teknikutrymme. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV03 Innervägg 95 mm Icke Bärande teknikutrymme:1196812</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1196812</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Icke Bärande innervägg, teknikutrymme. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV03 Innervägg 95 mm Icke Bärande teknikutrymme</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV03</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -3914,21 +3788,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>47</cbc:ID>
+    <cbc:ID>2y1Avj7i9EagxIU4cB0FEI</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1196813</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1196813</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -4008,21 +3879,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>48</cbc:ID>
+    <cbc:ID>2y1Avj7i9EagxIU4cB0FEG</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1196815</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1196815</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -4102,21 +3970,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>49</cbc:ID>
+    <cbc:ID>2y1Avj7i9EagxIU4cB0FEF</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1196816</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1196816</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -4196,21 +4061,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>50</cbc:ID>
+    <cbc:ID>2y1Avj7i9EagxIU4cB0FEE</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1196817</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1196817</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -4290,21 +4152,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>51</cbc:ID>
+    <cbc:ID>2y1Avj7i9EagxIU4cB0FED</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1196818</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1196818</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -4384,21 +4243,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>52</cbc:ID>
+    <cbc:ID>2y1Avj7i9EagxIU4cB0FEB</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Icke Bärande innervägg, teknikutrymme. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV03 Innervägg 95 mm Icke Bärande teknikutrymme:1196820</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1196820</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Icke Bärande innervägg, teknikutrymme. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV03 Innervägg 95 mm Icke Bärande teknikutrymme</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV03</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -4478,21 +4334,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>53</cbc:ID>
+    <cbc:ID>2y1Avj7i9EagxIU4cB0FEA</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1196821</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1196821</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -4572,21 +4425,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>54</cbc:ID>
+    <cbc:ID>2y1Avj7i9EagxIU4cB0FE9</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1196822</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1196822</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -4666,21 +4516,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>55</cbc:ID>
+    <cbc:ID>2y1Avj7i9EagxIU4cB0FlI</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Yttre bärande yttervägg, 350 mm. Materials: Tegel fasad 110 / Luft 30 / Vindskydd 9 / Regelstomme C24 195 + mineralull / Ångbroms / Installationsregel 45 + isolering / Gips 13</cbc:Description>
       <cbc:Name>Basic Wall:YV01 350:1198925</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1198925</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Yttre bärande yttervägg, 350 mm. Materials: Tegel fasad 110 / Luft 30 / Vindskydd 9 / Regelstomme C24 195 + mineralull / Ångbroms / Installationsregel 45 + isolering / Gips 13</cbc:Description>
+      <cbc:Keyword>42.A</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:YV01 350</cbc:Keyword>
+      <cbc:Keyword>external wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>YV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">42.A</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -4760,21 +4607,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>56</cbc:ID>
+    <cbc:ID>0HtbjhWEj6QR1Cn9kVz1ni</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Yttre bärande yttervägg, 350 mm. Materials: Tegel fasad 110 / Luft 30 / Vindskydd 9 / Regelstomme C24 195 + mineralull / Ångbroms / Installationsregel 45 + isolering / Gips 13</cbc:Description>
       <cbc:Name>Basic Wall:YV01 350:1203392</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1203392</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Yttre bärande yttervägg, 350 mm. Materials: Tegel fasad 110 / Luft 30 / Vindskydd 9 / Regelstomme C24 195 + mineralull / Ångbroms / Installationsregel 45 + isolering / Gips 13</cbc:Description>
+      <cbc:Keyword>42.A</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:YV01 350</cbc:Keyword>
+      <cbc:Keyword>external wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>YV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">42.A</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -4854,21 +4698,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>57</cbc:ID>
+    <cbc:ID>2iOu5HJm9A1eRoqwWIszpX</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1215351</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1215351</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -4948,21 +4789,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>58</cbc:ID>
+    <cbc:ID>3wAFA6fun7QxnYz2jBeocn</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Yttre bärande yttervägg, 350 mm. Materials: Tegel fasad 110 / Luft 30 / Vindskydd 9 / Regelstomme C24 195 + mineralull / Ångbroms / Installationsregel 45 + isolering / Gips 13</cbc:Description>
       <cbc:Name>Basic Wall:YV01 350:1228192</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1228192</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Yttre bärande yttervägg, 350 mm. Materials: Tegel fasad 110 / Luft 30 / Vindskydd 9 / Regelstomme C24 195 + mineralull / Ångbroms / Installationsregel 45 + isolering / Gips 13</cbc:Description>
+      <cbc:Keyword>42.A</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:YV01 350</cbc:Keyword>
+      <cbc:Keyword>external wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>YV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">42.A</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -5042,21 +4880,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>59</cbc:ID>
+    <cbc:ID>0HuQQaK9z1le2_LZGce0h$</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1293214</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1293214</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -5136,21 +4971,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>60</cbc:ID>
+    <cbc:ID>0mDgEmh6z909j1IGJwgD4T</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Yttre bärande yttervägg, 350 mm. Materials: Tegel fasad 110 / Luft 30 / Vindskydd 9 / Regelstomme C24 195 + mineralull / Ångbroms / Installationsregel 45 + isolering / Gips 13</cbc:Description>
       <cbc:Name>Basic Wall:YV01 350:1295992</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1295992</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Yttre bärande yttervägg, 350 mm. Materials: Tegel fasad 110 / Luft 30 / Vindskydd 9 / Regelstomme C24 195 + mineralull / Ångbroms / Installationsregel 45 + isolering / Gips 13</cbc:Description>
+      <cbc:Keyword>42.A</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:YV01 350</cbc:Keyword>
+      <cbc:Keyword>external wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>YV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">42.A</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -5230,14 +5062,12 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>61</cbc:ID>
+    <cbc:ID>0Ysg7vrTj4vwIFDGslIkzj</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
       <cbc:Name>Basic Wall:Kakel:1315370</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1315370</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Keyword>Basic Wall:Kakel</cbc:Keyword>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -5287,14 +5117,12 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>62</cbc:ID>
+    <cbc:ID>0Ysg7vrTj4vwIFDGslIkyV</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
       <cbc:Name>Basic Wall:Kakel:1315416</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1315416</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Keyword>Basic Wall:Kakel</cbc:Keyword>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -5344,14 +5172,12 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>63</cbc:ID>
+    <cbc:ID>0Ysg7vrTj4vwIFDGslIk$g</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
       <cbc:Name>Basic Wall:Kakel:1315501</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1315501</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Keyword>Basic Wall:Kakel</cbc:Keyword>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -5401,14 +5227,12 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>64</cbc:ID>
+    <cbc:ID>0Ysg7vrTj4vwIFDGslIk_k</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
       <cbc:Name>Basic Wall:Kakel:1315561</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1315561</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Keyword>Basic Wall:Kakel</cbc:Keyword>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -5458,14 +5282,12 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>65</cbc:ID>
+    <cbc:ID>0Ysg7vrTj4vwIFDGslIkx0</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
       <cbc:Name>Basic Wall:Kakel:1315719</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1315719</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Keyword>Basic Wall:Kakel</cbc:Keyword>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -5515,14 +5337,12 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>66</cbc:ID>
+    <cbc:ID>0Ysg7vrTj4vwIFDGslIkwL</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
       <cbc:Name>Basic Wall:Kakel:1315794</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1315794</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Keyword>Basic Wall:Kakel</cbc:Keyword>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -5572,14 +5392,12 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>67</cbc:ID>
+    <cbc:ID>0Ysg7vrTj4vwIFDGslIkwv</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
       <cbc:Name>Basic Wall:Kakel:1315838</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1315838</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Keyword>Basic Wall:Kakel</cbc:Keyword>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -5629,14 +5447,12 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>68</cbc:ID>
+    <cbc:ID>0Ysg7vrTj4vwIFDGslIkbp</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
       <cbc:Name>Basic Wall:Kakel:1315892</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1315892</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Keyword>Basic Wall:Kakel</cbc:Keyword>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -5686,14 +5502,12 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>69</cbc:ID>
+    <cbc:ID>0Ysg7vrTj4vwIFDGslIkam</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
       <cbc:Name>Basic Wall:Kakel:1315959</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1315959</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Keyword>Basic Wall:Kakel</cbc:Keyword>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -5743,14 +5557,12 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>70</cbc:ID>
+    <cbc:ID>0Ysg7vrTj4vwIFDGslIkda</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
       <cbc:Name>Basic Wall:Kakel:1316003</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1316003</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Keyword>Basic Wall:Kakel</cbc:Keyword>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -5800,14 +5612,12 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>71</cbc:ID>
+    <cbc:ID>0Ysg7vrTj4vwIFDGslIkc8</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
       <cbc:Name>Basic Wall:Kakel:1316047</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1316047</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Keyword>Basic Wall:Kakel</cbc:Keyword>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -5857,14 +5667,12 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>72</cbc:ID>
+    <cbc:ID>0Ysg7vrTj4vwIFDGslIkcn</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
       <cbc:Name>Basic Wall:Kakel:1316086</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1316086</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Keyword>Basic Wall:Kakel</cbc:Keyword>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -5914,21 +5722,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>73</cbc:ID>
+    <cbc:ID>0MU1TMDpLAEec5cnJBDnSG</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV01 Innervägg 95 mm Icke Bärande:1375746</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1375746</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Innervägg 200 mm. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV01 Innervägg 95 mm Icke Bärande</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV01</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
@@ -6008,21 +5813,18 @@
     </cac:Item>
   </cac:CatalogueLine>
   <cac:CatalogueLine>
-    <cbc:ID>74</cbc:ID>
+    <cbc:ID>0MU1TMDpLAEec5cnJBDnVl</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
     <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
     <cac:Item>
-      <cbc:Description>Icke Bärande innervägg, teknikutrymme. Materials: Gipsvägg</cbc:Description>
       <cbc:Name>Basic Wall:IV03 Innervägg 95 mm Icke Bärande teknikutrymme:1375997</cbc:Name>
-      <cac:SellersItemIdentification>
-        <cbc:ID>1375997</cbc:ID>
-      </cac:SellersItemIdentification>
+      <cbc:Description>Icke Bärande innervägg, teknikutrymme. Materials: Gipsvägg</cbc:Description>
+      <cbc:Keyword>43.CB</cbc:Keyword>
+      <cbc:Keyword>Basic Wall:IV03 Innervägg 95 mm Icke Bärande teknikutrymme</cbc:Keyword>
+      <cbc:Keyword>internal wall</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
         <cbc:ID>IV03</cbc:ID>
       </cac:ManufacturersItemIdentification>
-      <cac:CommodityClassification>
-        <cbc:ItemClassificationCode listID="ZZZ" listVersionID="BSAB96">43.CB</cbc:ItemClassificationCode>
-      </cac:CommodityClassification>
       <cac:AdditionalItemProperty>
         <cbc:Name>thickness</cbc:Name>
         <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>

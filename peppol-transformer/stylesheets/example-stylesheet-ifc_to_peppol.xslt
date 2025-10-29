@@ -146,9 +146,9 @@
     
     <xsl:template match="IfcWall">
         <cac:CatalogueLine>
-            <!-- Line ID: sequential position -->
+            <!-- Line ID: instance GlobalID -->
             <cbc:ID>
-                <xsl:value-of select="position()"/>
+                <xsl:value-of select="@id"/>
             </cbc:ID>
             
             <!-- Action Code -->
