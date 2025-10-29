@@ -27,11 +27,15 @@ Projektet levererar verktyg och standarder för att:
 
 Projektet innehåller flera verktyg som arbetar tillsammans:
 
-1. **BIM2BOM.ids** - Standard för vilken information som ska finnas i BIM-modeller
+1. **BIM2BOM.ids** - Standard för vilken information som ska finnas i BIM-modeller, inkluderar MMI-krav (Model Maturity Index)
 2. **BEAst-ifctester** - Verktyg för att validera IFC-filer mot kraven
 3. **BEAst-BIP-type-tester** - Verktyg för att testa typbeteckningar
-4. **ifcconvert** - Konverterar IFC-filer till XML-format
-5. **peppol-transformer** - Omvandlar XML till Peppol-kataloger med validering
+4. **ifcconvert** - Konverterar IFC-filer till XML-format med MMI-filtrering (≥375)
+5. **peppol-transformer** - Omvandlar XML till Peppol-kataloger med MMI-validering och kvalitetskontroll
+
+### MMI-filtrering (Model Maturity Index)
+
+För att säkerställa hög datakvalitet använder BIM2BOM MMI-filtrering på nivå 375 eller högre. Detta innebär att endast modellelement med tillräcklig informationsmognad inkluderas i materiallistor och Peppol-kataloger. MMI-skalan följer standardiserade nivåer från 100 (grundläggande information) till 500 (as-built dokumentation).
 
 ## Resultat
 

@@ -16,7 +16,7 @@ IfcConvert.exe [options] input.ifc output.ext
 
 ## Quick Start
 
-### Convert IFC to XML
+### Convert IFC to XML (Basic)
 ```batch
 # Windows
 IfcConvert.exe --threads 7 input.ifc output.xml
@@ -24,6 +24,17 @@ IfcConvert.exe --threads 7 input.ifc output.xml
 # Linux/macOS
 ./IfcConvert --threads 7 input.ifc output.xml
 ```
+
+### Convert IFC to XML med MMI-filtrering (BIM2BOM)
+```batch
+# Windows - endast element med BIP.MMI >= 375
+IfcConvert.exe --threads 7 --include="*[BIP.MMI>=375]" input.ifc output.xml
+
+# Linux/macOS - endast element med BIP.MMI >= 375
+./IfcConvert --threads 7 --include='*[BIP.MMI>=375]' input.ifc output.xml
+```
+
+**MMI-filtrering:** Använd `--include` parameter för att filtrera modellelement baserat på Model Maturity Index (MMI). Tröskelvärdet 375 säkerställer att endast element med tillräcklig detaljeringsgrad inkluderas i materiallistor och upphandlingsdokument.
 
 ### Convert IFC to OBJ
 ```batch
@@ -37,6 +48,8 @@ IfcConvert.exe input.ifc output.obj
 ## Common Options
 
 - `--threads N` - Use N threads for processing (default: 4)
+- `--include SELECTOR` - Filter elements using selector syntax (t.ex. `*[BIP.MMI>=375]`)
+- `--exclude SELECTOR` - Exclude elements using selector syntax
 - `--help` - Show help message
 - `--validate` - Validate geometrical output
 - `--use-element-names` - Use element names instead of IDs

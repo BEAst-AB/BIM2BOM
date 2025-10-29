@@ -17,9 +17,8 @@ Default properties include:
 
 Configuration:
 The script automatically loads property definitions from:
-1. ./bip_type_name_id_properties.csv (local CSV - default)
-2. ../../ifc-gherkin-rules/features/resources/IFC4/bip_type_name_id_properties.csv (fallback)
-3. Hardcoded fallback if CSV not found
+1. ../features/resources/bip_type_name_id_properties.csv (centralized CSV - default)
+2. Hardcoded fallback if CSV not found
 
 Usage:
     python validate_bip_type_name_id.py <path_to_ifc_file>
@@ -46,13 +45,9 @@ def load_validation_properties_from_csv(csv_path: str = None) -> List[str]:
         List of property names to validate
     """
     if csv_path is None:
-        # Default to local CSV in same directory as script
+        # Default to centralized CSV in features/resources
         script_dir = Path(__file__).parent
-        csv_path = script_dir / "bip_type_name_id_properties.csv"
-        
-        # Fallback to ifc-gherkin-rules location if local doesn't exist
-        if not csv_path.exists():
-            csv_path = script_dir.parent.parent / "ifc-gherkin-rules" / "features" / "resources" / "IFC4" / "bip_type_name_id_properties.csv"
+        csv_path = script_dir.parent / "features" / "resources" / "bip_type_name_id_properties.csv"
     
     properties = []
     try:

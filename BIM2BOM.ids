@@ -72,6 +72,19 @@
             <ids:simpleValue>LotNumberID</ids:simpleValue>
           </ids:baseName>
         </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required" instructions="MMI-nivå (Modell Mognads Index) | Revit: Lägg till parameter 'MMI' på Type eller Instance. Fyll i tresiffrig MMI-kod (t.ex. '100', '250', '375'). | Archicad: Skapa Text-property 'MMI' i BIP, fyll i tresiffrig MMI-kod (t.ex. '100', '200', '300').">
+          <ids:propertySet>
+            <ids:simpleValue>BIP</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>MMI</ids:simpleValue>
+          </ids:baseName>
+          <ids:value>
+            <xs:restriction base="xs:string">
+              <xs:pattern value="\d{3}" />
+            </xs:restriction>
+          </ids:value>
+        </ids:property>
       </ids:requirements>
     </ids:specification>
     <ids:specification ifcVersion="IFC4 IFC4X3_ADD2" name="Våningsbenämningar" description="Alla våningar i modellen ska ha grundläggande attribut på varje våning." instructions="Ange Name i tresiffrig kod, Elevation samt Description. ">

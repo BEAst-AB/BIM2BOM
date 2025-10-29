@@ -5,12 +5,21 @@
     This stylesheet transforms IFC XML files (exported from Revit or other BIM tools)
     into Peppol BIS Catalogue format with BIP (BIM In Production) property mapping.
     
-    Version: 1.0
-    Date: 2025-10-28
+    Version: 2.1
+    Date: 2025-10-29
     XSLT Version: 2.0
     
-    Input: IFC XML file with IfcWall elements and BIP property sets
+    Input: IFC XML file with IFC building elements (IfcWall, IfcDoor, IfcWindow, IfcSlab, 
+           IfcBeam, IfcColumn, etc.) and BIP property sets
     Output: Peppol Catalogue (UBL 2.1) with cac:AdditionalItemProperty for BIP properties
+    
+    Change Log:
+    - v2.1 (2025-10-29): Added MMI filter - only processes IFC elements with MMI >= 375
+                         in BIP property set (Model Maturity Index filtering)
+    - v2.0 (2025-10-29): Made stylesheet generic to process all IFC element types,
+                         not just walls. Renamed parameter from wallElement to ifcElement
+                         for clarity.
+    - v1.0 (2025-10-28): Initial version for IfcWall elements only
 -->
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -134,17 +143,35 @@
                 </cac:PartyLegalEntity>
             </cac:ReceiverParty>
             
-            <!-- Process all IfcWall elements -->
-            <xsl:apply-templates select="//IfcWall"/>
+            <!-- Process all IFC building elements with BIP properties and MMI >= 375 -->
+            <!-- Matches: IfcWall, IfcDoor, IfcWindow, IfcSlab, IfcBeam, IfcColumn, etc. -->
+            <!-- Only elements with BIP property set containing MMI property value >= 375 -->
+            <xsl:apply-templates select="//*[starts-with(name(), 'Ifc') and IfcPropertySet]"/>
             
         </Catalogue>
     </xsl:template>
     
     <!-- ========================================
-         Template: IfcWall to CatalogueLine
+         Template: IFC Element to CatalogueLine
+         Matches any IFC element (Wall, Door, Window, Slab, Beam, Column, etc.)
+         with MMI >= 375 in BIP property set
          ======================================== -->
     
-    <xsl:template match="IfcWall">
+    <xsl:template match="*[starts-with(name(), 'Ifc')]">
+        <!-- Get MMI value from BIP property set -->
+        <xsl:variable name="currentElement" select="."/>
+        <xsl:variable name="mmiValue">
+            <xsl:for-each select="$currentElement/IfcPropertySet">
+                <xsl:variable name="propSetId" select="substring-after(@xlink:href, '#')"/>
+                <xsl:variable name="propSet" select="key('propertySetById', $propSetId)"/>
+                <xsl:if test="$propSet[@Name='BIP']">
+                    <xsl:value-of select="$propSet/IfcPropertySingleValue[@Name='MMI']/@NominalValue"/>
+                </xsl:if>
+            </xsl:for-each>
+        </xsl:variable>
+        
+        <!-- Only process if MMI >= 375 -->
+        <xsl:if test="$mmiValue != '' and number($mmiValue) &gt;= 375">
         <cac:CatalogueLine>
             <!-- Line ID: instance GlobalID -->
             <cbc:ID>
@@ -161,22 +188,24 @@
             <cac:Item>
                 <!-- Process in correct UBL 2.1 order: Description BEFORE Name -->
                 <xsl:call-template name="processItemContent">
-                    <xsl:with-param name="wallElement" select="."/>
+                    <xsl:with-param name="ifcElement" select="."/>
                 </xsl:call-template>
                 
             </cac:Item>
         </cac:CatalogueLine>
+        </xsl:if><!-- End MMI >= 375 filter -->
     </xsl:template>
     
     <!-- ========================================
          Template: Process Item Content in Correct Order
+         Works with any IFC element type
          ======================================== -->
     
     <xsl:template name="processItemContent">
-        <xsl:param name="wallElement"/>
+        <xsl:param name="ifcElement"/><!-- Generic IFC element (wall, door, window, etc.) -->
         
         <!-- Find BIP property set -->
-        <xsl:for-each select="$wallElement/IfcPropertySet">
+        <xsl:for-each select="$ifcElement/IfcPropertySet">
             <xsl:variable name="propSetId" select="substring-after(@xlink:href, '#')"/>
             <xsl:variable name="propSet" select="key('propertySetById', $propSetId)"/>
             
@@ -190,7 +219,7 @@
                 
                 <!-- 1. Name (REQUIRED) -->
                 <cbc:Name>
-                    <xsl:value-of select="$wallElement/@Name"/>
+                    <xsl:value-of select="$ifcElement/@Name"/>
                 </cbc:Name>
                 
                 <!-- 2. Description -->
@@ -204,7 +233,7 @@
                     </cbc:Description>
                 </xsl:if>
                 
-                <!-- 3. BrandName (from BIP.Manufacturer if available, otherwise from type name id) -->
+                <!-- 3. BrandName (from BIP.Manufacturer if available) -->
                 <xsl:choose>
                     <xsl:when test="$manufacturer">
                         <cbc:BrandName>
@@ -220,11 +249,11 @@
                     </cbc:Keyword>
                 </xsl:if>
                 
-                <!-- Add keyword from wall type -->
-                <xsl:variable name="wallType" select="$wallElement/@ObjectType"/>
-                <xsl:if test="$wallType">
+                <!-- Add keyword from element type -->
+                <xsl:variable name="elementType" select="$ifcElement/@ObjectType"/>
+                <xsl:if test="$elementType">
                     <cbc:Keyword>
-                        <xsl:value-of select="$wallType"/>
+                        <xsl:value-of select="$elementType"/>
                     </cbc:Keyword>
                 </xsl:if>
                 
@@ -233,13 +262,13 @@
                 <xsl:if test="$isExternal">
                     <cbc:Keyword>
                         <xsl:choose>
-                            <xsl:when test="translate($isExternal, 'TRUE', 'true') = 'true'">external wall</xsl:when>
-                            <xsl:otherwise>internal wall</xsl:otherwise>
+                            <xsl:when test="translate($isExternal, 'TRUE', 'true') = 'true'">external</xsl:when>
+                            <xsl:otherwise>internal</xsl:otherwise>
                         </xsl:choose>
                     </cbc:Keyword>
                 </xsl:if>
                 
-                <!-- 5. ManufacturersItemIdentification -->
+                <!-- 5. ManufacturersItemIdentification (from BIP type name id) -->
                 <xsl:if test="$typeId">
                     <cac:ManufacturersItemIdentification>
                         <cbc:ID>

@@ -45,3 +45,9 @@ PropertySet:		BIP				I					IfcElement, IfcElementType
 	floor							Label				Reference Level
 	renovation component status		Label				Phase Created
 	LotNumberID						Label				LotNumberID
+
+#Används för Manufacturer Party
+	Manufacturer					Label				Manufacturer
+
+#Används för att filtrera på objekt som är redo för upphandling
+	MMI								Label				MMI

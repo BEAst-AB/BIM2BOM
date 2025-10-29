@@ -22,11 +22,14 @@ Modellerna har vidareutvecklats med ytterligare egenskaper från en shared param
 
 Följande egenskaper har lagts till för att förbättra modellen för BIM2BOM-testning:
 
+- **BIP.MMI** - Model Maturity Index (tresiffrigt värde, t.ex. 375) för kvalitetskontroll
 - **Pset_WallCommon.IsExternal** - Boolesk egenskap som indikerar om en vägg är extern
 - **Pset_WallCommon.LoadBearing** - Boolesk egenskap som indikerar om en vägg är bärande
 - **Qto_WallBaseQuantities.GrossWeight** - Vikt egenskap som innehåller bruttovikten för väggelement
 
 Dessa egenskaper är definierade i PropertySet-definitionsfilen och mappade till lämpliga Revit-parametrar för korrekt IFC-export.
+
+**Viktigt:** MMI-egenskapen är obligatorisk för BIM2BOM-arbetsflödet. Endast element med MMI ≥ 375 inkluderas i materiallistor och Peppol-kataloger för att säkerställa tillräcklig detaljeringsgrad för upphandling.
 
 ## Resurser
 

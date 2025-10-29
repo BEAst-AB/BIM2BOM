@@ -6,12 +6,13 @@ Transformera IFC (Industry Foundation Classes) XML-filer till Peppol BIS Katalog
 
 Detta verktyg konverterar BIM-modelldata från IFC-format till standardiserade Peppol e-upphandlingskataloger, vilket möjliggör sömlös integration mellan BIM-arbetsflöden inom byggsektorn och upphandlingssystem.
 
-**Version:** 1.2  
+**Version:** 2.1  
 **Datum:** 2025-10-29  
 **Status:** Produktionsklar ✓
 
 ## ✨ Funktioner
 
+- **MMI-filtrering** - Endast modellelement med MMI ≥ 375 inkluderas för att säkerställa datakvalitet
 - **Flera Stilmallar** - Använd olika transformationsmallar för olika scenarion
 - **GlobalID-spårning** - Bibehåller IFC-instansers GlobalID för full spårbarhet
 - **BIP Egenskapsmappning** - Komplett mappning av BIP-egenskaper till Peppol-format
@@ -111,12 +112,33 @@ Transformationen skapar Peppol BIS Katalogformat med följande struktur för var
 </cac:CatalogueLine>
 ```
 
+## 🎯 MMI-filtrering (Model Maturity Index)
+
+Transformationen inkluderar automatisk kvalitetskontroll genom MMI-filtrering:
+
+- **Tröskelvärde:** MMI ≥ 375 (Detaljerade lösningar som grund för anbud/order/prefabricering)
+- **Implementering:** XSLT-stilmallen kontrollerar BIP.MMI-egenskapen för varje IFC-element
+- **Resultat:** Endast element med tillräcklig informationsmognad inkluderas i Peppol-katalogen
+
+### MMI-nivåer (enligt svensk standard)
+
+| MMI | Nivå | Beskrivning |
+|-----|------|-------------|
+| 100-200 | Koncept | Grundläggande information och etablerat koncept |
+| 225-300 | Principiell lösning | Interdisciplinärt kontrollerade principiella lösningar |
+| 325-375 | **Detaljerade lösningar** | **Grund för anbud/order (tröskelvärde)** |
+| 400-475 | Arbetsunderlag | Utfört och kontrollerat arbetsunderlag |
+| 500 | As-built | Slutlig dokumentation |
+
+Element under MMI 375 anses inte ha tillräcklig detaljeringsgrad för upphandling och materiallistor.
+
 ## 🔍 BIP Egenskapsmappning
 
 Alla BIP (BIM In Production)-egenskaper mappas till `cac:AdditionalItemProperty`-element:
 
 | BIP-egenskap | Exempelvärde | Enhetskod | Anteckningar |
 |--------------|--------------|-----------|--------------|
+| MMI | 375 | - | **Model Maturity Index - filter ≥375** |
 | type name id | YV01 | - | Används för ManufacturersItemIdentification, fallback för BrandName |
 | Manufacturer | Tillverkare AB | - | Används för BrandName och ManufacturerParty (om finns) |
 | TypeDescription | Yttre bärande yttervägg, 350 mm | - | Används i Description |
@@ -230,6 +252,12 @@ python -c "from lxml import etree; doc = etree.parse('output/test.xml'); print(f
 ```
 
 ## 🔄 Versionshistorik
+
+### Version 2.1 (2025-10-29)
+- ✨ MMI-filtrering implementerad (≥375) för kvalitetskontroll
+- ✨ XSLT-stilmall kontrollerar BIP.MMI-egenskap automatiskt
+- 📝 Dokumentation uppdaterad med MMI-information
+- 🔧 Bugfix: XSLT variabelevaluering förbättrad för XSLT 1.0-kompatibilitet
 
 ### Version 1.2 (2025-10-29)
 - ✨ ManufacturerParty inkluderas endast om BIP.Manufacturer finns

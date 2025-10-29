@@ -19,7 +19,6 @@ All methods use centralized CSV configuration for maximum flexibility.
 # 1. Navigate and setup
 cd "BEAst-BIP-type-tester"
 pip install -r scripts/requirements.txt
-copy "features\resources\bip_type_name_id_properties.csv" "scripts\"
 
 # 2. Run validation (choose one)
 python -m behave --define input="..\models\A-40-V-000_BIM2BOM.ifc" --no-capture -v
@@ -35,9 +34,6 @@ cd "BEAst-BIP-type-tester"
 
 # Install dependencies
 pip install -r scripts/requirements.txt
-
-# Copy CSV configuration to scripts directory (for better compatibility)
-copy "features\resources\bip_type_name_id_properties.csv" "scripts\"
 ```
 
 ### Run Validation

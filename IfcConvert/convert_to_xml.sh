@@ -28,13 +28,14 @@ mkdir -p "$SCRIPT_DIR/output"
 # Make IfcConvert executable
 chmod +x "$IFCCONVERT_PATH"
 
-# Run IfcConvert with 7 threads
+# Run IfcConvert with 7 threads and filter on BIP.MMI >= 375
 echo "Converting IFC to XML..."
 echo "Input:  $INPUT_FILE"
 echo "Output: $OUTPUT_FILE"
+echo "Filter: Only elements with BIP.MMI >= 375"
 echo
 
-"$IFCCONVERT_PATH" --threads 7 "$INPUT_FILE" "$OUTPUT_FILE"
+"$IFCCONVERT_PATH" --threads 7 --include='*[BIP.MMI>=375]' "$INPUT_FILE" "$OUTPUT_FILE"
 
 if [ $? -eq 0 ]; then
     echo

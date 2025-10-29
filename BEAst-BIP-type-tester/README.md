@@ -19,7 +19,6 @@ Alla metoder använder centraliserad CSV-konfiguration för maximal flexibilitet
 # 1. Navigera och konfigurera
 cd "BEAst-BIP-type-tester"
 pip install -r scripts/requirements.txt
-copy "features\resources\bip_type_name_id_properties.csv" "scripts\"
 
 # 2. Kör validering (välj en)
 python -m behave --define input="..\models\A-40-V-000_BIM2BOM.ifc" --no-capture -v
@@ -35,9 +34,6 @@ cd "BEAst-BIP-type-tester"
 
 # Installera beroenden
 pip install -r scripts/requirements.txt
-
-# Kopiera CSV-konfiguration till scripts-mappen (för bättre kompatibilitet)
-copy "features\resources\bip_type_name_id_properties.csv" "scripts\"
 ```
 
 ### Kör validering
