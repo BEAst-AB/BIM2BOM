@@ -1,5 +1,7 @@
 <img width="1536" height="468" alt="427398987-fd756bf5-f736-415e-b223-2579367a7369" src="https://github.com/user-attachments/assets/a1c36490-7ba9-4f30-abd3-26fe6fbb9ad0" />
+
 # BIM2BOM - Från digital modell till materiallista
+
 ## Vad är BIM2BOM?
 
 BIM2BOM är ett projekt som skapar en obruten digital kedja från byggnadsmodeller (BIM) till materiallistor (BOM) för att effektivisera byggprocessen. Projektet utvecklar verktyg och standarder som gör det möjligt att automatiskt hämta materialdata direkt från digitala byggnadsmodeller och omvandla denna information till standardiserade format som kan användas i anbud, inköp och produktion.
