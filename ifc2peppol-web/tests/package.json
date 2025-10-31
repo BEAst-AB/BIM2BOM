@@ -1,0 +1,19 @@
+{
+  "name": "ifc2peppol-web-tests",
+  "version": "1.0.0",
+  "description": "HTTP and E2E tests for IFC2Peppol web application",
+  "scripts": {
+    "test": "playwright test",
+    "test:http": "playwright test tests/http",
+    "test:e2e": "playwright test tests/e2e",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui",
+    "test:server": "http-server . -p 8080 -c-1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "http-server": "^14.1.1"
+  }
+}
+

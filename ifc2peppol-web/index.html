@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IFC to Peppol Transformer</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/table-enhancements.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>IFC to Peppol Catalogue Transformer</h1>
+            <p class="subtitle">Drag and drop your IFC file to convert it to Peppol Catalogue XML format</p>
+        </header>
+
+        <main>
+            <!-- Status indicator -->
+            <div id="status-indicator" class="status-indicator" data-status="idle">
+                <div class="status-icon"></div>
+                <span class="status-text">Ready</span>
+            </div>
+
+            <!-- Drag and drop zone -->
+            <div id="drop-zone" class="drop-zone" data-state="idle">
+                <div id="loading-overlay" class="loading-overlay" hidden>
+                    <div class="spinner"></div>
+                    <p class="loading-text">Processing...</p>
+                </div>
+                <div class="drop-zone-content">
+                    <svg class="drop-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <h2>Drop your IFC file here</h2>
+                    <p>or</p>
+                    <button id="file-picker-btn" class="btn btn-primary">Choose File</button>
+                    <input type="file" id="file-input" accept=".ifc" hidden>
+                    <p class="file-info">Supported format: .ifc</p>
+                </div>
+            </div>
+
+            <!-- File info display -->
+            <div id="file-info" class="file-info-panel" hidden>
+                <h3>File Information</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>File Name:</label>
+                        <span id="file-name">-</span>
+                    </div>
+                    <div class="info-item">
+                        <label>File Size:</label>
+                        <span id="file-size">-</span>
+                    </div>
+                    <div class="info-item">
+                        <label>IFC Schema:</label>
+                        <span id="ifc-schema">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Validation results -->
+            <div id="validation-results-container" class="validation-results-container" hidden>
+                <div class="validation-content">
+                    <h3>Validation Results</h3>
+                    <p>Your IFC file has been validated. Review the results below.</p>
+                    
+                    <!-- Validation Tabs -->
+                    <div class="validation-tabs">
+                        <button class="validation-tab active" data-tab="ids" id="tab-ids">
+                            <span class="tab-number">1</span>
+                            <span class="tab-label">IDS Validation</span>
+                        </button>
+                        <button class="validation-tab" data-tab="bip" id="tab-bip">
+                            <span class="tab-number">2</span>
+                            <span class="tab-label">BIP Type Validation</span>
+                        </button>
+                    </div>
+                    
+                    <!-- IDS Validation Panel -->
+                    <div id="validation-panel-ids" class="validation-panel active">
+                        <div class="validation-panel-header">
+                            <h4>IDS Validation Results</h4>
+                            <p>Validated against BIM2BOM requirements</p>
+                        </div>
+                        <div class="validation-report">
+                            <div id="validation-html"></div>
+                        </div>
+                        <div class="validation-actions">
+                            <button id="validation-proceed-btn" class="btn btn-success">Continue to BIP Validation</button>
+                            <button id="validation-cancel-btn" class="btn btn-secondary">Cancel</button>
+                        </div>
+                    </div>
+                    
+                    <!-- BIP Validation Panel -->
+                    <div id="validation-panel-bip" class="validation-panel">
+                        <div class="validation-panel-header">
+                            <h4>BIP Type Name ID Validation Results</h4>
+                            <p>Validated for BIP type name ID consistency and uniqueness</p>
+                        </div>
+                        <div class="validation-report">
+                            <div id="bip-validation-html"></div>
+                        </div>
+                        <div class="validation-actions">
+                            <button id="bip-validation-proceed-btn" class="btn btn-success">Proceed with Transformation</button>
+                            <button id="bip-validation-cancel-btn" class="btn btn-secondary">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Statistics panel -->
+            <div id="statistics-panel" class="statistics-panel" hidden>
+                <h3>Transformation Statistics</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <label>Elements Processed:</label>
+                        <span id="stat-processed">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <label>Elements Filtered (MMI ≥ 375):</label>
+                        <span id="stat-filtered">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <label>Catalogue Lines Created:</label>
+                        <span id="stat-lines">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <label>Processing Time:</label>
+                        <span id="stat-time">0s</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Download section -->
+            <div id="download-section" class="download-section" hidden>
+                <div class="download-content">
+                    <h3>Transformation Complete!</h3>
+                    <p>Your Peppol Catalogue XML file is ready to download.</p>
+                    <button id="download-btn" class="btn btn-success">Download XML</button>
+                    <div class="download-info">
+                        <span id="download-size">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- XML Explorer section -->
+            <div id="xml-explorer" class="xml-explorer" hidden>
+                <h3>XML Explorer</h3>
+                <div id="lot-tabs" class="lot-tabs"></div>
+                <div class="table-controls">
+                    <input type="text" id="table-search" class="table-search" placeholder="Search catalogue lines...">
+                </div>
+                <div id="catalogue-table-container" class="table-container">
+                    <table id="catalogue-table" class="catalogue-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Keywords</th>
+                                <th>Manufacturer</th>
+                                <th>Lot Number</th>
+                            </tr>
+                        </thead>
+                        <tbody id="catalogue-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Download section -->
+            <div id="download-section" class="download-section" hidden>
+                <div class="download-content">
+                    <h3>Transformation Complete!</h3>
+                    <p>Your Peppol Catalogue XML file is ready to download.</p>
+                    <button id="download-btn" class="btn btn-success">Download XML</button>
+                    <div class="download-info">
+                        <span id="download-size">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error display -->
+            <div id="error-display" class="error-display" hidden>
+                <div class="error-content">
+                    <h3>Error</h3>
+                    <p id="error-message"></p>
+                    <details id="error-details">
+                        <summary>Technical Details</summary>
+                        <pre id="error-stack"></pre>
+                    </details>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Powered by Pyodide and IfcOpenShell</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="src/main.js?v=2"></script>
+</body>
+</html>
+

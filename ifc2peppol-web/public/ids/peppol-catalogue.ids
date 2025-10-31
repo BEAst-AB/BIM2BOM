@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ids xmlns="http://standards.buildingsmart.org/IDS" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://standards.buildingsmart.org/IDS http://standards.buildingsmart.org/IDS/0.9.6/ids.xsd" version="0.9.6">
+  <info>
+    <title>Peppol Catalogue Requirements</title>
+    <copyright>BuildingSMART International</copyright>
+    <version>1.0</version>
+    <author>
+      <name>IFC2Peppol Transformer</name>
+    </author>
+    <date>2025-01-27</date>
+    <description>Validates IFC files for Peppol Catalogue transformation requirements</description>
+  </info>
+  <specifications>
+    <specification name="Peppol Catalogue Requirements" ifcVersion="IFC2X3 IFC4 IFC4X3" minOccurs="0" maxOccurs="unbounded">
+      <applicability>
+        <entity>
+          <name>IfcProduct</name>
+        </entity>
+      </applicability>
+      <requirements>
+        <property>
+          <propertySet>Pset_BIM2BOM</propertySet>
+          <baseName>MMI</baseName>
+          <cardinality>required</cardinality>
+        </property>
+        <property>
+          <propertySet>Pset_BIM2BOM</propertySet>
+          <baseName>GlobalId</baseName>
+          <cardinality>required</cardinality>
+        </property>
+        <property>
+          <propertySet>Pset_BIM2BOM</propertySet>
+          <baseName>Name</baseName>
+          <cardinality>required</cardinality>
+        </property>
+      </requirements>
+    </specification>
+  </specifications>
+</ids>
+
