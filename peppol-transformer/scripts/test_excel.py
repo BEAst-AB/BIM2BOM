@@ -16,3 +16,4 @@ for i in range(1, min(21, cat_sheet.max_column + 1)):
         print(f'{cat_sheet.cell(1, i).value}: {value}')
 
 
+
