@@ -90,6 +90,10 @@ class WorkflowTester:
         self.transform_script = self.project_root / "peppol-transformer" / "scripts" / "transform_ifc_to_peppol.py"
         self.verify_script = self.project_root / "peppol-transformer" / "scripts" / "verify_catalogue.py"
         
+        # ifcopenshell transformer paths
+        self.ifc2peppol_script = self.project_root / "ifc2peppol" / "scripts" / "transform_ifc_to_peppol.py"
+        self.ifc2peppol_output = self.project_root / "ifc2peppol" / "output" / "test_workflow_ifcopenshell_catalogue.xml"
+        
     def print_header(self, text):
         """Print a formatted header."""
         print(f"\n{Colors.HEADER}{Colors.BOLD}{'='*70}{Colors.ENDC}")
@@ -155,7 +159,7 @@ class WorkflowTester:
             
             # Check Python dependencies
             print("\n  Checking dependencies:")
-            dependencies = ['lxml', 'openpyxl', 'requests']
+            dependencies = ['lxml', 'openpyxl', 'requests', 'ifcopenshell']
             missing_deps = []
             
             for dep in dependencies:
@@ -168,6 +172,13 @@ class WorkflowTester:
             
             if missing_deps:
                 raise Exception(f"Missing dependencies: {', '.join(missing_deps)}")
+            
+            # Check ifc2peppol script
+            if self.ifc2peppol_script.exists():
+                self.print_success(f"ifc2peppol script: {self.ifc2peppol_script.name}")
+            else:
+                self.print_error(f"ifc2peppol script not found: {self.ifc2peppol_script}")
+                missing_files.append("ifc2peppol script")
             
             duration = time.time() - start
             self.add_result("Environment Check", "PASS", duration, "All requirements met")
@@ -451,6 +462,171 @@ class WorkflowTester:
             self.print_error(f"Verification failed: {e}")
             return False
     
+    def test_ifcopenshell_to_peppol(self):
+        """Test: IFC to Peppol transformation using ifcopenshell."""
+        self.print_step("Test: IFC to Peppol Transformation (ifcopenshell)")
+        start = time.time()
+        
+        try:
+            # Remove existing catalogue if present
+            if self.ifc2peppol_output.exists():
+                self.ifc2peppol_output.unlink()
+            
+            # Create output directory
+            self.ifc2peppol_output.parent.mkdir(parents=True, exist_ok=True)
+            
+            # Run transformation script
+            cmd = [
+                sys.executable,
+                str(self.ifc2peppol_script),
+                str(self.ifc_model),
+                str(self.ifc2peppol_output)
+            ]
+            
+            print(f"  Running transformation...")
+            result = subprocess.run(
+                cmd,
+                capture_output=True,
+                text=True,
+                timeout=120  # 2 minute timeout
+            )
+            
+            if result.returncode != 0:
+                raise Exception(f"Transformation failed: {result.stderr}")
+            
+            # Check output file
+            if not self.ifc2peppol_output.exists():
+                raise Exception("Peppol catalogue not created")
+            
+            # Parse output to get statistics
+            from lxml import etree
+            doc = etree.parse(str(self.ifc2peppol_output))
+            ns = {'cac': 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'}
+            catalogue_lines = doc.xpath('//cac:CatalogueLine', namespaces=ns)
+            
+            file_size_kb = self.ifc2peppol_output.stat().st_size / 1024
+            
+            duration = time.time() - start
+            details = f"{len(catalogue_lines)} catalogue lines, {file_size_kb:.2f} KB"
+            self.add_result("IFC to Peppol (ifcopenshell)", "PASS", duration, details)
+            self.print_success(f"Peppol transformation completed ({duration:.2f}s) - {len(catalogue_lines)} lines")
+            return True
+            
+        except subprocess.TimeoutExpired:
+            duration = time.time() - start
+            self.add_result("IFC to Peppol (ifcopenshell)", "FAIL", duration, "Timeout (>120s)")
+            self.print_error("Transformation timed out")
+            return False
+            
+        except Exception as e:
+            duration = time.time() - start
+            self.add_result("IFC to Peppol (ifcopenshell)", "FAIL", duration, str(e))
+            self.print_error(f"Transformation failed: {e}")
+            return False
+    
+    def compare_peppol_outputs(self):
+        """Compare ifcconvert and ifcopenshell Peppol outputs."""
+        self.print_step("Test: Compare Peppol Outputs")
+        start = time.time()
+        
+        try:
+            from lxml import etree
+            
+            # Load both XML files
+            if not self.peppol_output.exists():
+                raise Exception(f"ifcconvert output not found: {self.peppol_output}")
+            if not self.ifc2peppol_output.exists():
+                raise Exception(f"ifcopenshell output not found: {self.ifc2peppol_output}")
+            
+            doc_ifcconvert = etree.parse(str(self.peppol_output))
+            doc_ifcopenshell = etree.parse(str(self.ifc2peppol_output))
+            
+            ns = {
+                'cac': 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2',
+                'cbc': 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+            }
+            
+            # Compare catalogue lines
+            lines_ifcconvert = doc_ifcconvert.xpath('//cac:CatalogueLine', namespaces=ns)
+            lines_ifcopenshell = doc_ifcopenshell.xpath('//cac:CatalogueLine', namespaces=ns)
+            
+            print(f"  ifcconvert lines: {len(lines_ifcconvert)}")
+            print(f"  ifcopenshell lines: {len(lines_ifcopenshell)}")
+            
+            differences = []
+            
+            # Check line count
+            if len(lines_ifcconvert) != len(lines_ifcopenshell):
+                differences.append(f"Line count mismatch: {len(lines_ifcconvert)} vs {len(lines_ifcopenshell)}")
+            
+            # Get all line IDs
+            ids_ifcconvert = set()
+            for line in lines_ifcconvert:
+                id_elem = line.xpath('./cbc:ID/text()', namespaces=ns)
+                if id_elem:
+                    ids_ifcconvert.add(id_elem[0])
+            
+            ids_ifcopenshell = set()
+            for line in lines_ifcopenshell:
+                id_elem = line.xpath('./cbc:ID/text()', namespaces=ns)
+                if id_elem:
+                    ids_ifcopenshell.add(id_elem[0])
+            
+            # Check for missing IDs
+            missing_in_ifcopenshell = ids_ifcconvert - ids_ifcopenshell
+            extra_in_ifcopenshell = ids_ifcopenshell - ids_ifcconvert
+            
+            if missing_in_ifcopenshell:
+                differences.append(f"Missing {len(missing_in_ifcopenshell)} IDs in ifcopenshell output")
+                if len(missing_in_ifcopenshell) <= 10:
+                    for missing_id in list(missing_in_ifcopenshell)[:10]:
+                        differences.append(f"  - Missing: {missing_id}")
+            
+            if extra_in_ifcopenshell:
+                differences.append(f"Extra {len(extra_in_ifcopenshell)} IDs in ifcopenshell output")
+                if len(extra_in_ifcopenshell) <= 10:
+                    for extra_id in list(extra_in_ifcopenshell)[:10]:
+                        differences.append(f"  - Extra: {extra_id}")
+            
+            # Compare common elements (sample)
+            common_ids = ids_ifcconvert & ids_ifcopenshell
+            if common_ids:
+                sample_ids = list(common_ids)[:5]  # Check first 5
+                for line_id in sample_ids:
+                    line_ifcconvert = doc_ifcconvert.xpath(f'//cac:CatalogueLine[cbc:ID/text()="{line_id}"]', namespaces=ns)[0]
+                    line_ifcopenshell = doc_ifcopenshell.xpath(f'//cac:CatalogueLine[cbc:ID/text()="{line_id}"]', namespaces=ns)[0]
+                    
+                    # Compare Name (get first Item Name, not all Names)
+                    name_ifcconvert = line_ifcconvert.xpath('.//cac:Item/cbc:Name/text()', namespaces=ns)
+                    name_ifcopenshell = line_ifcopenshell.xpath('.//cac:Item/cbc:Name/text()', namespaces=ns)
+                    name_ifcconvert_str = name_ifcconvert[0] if name_ifcconvert else ""
+                    name_ifcopenshell_str = name_ifcopenshell[0] if name_ifcopenshell else ""
+                    if name_ifcconvert_str != name_ifcopenshell_str:
+                        differences.append(f"  ID {line_id}: Name mismatch - '{name_ifcconvert_str[:50]}' vs '{name_ifcopenshell_str[:50]}'")
+            
+            duration = time.time() - start
+            
+            if differences:
+                details = f"{len(differences)} difference(s) found"
+                self.add_result("Output Comparison", "FAIL", duration, details)
+                self.print_error(f"Comparison failed: {len(differences)} difference(s)")
+                for diff in differences[:20]:  # Show first 20 differences
+                    print(f"    {diff}")
+                return False
+            else:
+                details = f"Both outputs match: {len(lines_ifcconvert)} lines"
+                self.add_result("Output Comparison", "PASS", duration, details)
+                self.print_success(f"Comparison passed ({duration:.2f}s) - Outputs match")
+                return True
+                
+        except Exception as e:
+            duration = time.time() - start
+            self.add_result("Output Comparison", "FAIL", duration, str(e))
+            self.print_error(f"Comparison failed: {e}")
+            import traceback
+            traceback.print_exc()
+            return False
+    
     def cleanup(self):
         """Cleanup test files."""
         if self.keep_files:
@@ -462,6 +638,7 @@ class WorkflowTester:
         files_to_remove = [
             self.peppol_output,
             self.excel_output,
+            self.ifc2peppol_output,
         ]
         
         if not self.skip_ifcconvert:
@@ -542,6 +719,8 @@ class WorkflowTester:
             ("Environment Check", self.test_environment),
             ("IFC to XML", self.test_ifc_to_xml),
             ("XML to Peppol", self.test_xml_to_peppol),
+            ("IFC to Peppol (ifcopenshell)", self.test_ifcopenshell_to_peppol),
+            ("Output Comparison", self.compare_peppol_outputs),
             ("Excel Generation", self.test_excel_generation),
             ("Verification", self.test_catalogue_verification),
         ]
