@@ -32,7 +32,7 @@
             </xs:restriction>
           </ids:baseName>
         </ids:property>
-        <ids:property dataType="IFCTEXT" cardinality="required" instructions="Status of renovation component | Revit: Lägg till parameter 'renovation component status' på Instance. Fyll i 'Ny'/'Befintlig'/'Rivning' eller mappa till Phase Created. | Archicad: Skapa Text-property 'renovation component status' i BIP, fyll i 'Ny'/'Befintlig'/'Rivning'.">
+        <ids:property dataType="IFCLABEL" cardinality="required" instructions="Status of renovation component | Revit: Lägg till parameter 'renovation component status' på Instance. Fyll i 'Ny'/'Befintlig'/'Rivning' eller mappa till Phase Created. | Archicad: Skapa Text-property 'renovation component status' i BIP, fyll i 'Ny'/'Befintlig'/'Rivning'.">
           <ids:propertySet>
             <ids:simpleValue>BIP</ids:simpleValue>
           </ids:propertySet>
