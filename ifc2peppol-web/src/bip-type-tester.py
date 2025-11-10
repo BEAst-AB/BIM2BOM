@@ -91,6 +91,7 @@ class BIPValidator:
         self.elements: List[ElementInfo] = []
         self.consistency_violations: List[Dict] = []
         self.uniqueness_violations: List[Dict] = []
+        self.completeness_violations: List[Dict] = []
         
     def extract_bip_properties(self, element) -> Optional[Tuple[str, BIPProperties]]:
         """Extract BIP property set and type name id from an IFC element"""
@@ -229,6 +230,22 @@ class BIPValidator:
                 
                 self.uniqueness_violations.append(violation)
     
+    def validate_completeness(self):
+        """Validate completeness: type name id must not contain 'xx' placeholder"""
+        for element in self.elements:
+            type_name_id_str = str(element.type_name_id) if element.type_name_id else ""
+            if 'xx' in type_name_id_str.lower():
+                violation = {
+                    'type_name_id': element.type_name_id,
+                    'element': {
+                        'id': element.element_id,
+                        'type': element.element_type,
+                        'global_id': element.global_id,
+                        'name': element.name
+                    }
+                }
+                self.completeness_violations.append(violation)
+    
     def generate_html_report(self) -> str:
         """Generate HTML validation report"""
         html_parts = []
@@ -243,6 +260,7 @@ class BIPValidator:
         html_parts.append(f'<tr><td>Unique type name IDs:</td><td>{len(set(e.type_name_id for e in self.elements))}</td></tr>')
         html_parts.append(f'<tr><td>Consistency violations:</td><td><strong>{len(self.consistency_violations)}</strong></td></tr>')
         html_parts.append(f'<tr><td>Uniqueness violations:</td><td><strong>{len(self.uniqueness_violations)}</strong></td></tr>')
+        html_parts.append(f'<tr><td>Completeness violations:</td><td><strong>{len(self.completeness_violations)}</strong></td></tr>')
         html_parts.append('</table>')
         html_parts.append('</div>')
         
@@ -332,10 +350,42 @@ class BIPValidator:
             html_parts.append('<p class="success">✓ No uniqueness violations found</p>')
             html_parts.append('</div>')
         
+        # Completeness Violations
+        if self.completeness_violations:
+            html_parts.append('<div class="violations-section">')
+            html_parts.append('<h4>Completeness Violations</h4>')
+            html_parts.append('<p>Type name IDs containing "xx" placeholder (must be replaced with project-specific numbering):</p>')
+            
+            # Group by type_name_id to show unique violations
+            unique_violations = {}
+            for violation in self.completeness_violations:
+                type_id = violation['type_name_id']
+                if type_id not in unique_violations:
+                    unique_violations[type_id] = []
+                unique_violations[type_id].append(violation['element'])
+            
+            for i, (type_id, elements) in enumerate(unique_violations.items(), 1):
+                html_parts.append('<div class="violation-item">')
+                html_parts.append(f'<h5>Violation {i}: Type Name ID "{type_id}"</h5>')
+                html_parts.append(f'<p>Found in {len(elements)} element(s):</p>')
+                html_parts.append('<ul>')
+                for elem in elements[:10]:  # Show first 10
+                    html_parts.append(f'<li>Element #{elem["id"]} ({elem["type"]}) - {elem["global_id"]} {elem.get("name", "")}</li>')
+                if len(elements) > 10:
+                    html_parts.append(f'<li>... and {len(elements) - 10} more</li>')
+                html_parts.append('</ul>')
+                html_parts.append('</div>')
+            
+            html_parts.append('</div>')
+        else:
+            html_parts.append('<div class="no-violations">')
+            html_parts.append('<p class="success">✓ No completeness violations found</p>')
+            html_parts.append('</div>')
+        
         # Conclusion
-        if not self.consistency_violations and not self.uniqueness_violations:
+        if not self.consistency_violations and not self.uniqueness_violations and not self.completeness_violations:
             html_parts.append('<div class="validation-passed">')
-            html_parts.append('<p class="success-message">✓ Validation Passed: All type name IDs are consistent and unique</p>')
+            html_parts.append('<p class="success-message">✓ Validation Passed: All type name IDs are consistent, unique, and complete</p>')
             html_parts.append('</div>')
         else:
             html_parts.append('<div class="validation-failed">')
@@ -352,10 +402,12 @@ class BIPValidator:
                 'total_elements': len(self.elements),
                 'unique_type_name_ids': len(set(e.type_name_id for e in self.elements)),
                 'consistency_violations': len(self.consistency_violations),
-                'uniqueness_violations': len(self.uniqueness_violations)
+                'uniqueness_violations': len(self.uniqueness_violations),
+                'completeness_violations': len(self.completeness_violations)
             },
             'consistency_violations': self.consistency_violations,
-            'uniqueness_violations': self.uniqueness_violations
+            'uniqueness_violations': self.uniqueness_violations,
+            'completeness_violations': self.completeness_violations
         }
 
 
@@ -380,6 +432,7 @@ def validate_bip_type_name_id(ifc_path: str, csv_path: str) -> dict:
     validator.collect_elements()
     validator.validate_consistency()
     validator.validate_uniqueness()
+    validator.validate_completeness()
     
     # Generate reports
     html_report = validator.generate_html_report()
@@ -388,6 +441,6 @@ def validate_bip_type_name_id(ifc_path: str, csv_path: str) -> dict:
     return {
         'html': html_report,
         'json': json_data,
-        'valid': len(validator.consistency_violations) == 0 and len(validator.uniqueness_violations) == 0
+        'valid': len(validator.consistency_violations) == 0 and len(validator.uniqueness_violations) == 0 and len(validator.completeness_violations) == 0
     }
 

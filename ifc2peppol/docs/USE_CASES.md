@@ -480,10 +480,9 @@ Potential improvements for future versions:
 - **BEAst Supply Validator**: https://bis.beast.se/
 - **Peppol BIS**: https://peppol.eu/
 
----
 
-**Last Updated**: 2025-01-XX  
-**Version**: 1.0  
-**Status**: Production Ready ✓
+
+
+
 
 

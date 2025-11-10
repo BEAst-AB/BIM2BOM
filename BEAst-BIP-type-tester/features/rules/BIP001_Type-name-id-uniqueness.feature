@@ -5,6 +5,7 @@ Feature: BIP001 - Type Name ID Uniqueness and Consistency
   The rule verifies that the "type name id" property in BIP property sets maintains both:
   1. Consistency: Elements with the same "type name id" must have identical BIP property values
   2. Uniqueness: Each unique combination of BIP properties must map to exactly one "type name id"
+  3. Completeness: Type name ids must not contain "xx" placeholder, as consultants must replace this with project-specific numbering sequences
   
   The validation checks BIP properties defined in the table 'bip_type_name_id_properties':
   - TypeDescription (IFCTEXT)
@@ -32,3 +33,7 @@ Feature: BIP001 - Type Name ID Uniqueness and Consistency
   Scenario: Uniqueness - Each unique combination of BIP properties must map to one type name id
     
     Then Each unique combination [according to the table] 'bip_type_name_id_properties' must correspond to exactly one value of 'type name id'
+
+  Scenario: Completeness - Type name id must not contain xx placeholder
+    
+    Then The value of 'type name id' must not contain 'xx'

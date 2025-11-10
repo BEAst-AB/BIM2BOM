@@ -231,3 +231,51 @@ def step_then_uniqueness(context, csv_file):
     if violations == 0:
         print(f"  PASS: All {len(property_map)} property combinations are unique")
 
+
+@then("The value of 'type name id' must not contain 'xx'")
+def step_then_no_xx_placeholder(context):
+    """
+    Validate completeness: type name id must not contain 'xx' placeholder.
+    Consultants must replace 'xx' with project-specific numbering sequences.
+    """
+    # Collect all type name id values from filtered instances
+    type_name_ids_with_xx = []
+    total_checked = 0
+    
+    if hasattr(context, 'instance_stack') and context.instance_stack:
+        # Get instances from the last layer of the stack
+        for layer in context.instance_stack:
+            instances = layer.get('instances', [])
+            for instance in instances:
+                try:
+                    if context.model_type == 'step':
+                        # IfcOpenShell instance
+                        type_name_id = instance.NominalValue.wrappedValue if instance.NominalValue else None
+                    else:
+                        # XML element
+                        type_name_id = instance.get('NominalValue')
+                    
+                    if type_name_id:
+                        total_checked += 1
+                        type_name_id_str = str(type_name_id).lower()
+                        if 'xx' in type_name_id_str:
+                            type_name_ids_with_xx.append(type_name_id)
+                except Exception:
+                    # Skip instances we can't process
+                    continue
+    
+    print(f"  Checking for 'xx' placeholder in {total_checked} type name id(s)...")
+    
+    if type_name_ids_with_xx:
+        # Get unique violations for reporting
+        unique_violations = sorted(set(type_name_ids_with_xx))
+        violations_count = len(type_name_ids_with_xx)
+        
+        print(f"  FAIL: Found {violations_count} type name id(s) containing 'xx' placeholder:")
+        for violation in unique_violations:
+            print(f"       - '{violation}'")
+        
+        # Fail the scenario
+        assert False, f"Completeness violation: {violations_count} type name id(s) contain 'xx' placeholder: {', '.join(unique_violations)}"
+    
+    print(f"  PASS: No type name ids contain 'xx' placeholder")

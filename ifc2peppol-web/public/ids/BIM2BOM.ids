@@ -6,7 +6,7 @@
     <ids:version>0.1</ids:version>
     <ids:description>DRAFT - Informationsleveranskrav baserat på utkast av Systemdatamallar</ids:description>
     <ids:author>projekteringsutskottet@beast.se</ids:author>
-    <ids:date>2025-10-27</ids:date>
+    <ids:date>2025-11-10</ids:date>
     <ids:purpose>Framtagen för att ge olika parter som beställare, projektör och entreprenören en gemensam målbild för informationsleveranskraven på IFC-modeller enligt alá systemdatamallar.</ids:purpose>
     <ids:milestone>AP1</ids:milestone>
   </ids:info>
@@ -32,7 +32,7 @@
             </xs:restriction>
           </ids:baseName>
         </ids:property>
-        <ids:property dataType="IFCTEXT" cardinality="required" instructions="Status of renovation component | Revit: Lägg till parameter 'renovation component status' på Instance. Fyll i 'Ny'/'Befintlig'/'Rivning' eller mappa till Phase Created. | Archicad: Skapa Text-property 'renovation component status' i BIP, fyll i 'Ny'/'Befintlig'/'Rivning'.">
+        <ids:property dataType="IFCLABEL" cardinality="required" instructions="Status of renovation component | Revit: Lägg till parameter 'renovation component status' på Instance. Fyll i 'Ny'/'Befintlig'/'Rivning' eller mappa till Phase Created. | Archicad: Skapa Text-property 'renovation component status' i BIP, fyll i 'Ny'/'Befintlig'/'Rivning'.">
           <ids:propertySet>
             <ids:simpleValue>BIP</ids:simpleValue>
           </ids:propertySet>
@@ -40,7 +40,7 @@
             <ids:simpleValue>renovation component status</ids:simpleValue>
           </ids:baseName>
         </ids:property>
-        <ids:property dataType="IFCLABEL" cardinality="required" instructions="Type name identifier | Revit: Lägg till parameter 'type name id' på Type. Använd som typidentifierare enligt BIP-koder.se (t.ex. 'YVB01', 'F1'). | Archicad: Skapa Text-property 'type name id' i BIP, använd som typidentifierare (t.ex. 'YVB01', 'F1').">
+        <ids:property dataType="IFCLABEL" cardinality="required" instructions="Type name identifier | Revit: Lägg till parameter 'type name id' på Type. Använd som typidentifierare enligt BIP-koder.se (t.ex. 'YVB01', 'F1'). Måste inte innehålla 'xx' placeholder. | Archicad: Skapa Text-property 'type name id' i BIP, använd som typidentifierare (t.ex. 'YVB01', 'F1'). Måste inte innehålla 'xx' placeholder.">
           <ids:propertySet>
             <ids:simpleValue>BIP</ids:simpleValue>
           </ids:propertySet>
@@ -409,6 +409,100 @@
           </ids:baseName>
         </ids:property>
         <ids:property dataType="IFCBOOLEAN" cardinality="required" instructions="Bärande | Revit: Lägg till parameter 'is external' på Type eller Instance. För Walls: kan mappas från Structural-parameter (Wall Properties). | Archicad: Skapa Yes/No-property 'is external' i BIP.">
+          <ids:propertySet>
+            <ids:simpleValue>BIP</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>is external</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC4 IFC4X3_ADD2" name="Byggdelar - Utvändiga Fönster" description="Alla utvändiga fönster ska innehålla specificerade egenskaper från BIP property set för att möjliggöra korrekt mängdavtagning för BIM2BOM." instructions="Kontrollera att varje utvändigt fönster innehåller alla obligatoriska egenskaper i BIP property set.">
+      <ids:applicability minOccurs="1" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCWINDOW</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+        <ids:property dataType="IFCBOOLEAN">
+          <ids:propertySet>
+            <ids:simpleValue>BIP</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>is external</ids:simpleValue>
+          </ids:baseName>
+          <ids:value>
+            <ids:simpleValue>true</ids:simpleValue>
+          </ids:value>
+        </ids:property>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCLABEL" cardinality="required" instructions="Typbeteckning för fönster | Revit: Lägg till parameter 'type name id' på Type. Använd som typidentifierare enligt BIP-koder.se (t.ex. 'F1', 'F2'). Kan mappas från Type Mark. | Archicad: Skapa Text-property 'type name id' i BIP, använd som typidentifierare (t.ex. 'F1', 'F2').">
+          <ids:propertySet>
+            <ids:simpleValue>BIP</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>type name id</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCTEXT" cardinality="required" instructions="Typbeskrivning | Revit: Lägg till parameter 'TypeDescription' på Type. Kan mappas från Type Comments. | Archicad: Skapa Text-property 'TypeDescription' i BIP.">
+          <ids:propertySet>
+            <ids:simpleValue>BIP</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>TypeDescription</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required" instructions="Klassifikationssystem (BSAB 96) | Revit: Lägg till parameter 'BSAB 96' på Type eller Instance. Fyll i BSAB-kod som text (t.ex. 'NBC'), INTE classification system. | Archicad: Skapa Text-property 'BSAB 96' i BIP, fyll i BSAB-kod som text (t.ex. 'NBC'), INTE classification system.">
+          <ids:propertySet>
+            <ids:simpleValue>BIP</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>BSAB 96</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCTEXT" cardinality="required" instructions="Rammaterial | Revit: Lägg till parameter 'frame material' på Type. Ange material för fönsterram (t.ex. 'Aluminium', 'Trä', 'PVC'). | Archicad: Skapa Text-property 'frame material' i BIP, ange material för fönsterram.">
+          <ids:propertySet>
+            <ids:simpleValue>BIP</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>frame material</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCPOSITIVELENGTHMEASURE" cardinality="required" instructions="Höjd | Revit: Lägg till parameter 'height' på Instance. För Fönster: från Height-parameter i Type Properties eller Instance Properties. | Archicad: Skapa Number-property 'height' i BIP, använd expression =ZZYZX eller fönstrets höjdparameter.">
+          <ids:propertySet>
+            <ids:simpleValue>BIP</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>height</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCPOSITIVELENGTHMEASURE" cardinality="required" instructions="Bredd | Revit: Lägg till parameter 'length' på Instance. För Fönster: från Width-parameter i Type Properties eller Instance Properties. | Archicad: Skapa Number-property 'length' i BIP, använd fönstrets breddparameter.">
+          <ids:propertySet>
+            <ids:simpleValue>BIP</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>length</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required" instructions="Våningsplan | Revit: Lägg till parameter 'floor' på Instance. Mappas automatiskt från Level-parameter eller fyll i manuellt. | Archicad: Skapa Text-property 'floor' i BIP, använd expression =HOMESTOREY eller fyll i manuellt.">
+          <ids:propertySet>
+            <ids:simpleValue>BIP</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>floor</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required" instructions="Byggnadsstatus | Revit: Lägg till parameter 'renovation component status' på Instance. Fyll i 'Ny'/'Befintlig'/'Rivning' eller mappa till Phase Created/Phase Demolished. | Archicad: Skapa Text-property 'renovation component status' i BIP, fyll i 'Ny'/'Befintlig'/'Rivning'.">
+          <ids:propertySet>
+            <ids:simpleValue>BIP</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>renovation component status</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCBOOLEAN" cardinality="required" instructions="Utvändigt fönster | Revit: Lägg till parameter 'is external' på Type eller Instance. För Fönster: sätt till 'true' för utvändiga fönster, 'false' för invändiga. | Archicad: Skapa Yes/No-property 'is external' i BIP, sätt till 'true' för utvändiga fönster.">
           <ids:propertySet>
             <ids:simpleValue>BIP</ids:simpleValue>
           </ids:propertySet>

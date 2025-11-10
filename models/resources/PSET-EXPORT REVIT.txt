@@ -25,19 +25,19 @@
 #	...
 #
 
+
 PropertySet:		BIP				I					IfcElement, IfcElementType
 	type name id					Label				Type Mark
 	TypeDescription					Text				Description
 	BSAB 96							Label				BSABe
 	materials/components			Text				materials/components
+	frame material					Text				materials/components
 	thickness						PositiveLength		Width
 	is load bearing					Boolean				Pset_WallCommon.LoadBearing
-	is external						Boolean				Pset_WallCommon.IsExternal
+	is external						Boolean				IsExternal
 	height							PositiveLength		Unconnected Height
 	length							PositiveLength		Length
-#	gross area						Area				gross area
 	net area						Area				Area
-#	gross volume					Volume				gross volume
 	net volume						Volume				Volume
 	weight							Real				Qto_WallBaseQuantities.GrossWeight
 	floor							Label				Level
@@ -45,9 +45,5 @@ PropertySet:		BIP				I					IfcElement, IfcElementType
 	floor							Label				Reference Level
 	renovation component status		Label				Phase Created
 	LotNumberID						Label				LotNumberID
-
-#Används för Manufacturer Party
 	Manufacturer					Label				Manufacturer
-
-#Används för att filtrera på objekt som är redo för upphandling
 	MMI								Label				MMI
