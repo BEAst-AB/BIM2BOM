@@ -1,0 +1,13 @@
+property_name,data_type,required,description
+TypeDescription,IfcText,true,Type description of the element
+BSAB 96,IfcLabel,true,Swedish classification code BSAB 96
+materials/components,IfcText,true,Material specifications
+thickness,IfcPositiveLengthMeasure,true,Element thickness
+is load bearing,IfcBoolean,true,Structural designation (load bearing or not)
+is external,IfcBoolean,true,Location designation (exterior wall or interior wall)
+height,IfcPositiveLengthMeasure,false,Element height (instance property - change to true to include in validation)
+
+
+
+
+

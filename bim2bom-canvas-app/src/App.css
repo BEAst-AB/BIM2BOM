@@ -1,0 +1,166 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 24px;
+  color: #1f2937;
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  color: #1f2937;
+}
+
+.button {
+  padding: 8px 16px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.button:hover {
+  background: #2563eb;
+}
+
+.button:active {
+  background: #1d4ed8;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  flex: 1;
+  overflow: auto;
+  min-height: 0;
+}
+
+.canvas-panel {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+  background: white;
+  min-width: 0;
+  overflow: hidden;
+  flex: 1;
+}
+
+.canvas-panel h2 {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.canvas-panel > div,
+.viewer-panel > div {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+}
+
+.xml-panel {
+  padding: 16px;
+  border-top: 1px solid #e5e7eb;
+  background: white;
+}
+
+.data-viewer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.data-viewer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.data-viewer-header h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.view-mode-toggle {
+  display: flex;
+  gap: 8px;
+  background: #f3f4f6;
+  padding: 4px;
+  border-radius: 6px;
+}
+
+.toggle-btn {
+  padding: 6px 16px;
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.toggle-btn:hover {
+  background: #e5e7eb;
+  color: #1f2937;
+}
+
+.toggle-btn.active {
+  background: white;
+  color: #1f2937;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.xml-view,
+.table-view {
+  flex: 1;
+  overflow: hidden;
+}
+
+.system-node {
+  transition: all 0.2s;
+}
+
+.system-node.active {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.system-node.selected {
+  border-width: 3px;
+}
+
