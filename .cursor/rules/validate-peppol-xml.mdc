@@ -1,0 +1,36 @@
+---
+description: Always validate Peppol catalogue XML files after creation or modification
+globs: "**/*.xml"
+alwaysApply: false
+---
+
+# Peppol XML Validation
+
+When creating or modifying Peppol catalogue XML files, **always validate** them using the project's validation script.
+
+## Validation Command
+
+```bash
+python peppol-transformer/scripts/validate_peppol_catalogue.py <path-to-xml>
+```
+
+## When to Validate
+
+- After creating a new Peppol catalogue XML
+- After modifying an existing Peppol catalogue XML
+- After running XSLT transformations that produce Peppol XML output
+
+## Common Validation Issues
+
+- Invalid `listID` values (use UNCL7143 codes)
+- Missing required elements
+- Invalid date formats
+- Incorrect namespace declarations
+
+## Example
+
+```bash
+python peppol-transformer/scripts/validate_peppol_catalogue.py output/BIM2BOM_Peppol_Catalogue.xml
+```
+
+The validator uses the official Peppol validator API at `validator.logiq.no`.
