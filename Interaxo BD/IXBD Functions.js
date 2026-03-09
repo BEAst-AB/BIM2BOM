@@ -4,7 +4,7 @@
 const typeIdOptions = {'Instance':100,'Type':101,'Room Instance':200};
 const dataTypeOptions = {'Bool':1,'Integer':3,'Double':4,'Text':5, 'Measure':6, 'URL':7};
 const measureOptions = {'Not Measure':1,'Length':2,'Area':3};
-
+const baseUrl = "app.bimeye.com";
 //Access token
 var access_token = null;
 //projectguid
