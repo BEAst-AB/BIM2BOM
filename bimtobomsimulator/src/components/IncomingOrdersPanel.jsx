@@ -19,6 +19,7 @@ export default function IncomingOrdersPanel({
         <table className="wallsTable">
           <thead>
             <tr>
+              <th style={{ width: 120 }}>CDE</th>
               <th>Selling system</th>
               <th style={{ width: 110 }}>Items</th>
               <th style={{ width: 120 }} aria-label="Actions" />
@@ -27,13 +28,14 @@ export default function IncomingOrdersPanel({
           <tbody>
             {visibleOrders.length === 0 ? (
               <tr>
-                <td colSpan={3} className="emptyCell">
+                <td colSpan={4} className="emptyCell">
                   No incoming orders yet
                 </td>
               </tr>
             ) : (
               visibleOrders.map((order) => (
                 <tr key={order.id}>
+                  <td className="mono">{order?.payload?.cdeid || "-"}</td>
                   <td>{order?.payload?.SellingSystem || "-"}</td>
                   <td className="mono">{order?.payload?.items?.length ?? 0}</td>
                   <td>

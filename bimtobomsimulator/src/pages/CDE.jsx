@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from "react";
 import IfcViewer from "../components/IfcViewer.jsx";
-import IfcWallsTable from "../components/IfcWallsTable.jsx";
+import CdeBomSidebar from "../components/CdeBomSidebar.jsx";
 import { useBom } from "../context/useBom.js";
 
 export default function CDE() {
@@ -106,22 +106,9 @@ export default function CDE() {
         onPointerDown={onSplitterPointerDown}
       />
       <div className="sidebarPane" style={{ width: `${sidebarWidth}px` }}>
-        <div className="pageActions" style={{ padding: 12 }}>
-          <button
-            type="button"
-            onClick={onPublishToBuyingSystem}
-            disabled={!hasUnsentDraft}
-          >
-            Send BOM to Buying System
-          </button>
-          <div className="pageMeta">
-            {hasUnsentDraft
-              ? "BOM loaded (not sent)"
-              : "BOM sent to Buying System"}
-          </div>
-        </div>
-
-        <IfcWallsTable
+        <CdeBomSidebar
+          hasUnsentDraft={hasUnsentDraft}
+          onPublishToBuyingSystem={onPublishToBuyingSystem}
           bomResult={hasUnsentDraft ? draftBomResult : bomResult}
         />
       </div>

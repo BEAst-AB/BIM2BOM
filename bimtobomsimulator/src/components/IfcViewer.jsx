@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
 import * as OBC from "@thatopen/components";
+import { createBeastProp, createBomResult } from "../helpers/bomTemplates.js";
 
 export default function IfcViewer({ ifcUrl, onBomLoaded }) {
   const containerRef = useRef(null);
@@ -118,21 +119,17 @@ export default function IfcViewer({ ifcUrl, onBomLoaded }) {
           },
         });
 
-        const BOMresult = {
-          cdeid: "",
-          items: [],
-        };
+        const BOMresult = createBomResult();
 
         for (const prop in data) {
           const propData = data[prop];
 
           if (!propData.IsDefinedBy) continue;
-          const beastProp = {};
-          beastProp.id = prop;
-          beastProp.localID = propData._localId?.value;
-          beastProp.GUID = propData._guid?.value;
-          beastProp.Seller = "";
-          beastProp.price = "";
+          const beastProp = createBeastProp({
+            id: prop,
+            localID: propData._localId?.value,
+            GUID: propData._guid?.value,
+          });
           let hasBip = false;
 
           for (const def of propData.IsDefinedBy) {
