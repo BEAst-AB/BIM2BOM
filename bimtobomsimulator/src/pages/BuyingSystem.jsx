@@ -124,7 +124,7 @@ export default function BuyingSystem() {
   };
 
   return (
-    <div className="pageShell">
+    <div className="pageShell buyingSystemPage">
       <div className="pageHeader">
         <div className="pageTitle">Buying System</div>
         <div className="pageMeta">{items.length} BOM items</div>

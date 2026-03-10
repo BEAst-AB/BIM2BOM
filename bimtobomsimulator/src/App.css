@@ -238,6 +238,75 @@
   font-weight: 600;
 }
 
+.buyingSystemPage {
+  font-size: 14px;
+}
+
+.buyingSystemPage .pageHeader {
+  padding: 10px 12px;
+}
+
+.buyingSystemPage .pageTitle {
+  font-size: 20px;
+}
+
+.buyingSystemPage .panelHeader {
+  padding: 8px 10px;
+}
+
+.buyingSystemPage .panelBody {
+  padding: 10px 10px;
+}
+
+.buyingSystemPage .wallsTable th,
+.buyingSystemPage .wallsTable td {
+  padding: 6px 8px;
+}
+
+.buyingSystemPage button {
+  padding: 0.45em 0.9em;
+  font-size: 0.95em;
+  border-radius: 6px;
+}
+
+.buyingSystemPage .buySelect {
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+
+.buyingSystemPage .pageActions {
+  padding: 10px 10px;
+}
+
+.buyingSystemPage .splitLeft .splitColumn {
+  padding: 10px;
+}
+
+.buyingSystemPage .splitRight {
+  padding: 10px;
+}
+
+.buyingSystemPage .rightRowsBuying {
+  gap: 10px;
+}
+
+.buyingSystemPage .rightRowsBuying > * {
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 14px;
+  background: #ffffff;
+  color: #111111;
+  overflow: hidden;
+}
+
+.buyingSystemPage .rightRowsBuying > * .panelHeader {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.buyingSystemPage .rightRowsBuying > * .wallsTable th,
+.buyingSystemPage .rightRowsBuying > * .wallsTable td {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
 .placeholderPane {
   height: 100%;
   display: grid;
