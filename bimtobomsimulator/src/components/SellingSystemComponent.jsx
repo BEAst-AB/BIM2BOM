@@ -17,6 +17,7 @@ const getItemKey = (item, index) => item?.GUID ?? item?.id ?? index;
 export default function SellingSystemComponent({
   order,
   addIncomingOrder,
+  clearOrder,
   sellingSystemName,
   companyTitle,
 }) {
@@ -77,6 +78,8 @@ ${(payload.items ?? [])
 
     setPeppolXml(xml);
     setSentForBuyingSystemId(payload.buyingSystem ?? null);
+    setPriceByKey({});
+    clearOrder?.();
     window.setTimeout(() => setSendStatus(""), 1500);
   };
 
