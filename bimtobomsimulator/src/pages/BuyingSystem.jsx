@@ -25,7 +25,15 @@ export default function BuyingSystem() {
     incomingOrders,
     acceptIncomingOrder,
   } = useBom();
-  const items = useMemo(() => bomResult ?? [], [bomResult]);
+  const items = useMemo(() => {
+    if (Array.isArray(bomResult)) return bomResult;
+    return bomResult?.items ?? [];
+  }, [bomResult]);
+
+  const ideid = useMemo(() => {
+    if (Array.isArray(bomResult)) return "IDE1";
+    return (bomResult?.Ideid ?? bomResult?.ideid ?? "IDE1").toString();
+  }, [bomResult]);
 
   const shellRef = useRef(null);
   const xmlDialogRef = useRef(null);
@@ -42,9 +50,11 @@ export default function BuyingSystem() {
 
   const [selectedKeys, setSelectedKeys] = useState(() => new Set());
   const [showXml, setShowXml] = useState(false);
+  const [xmlOrder, setXmlOrder] = useState(null);
 
   const openXmlModal = () => {
     if (!showXml) return;
+    console.log("XML payload", xmlOrder);
     const dialog = xmlDialogRef.current;
     if (!dialog) return;
     if (typeof dialog.showModal === "function") {
@@ -127,7 +137,9 @@ export default function BuyingSystem() {
     <div className="pageShell buyingSystemPage">
       <div className="pageHeader">
         <div className="pageTitle">Buying System</div>
-        <div className="pageMeta">{items.length} BOM items</div>
+        <div className="pageMeta">
+          {items.length} BOM items from {ideid}
+        </div>
       </div>
 
       <div className="pageBody" ref={shellRef}>
@@ -200,7 +212,10 @@ export default function BuyingSystem() {
             <div className="rightRows rightRowsBuying">
               <BuyingSystemOrderPanel
                 selectedItems={selectedList}
-                onRequestSent={() => setShowXml(true)}
+                onRequestSent={(order) => {
+                  setXmlOrder(order);
+                  setShowXml(true);
+                }}
                 xmlCreated={showXml}
                 onOpenXml={openXmlModal}
               />
@@ -215,6 +230,7 @@ export default function BuyingSystem() {
                 emptyText="Press BUY to generate XML"
                 renderPanel={false}
                 dialogRef={xmlDialogRef}
+                payload={xmlOrder}
               />
             </div>
           </div>

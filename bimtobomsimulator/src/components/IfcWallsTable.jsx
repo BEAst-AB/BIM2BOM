@@ -1,5 +1,5 @@
 export default function IfcWallsTable({ bomResult }) {
-  const items = bomResult ?? [];
+  const items = Array.isArray(bomResult) ? bomResult : (bomResult?.items ?? []);
 
   return (
     <div className="sidebar">

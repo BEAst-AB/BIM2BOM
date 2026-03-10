@@ -64,21 +64,23 @@ export default function BuyingSystemOrderPanel({
   const onBuy = () => {
     const itemsToBuy = selectedItems ?? [];
     setSelectedBomItems(itemsToBuy);
-    onRequestSent?.();
 
     const order = {
       buyingSystem: createBuyingSystemId(),
       company: selectedCompany,
+      cdeid: null,
       items: itemsToBuy,
     };
 
     if (selectedCompany === "Company 1") {
       setSellingSystem1Order(order);
+      onRequestSent?.(order);
       return;
     }
 
     if (selectedCompany === "Company 2") {
       setSellingSystem2Order(order);
+      onRequestSent?.(order);
       return;
     }
 

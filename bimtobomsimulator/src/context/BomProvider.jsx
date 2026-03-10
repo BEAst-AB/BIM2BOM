@@ -33,8 +33,25 @@ const applyBomOverrides = (items, overridesByGuid) => {
   });
 };
 
+const normalizeBomResult = (value) => {
+  if (Array.isArray(value)) {
+    return { Ideid: "IDE1", items: value };
+  }
+
+  if (value && typeof value === "object") {
+    const ideid = value.Ideid ?? value.ideid ?? "IDE1";
+    const items = Array.isArray(value.items) ? value.items : [];
+    return { ...value, Ideid: ideid, items };
+  }
+
+  return { Ideid: "IDE1", items: [] };
+};
+
 export function BomProvider({ children }) {
-  const [bomResult, setBomResultState] = useState([]);
+  const [bomResult, setBomResultState] = useState(() => ({
+    Ideid: "IDE1",
+    items: [],
+  }));
   const [selectedBomItems, setSelectedBomItems] = useState([]);
   const [buySummaryLines, setBuySummaryLines] = useState([]);
   const [sellingSystem1Order, setSellingSystem1Order] = useState(null);
@@ -53,7 +70,11 @@ export function BomProvider({ children }) {
   const setBomResult = useCallback((next) => {
     setBomResultState((prev) => {
       const resolved = typeof next === "function" ? next(prev) : next;
-      return applyBomOverrides(resolved, bomOverridesRef.current);
+      const normalized = normalizeBomResult(resolved);
+      return {
+        ...normalized,
+        items: applyBomOverrides(normalized.items, bomOverridesRef.current),
+      };
     });
   }, []);
 
@@ -98,7 +119,13 @@ export function BomProvider({ children }) {
           }));
 
           const merged = { ...bomOverridesRef.current, ...updatesByGuid };
-          setBomResultState((bomPrev) => applyBomOverrides(bomPrev, merged));
+          setBomResultState((bomPrev) => {
+            const normalized = normalizeBomResult(bomPrev);
+            return {
+              ...normalized,
+              items: applyBomOverrides(normalized.items, merged),
+            };
+          });
         }
       }
 

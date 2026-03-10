@@ -112,7 +112,10 @@ export default function IfcViewer({ ifcUrl, onBomLoaded }) {
           },
         });
 
-        const BOMresult = []; // array of objects
+        const BOMresult = {
+          Ideid: "IDE1",
+          items: [],
+        };
 
         for (const prop in data) {
           const propData = data[prop];
@@ -124,7 +127,6 @@ export default function IfcViewer({ ifcUrl, onBomLoaded }) {
           beastProp.GUID = propData._guid?.value;
           beastProp.Seller = "";
           beastProp.price = "";
-
           let hasBip = false;
 
           for (const def of propData.IsDefinedBy) {
@@ -147,10 +149,10 @@ export default function IfcViewer({ ifcUrl, onBomLoaded }) {
             });
           }
 
-          if (hasBip) BOMresult.push(beastProp);
+          if (hasBip) BOMresult.items.push(beastProp);
         }
 
-        console.log(BOMresult);
+        // console.log(BOMresult);
 
         if (typeof onBomLoaded === "function" && !disposed) {
           onBomLoaded(BOMresult);
@@ -159,7 +161,9 @@ export default function IfcViewer({ ifcUrl, onBomLoaded }) {
         console.log("Walls found by ItemsFinder:", data);
       } catch (error) {
         console.error("Viewer init failed:", error);
-        if (typeof onBomLoaded === "function") onBomLoaded([]);
+        if (typeof onBomLoaded === "function") {
+          onBomLoaded({ Ideid: "IDE1", items: [] });
+        }
       }
     })();
 

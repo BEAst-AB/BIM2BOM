@@ -5,6 +5,7 @@ import App from "./App.jsx";
 import { BomProvider } from "./context/BomProvider.jsx";
 import CDE from "./pages/CDE.jsx";
 import BuyingSystem from "./pages/BuyingSystem.jsx";
+import Interaxo from "./pages/Interaxo.jsx";
 import SellingSystem1 from "./pages/SellingSystem1.jsx";
 import SellingSystem2 from "./pages/SellingSystem2.jsx";
 
@@ -14,6 +15,7 @@ const router = createHashRouter([
     element: <App />,
     children: [
       { index: true, element: <Navigate to="/cde" replace /> },
+      { path: "interaxo", element: <Interaxo /> },
       { path: "cde", element: <CDE /> },
       { path: "buying-system", element: <BuyingSystem /> },
       { path: "selling-system-1", element: <SellingSystem1 /> },

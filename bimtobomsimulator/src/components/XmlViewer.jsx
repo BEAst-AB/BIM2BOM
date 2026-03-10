@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const DEFAULT_BUYING_SYSTEM_XML = `<?xml version="1.0" encoding="utf-8"?>
 <BuyOrder>
@@ -30,13 +30,20 @@ export default function XmlViewer({
   height = 240,
   renderPanel = true,
   dialogRef: dialogRefProp,
+  payload,
 }) {
   const localDialogRef = useRef(null);
   const dialogRef = dialogRefProp ?? localDialogRef;
+  const payloadRef = useRef(null);
   const canOpen = Boolean(show);
+
+  useEffect(() => {
+    payloadRef.current = payload;
+  }, [payload]);
 
   const openModal = () => {
     if (!canOpen) return;
+    console.log("XML payload", payloadRef.current);
     const dialog = dialogRef.current;
     if (!dialog) return;
     if (typeof dialog.showModal === "function") {

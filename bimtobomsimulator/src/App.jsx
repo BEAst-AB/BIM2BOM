@@ -8,6 +8,9 @@ export default function App() {
   return (
     <div className="appFrame">
       <div className="tabsBar" role="tablist" aria-label="Systems">
+        <NavLink to="/interaxo" role="tab" className="tabButton">
+          Interaxo
+        </NavLink>
         <NavLink to="/cde" role="tab" className="tabButton">
           CDE
         </NavLink>
