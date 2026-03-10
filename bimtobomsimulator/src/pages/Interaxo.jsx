@@ -1,10 +1,11 @@
 import { useMemo, useState } from "react";
 import { useBom } from "../context/useBom.js";
+import CdeBomSidebar from "../components/CdeBomSidebar.jsx";
 import { createBeastProp, createBomResult } from "../helpers/bomTemplates.js";
 
 export default function Interaxo() {
   const { setBomResult } = useBom();
-  const [sentAt, setSentAt] = useState(null);
+  const [hasUnsentDraft, setHasUnsentDraft] = useState(true);
 
   const dummyBom = useMemo(() => {
     const items = [
@@ -35,9 +36,9 @@ export default function Interaxo() {
     return createBomResult({ cdeid: "interaxo", items });
   }, []);
 
-  const onSendDummyToBuyingSystem = () => {
+  const onPublishToBuyingSystem = () => {
     setBomResult(dummyBom);
-    setSentAt(Date.now());
+    setHasUnsentDraft(false);
   };
 
   return (
@@ -55,16 +56,12 @@ export default function Interaxo() {
               This page is a placeholder for future Interaxo integration.
             </div>
 
-            <div className="pageActions" style={{ marginTop: 12 }}>
-              <button type="button" onClick={onSendDummyToBuyingSystem}>
-                Send dummy BOM to Buying System
-              </button>
-              <div className="pageMeta">
-                Sends {dummyBom.items.length} items with cdeid "interaxo"
-                {sentAt
-                  ? ` (last sent ${new Date(sentAt).toLocaleTimeString()})`
-                  : ""}
-              </div>
+            <div style={{ marginTop: 12 }}>
+              <CdeBomSidebar
+                bomResult={dummyBom}
+                hasUnsentDraft={hasUnsentDraft}
+                onPublishToBuyingSystem={onPublishToBuyingSystem}
+              />
             </div>
           </div>
         </div>
