@@ -6,18 +6,26 @@ import { useBom } from "../context/useBom.js";
 export default function CDE() {
   const { bomResult, setBomResult } = useBom();
   const cdeid = "CDE1";
+  const [draftBomResult, setDraftBomResult] = useState(null);
+  const [hasUnsentDraft, setHasUnsentDraft] = useState(false);
 
   const onBomLoaded = useCallback(
     (result) => {
-      if (Array.isArray(result)) {
-        setBomResult({ cdeid, items: result });
-        return;
-      }
+      const normalized = Array.isArray(result)
+        ? { cdeid, items: result }
+        : { ...(result ?? {}), cdeid, items: result?.items ?? [] };
 
-      setBomResult({ ...(result ?? {}), cdeid });
+      setDraftBomResult(normalized);
+      setHasUnsentDraft(true);
     },
-    [setBomResult, cdeid],
+    [cdeid],
   );
+
+  const onPublishToBuyingSystem = useCallback(() => {
+    if (!draftBomResult) return;
+    setBomResult(draftBomResult);
+    setHasUnsentDraft(false);
+  }, [draftBomResult, setBomResult]);
 
   const [sidebarWidth, setSidebarWidth] = useState(() => {
     const viewportWidth =
@@ -98,7 +106,24 @@ export default function CDE() {
         onPointerDown={onSplitterPointerDown}
       />
       <div className="sidebarPane" style={{ width: `${sidebarWidth}px` }}>
-        <IfcWallsTable bomResult={bomResult} />
+        <div className="pageActions" style={{ padding: 12 }}>
+          <button
+            type="button"
+            onClick={onPublishToBuyingSystem}
+            disabled={!hasUnsentDraft}
+          >
+            Send BOM to Buying System
+          </button>
+          <div className="pageMeta">
+            {hasUnsentDraft
+              ? "BOM loaded (not sent)"
+              : "BOM sent to Buying System"}
+          </div>
+        </div>
+
+        <IfcWallsTable
+          bomResult={hasUnsentDraft ? draftBomResult : bomResult}
+        />
       </div>
     </div>
   );
