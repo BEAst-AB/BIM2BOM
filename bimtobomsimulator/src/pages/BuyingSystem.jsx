@@ -28,6 +28,7 @@ export default function BuyingSystem() {
   const items = useMemo(() => bomResult ?? [], [bomResult]);
 
   const shellRef = useRef(null);
+  const xmlDialogRef = useRef(null);
   const dragRef = useRef(null);
   const resizeRafRef = useRef(0);
   const [leftWidth, setLeftWidth] = useState(() => {
@@ -41,6 +42,17 @@ export default function BuyingSystem() {
 
   const [selectedKeys, setSelectedKeys] = useState(() => new Set());
   const [showXml, setShowXml] = useState(false);
+
+  const openXmlModal = () => {
+    if (!showXml) return;
+    const dialog = xmlDialogRef.current;
+    if (!dialog) return;
+    if (typeof dialog.showModal === "function") {
+      dialog.showModal();
+      return;
+    }
+    dialog.setAttribute("open", "");
+  };
 
   const selectedCount = selectedKeys.size;
 
@@ -185,10 +197,12 @@ export default function BuyingSystem() {
           />
 
           <div className="splitRight">
-            <div className="rightRows">
+            <div className="rightRows rightRowsBuying">
               <BuyingSystemOrderPanel
                 selectedItems={selectedList}
                 onRequestSent={() => setShowXml(true)}
+                xmlCreated={showXml}
+                onOpenXml={openXmlModal}
               />
 
               <IncomingOrdersPanel
@@ -196,7 +210,12 @@ export default function BuyingSystem() {
                 onAcceptIncomingOrder={acceptIncomingOrder}
               />
 
-              <XmlViewer show={showXml} emptyText="Press BUY to generate XML" />
+              <XmlViewer
+                show={showXml}
+                emptyText="Press BUY to generate XML"
+                renderPanel={false}
+                dialogRef={xmlDialogRef}
+              />
             </div>
           </div>
         </div>

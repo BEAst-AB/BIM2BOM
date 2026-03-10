@@ -45,6 +45,8 @@ const groupByNameAndSumLength = (selectedItems) => {
 export default function BuyingSystemOrderPanel({
   selectedItems,
   onRequestSent,
+  xmlCreated,
+  onOpenXml,
 }) {
   const {
     setSelectedBomItems,
@@ -102,6 +104,23 @@ export default function BuyingSystemOrderPanel({
           </label>
           <button type="button" onClick={onBuy}>
             Send request
+          </button>
+        </div>
+
+        <div
+          className="pageMeta"
+          style={{ display: "flex", alignItems: "center", gap: 8 }}
+        >
+          {xmlCreated ? "XML created" : "Press BUY to generate XML"}
+          <button
+            type="button"
+            onClick={onOpenXml}
+            disabled={!xmlCreated}
+            aria-label="Open XML in resizable window"
+            title={xmlCreated ? "Open" : "Generate XML first"}
+            style={{ padding: "0.4em 0.6em" }}
+          >
+            ⤢
           </button>
         </div>
 

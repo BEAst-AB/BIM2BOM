@@ -13,7 +13,7 @@ export default function IncomingOrdersPanel({
   );
 
   return (
-    <section className="panel" style={{ flex: "0 0 240px" }}>
+    <section className="panel">
       <div className="panelHeader">Incoming orders</div>
       <div className="panelBody">
         <table className="wallsTable">
