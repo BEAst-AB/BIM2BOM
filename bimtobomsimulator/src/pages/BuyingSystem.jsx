@@ -30,9 +30,9 @@ export default function BuyingSystem() {
     return bomResult?.items ?? [];
   }, [bomResult]);
 
-  const ideid = useMemo(() => {
-    if (Array.isArray(bomResult)) return "IDE1";
-    return (bomResult?.Ideid ?? bomResult?.ideid ?? "IDE1").toString();
+  const cdeid = useMemo(() => {
+    if (Array.isArray(bomResult)) return "";
+    return (bomResult?.cdeid ?? "").toString();
   }, [bomResult]);
 
   const shellRef = useRef(null);
@@ -54,7 +54,6 @@ export default function BuyingSystem() {
 
   const openXmlModal = () => {
     if (!showXml) return;
-    console.log("XML payload", xmlOrder);
     const dialog = xmlDialogRef.current;
     if (!dialog) return;
     if (typeof dialog.showModal === "function") {
@@ -138,7 +137,7 @@ export default function BuyingSystem() {
       <div className="pageHeader">
         <div className="pageTitle">Buying System</div>
         <div className="pageMeta">
-          {items.length} BOM items from {ideid}
+          {items.length} BOM items from {cdeid || "-"}
         </div>
       </div>
 
@@ -211,6 +210,7 @@ export default function BuyingSystem() {
           <div className="splitRight">
             <div className="rightRows rightRowsBuying">
               <BuyingSystemOrderPanel
+                cdeid={cdeid}
                 selectedItems={selectedList}
                 onRequestSent={(order) => {
                   setXmlOrder(order);

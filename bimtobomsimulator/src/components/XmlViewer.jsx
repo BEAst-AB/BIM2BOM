@@ -39,11 +39,11 @@ export default function XmlViewer({
 
   useEffect(() => {
     payloadRef.current = payload;
+    console.log("XMLViewer payload updated:", payload);
   }, [payload]);
 
   const openModal = () => {
     if (!canOpen) return;
-    console.log("XML payload", payloadRef.current);
     const dialog = dialogRef.current;
     if (!dialog) return;
     if (typeof dialog.showModal === "function") {

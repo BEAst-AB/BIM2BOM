@@ -43,12 +43,14 @@ const groupByNameAndSumLength = (selectedItems) => {
 };
 
 export default function BuyingSystemOrderPanel({
+  cdeid: cdeidProp,
   selectedItems,
   onRequestSent,
   xmlCreated,
   onOpenXml,
 }) {
   const {
+    bomResult,
     setSelectedBomItems,
     setSellingSystem1Order,
     setSellingSystem2Order,
@@ -65,10 +67,14 @@ export default function BuyingSystemOrderPanel({
     const itemsToBuy = selectedItems ?? [];
     setSelectedBomItems(itemsToBuy);
 
+    const resolvedCdeId = (
+      cdeidProp ?? (Array.isArray(bomResult) ? "" : (bomResult?.cdeid ?? ""))
+    ).toString();
+
     const order = {
       buyingSystem: createBuyingSystemId(),
       company: selectedCompany,
-      cdeid: null,
+      cdeid: resolvedCdeId,
       items: itemsToBuy,
     };
 

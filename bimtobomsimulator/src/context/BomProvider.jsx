@@ -35,21 +35,22 @@ const applyBomOverrides = (items, overridesByGuid) => {
 
 const normalizeBomResult = (value) => {
   if (Array.isArray(value)) {
-    return { Ideid: "IDE1", items: value };
+    return { cdeid: "", items: value };
   }
 
   if (value && typeof value === "object") {
-    const ideid = value.Ideid ?? value.ideid ?? "IDE1";
+    const cdeid = value.cdeid ?? "";
     const items = Array.isArray(value.items) ? value.items : [];
-    return { ...value, Ideid: ideid, items };
+    const { items: _items, cdeid: _cdeid, ...rest } = value;
+    return { ...rest, cdeid, items };
   }
 
-  return { Ideid: "IDE1", items: [] };
+  return { cdeid: "", items: [] };
 };
 
 export function BomProvider({ children }) {
   const [bomResult, setBomResultState] = useState(() => ({
-    Ideid: "IDE1",
+    cdeid: "",
     items: [],
   }));
   const [selectedBomItems, setSelectedBomItems] = useState([]);

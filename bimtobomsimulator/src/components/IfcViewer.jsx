@@ -1,8 +1,13 @@
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import * as OBC from "@thatopen/components";
 
 export default function IfcViewer({ ifcUrl, onBomLoaded }) {
   const containerRef = useRef(null);
+  const onBomLoadedRef = useRef(onBomLoaded);
+
+  useEffect(() => {
+    onBomLoadedRef.current = onBomLoaded;
+  }, [onBomLoaded]);
 
   useLayoutEffect(() => {
     if (!containerRef.current) return;
@@ -43,7 +48,8 @@ export default function IfcViewer({ ifcUrl, onBomLoaded }) {
       await ifcLoader.load(buffer, false, "BIM2BOM", {
         processData: {
           progressCallback: (progress) => {
-            console.log("IFC loading progress:", progress);
+            progress;
+            // console.log("IFC loading progress:", progress);
           },
         },
       });
@@ -113,7 +119,7 @@ export default function IfcViewer({ ifcUrl, onBomLoaded }) {
         });
 
         const BOMresult = {
-          Ideid: "IDE1",
+          cdeid: "",
           items: [],
         };
 
@@ -154,15 +160,18 @@ export default function IfcViewer({ ifcUrl, onBomLoaded }) {
 
         // console.log(BOMresult);
 
-        if (typeof onBomLoaded === "function" && !disposed) {
-          onBomLoaded(BOMresult);
+        if (typeof onBomLoadedRef.current === "function" && !disposed) {
+          onBomLoadedRef.current(BOMresult);
         }
 
-        console.log("Walls found by ItemsFinder:", data);
+        // console.log("Walls found by ItemsFinder:", data);
       } catch (error) {
         console.error("Viewer init failed:", error);
-        if (typeof onBomLoaded === "function") {
-          onBomLoaded({ Ideid: "IDE1", items: [] });
+        if (typeof onBomLoadedRef.current === "function") {
+          onBomLoadedRef.current({
+            cdeid: "",
+            items: [],
+          });
         }
       }
     })();
@@ -187,7 +196,7 @@ export default function IfcViewer({ ifcUrl, onBomLoaded }) {
         // Ignore cleanup errors.
       }
     };
-  }, [ifcUrl, onBomLoaded]);
+  }, [ifcUrl]);
 
   return <div ref={containerRef} className="viewerCanvas" />;
 }

@@ -1,10 +1,24 @@
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import IfcViewer from "../components/IfcViewer.jsx";
 import IfcWallsTable from "../components/IfcWallsTable.jsx";
 import { useBom } from "../context/useBom.js";
 
 export default function CDE() {
   const { bomResult, setBomResult } = useBom();
+  const cdeid = "CDE1";
+
+  const onBomLoaded = useCallback(
+    (result) => {
+      if (Array.isArray(result)) {
+        setBomResult({ cdeid, items: result });
+        return;
+      }
+
+      setBomResult({ ...(result ?? {}), cdeid });
+    },
+    [setBomResult, cdeid],
+  );
+
   const [sidebarWidth, setSidebarWidth] = useState(() => {
     const viewportWidth =
       typeof window !== "undefined" ? window.innerWidth : 1200;
@@ -73,7 +87,7 @@ export default function CDE() {
       <div className="viewerPane">
         <IfcViewer
           ifcUrl="/web-ifc/A-40-V-000_BIM2BOM.ifc"
-          onBomLoaded={setBomResult}
+          onBomLoaded={onBomLoaded}
         />
       </div>
       <div

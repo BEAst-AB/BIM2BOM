@@ -37,6 +37,7 @@ export default function SellingSystemComponent({
 
     const payload = {
       buyingSystem: order.buyingSystem,
+      cdeid: order.cdeid ?? "",
       company: order.company,
       SellingSystem: sellingSystemName,
       items: items.map((item, index) => {
