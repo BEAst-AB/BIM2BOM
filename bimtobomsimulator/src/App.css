@@ -1,0 +1,279 @@
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+.appFrame {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.tabsBar {
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.tabButton {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 8px 12px;
+  border-radius: 10px;
+  line-height: 1;
+  color: inherit;
+  text-decoration: none;
+}
+
+.tabButton[aria-current="page"] {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+.tabButton:hover {
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+.tabContent {
+  flex: 1;
+  min-height: 0;
+}
+
+.appShell {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.viewerPane {
+  flex: 1;
+  min-width: 0;
+}
+
+.viewerCanvas {
+  width: 100%;
+  height: 100%;
+}
+
+.paneSplitter {
+  flex: 0 0 6px;
+  width: 6px;
+  height: 100%;
+  cursor: col-resize;
+  touch-action: none;
+  user-select: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.sidebarPane {
+  flex: 0 0 auto;
+  height: 100%;
+  overflow: hidden;
+}
+
+.pagePane {
+  height: 100%;
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+
+.pageShell {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.pageHeader {
+  padding: 12px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.pageBody {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.splitShell {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.splitLeft {
+  flex: 0 0 auto;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.splitRight {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.splitColumn {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.rightRows {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  height: 100%;
+  min-height: 0;
+}
+
+.panel {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.panelHeader {
+  padding: 12px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  font-weight: 600;
+}
+
+.panelBody {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 12px 12px;
+}
+
+.xmlPre {
+  margin: 0;
+  white-space: pre;
+}
+
+.buyControls {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.buyLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.buyLabelText {
+  opacity: 0.8;
+  font-size: 0.9em;
+}
+
+.buySelect {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.2);
+  color: inherit;
+}
+
+.pageActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.pageMeta {
+  opacity: 0.8;
+  font-size: 0.9em;
+}
+
+.pageTitle {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.placeholderPane {
+  height: 100%;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  opacity: 0.9;
+  gap: 6px;
+}
+
+.placeholderTitle {
+  font-weight: 600;
+}
+
+.placeholderMeta {
+  opacity: 0.8;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.sidebarHeader {
+  padding: 12px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.sidebarTitle {
+  font-weight: 600;
+}
+
+.sidebarMeta {
+  opacity: 0.8;
+  font-size: 0.9em;
+}
+
+.tableWrap {
+  flex: 1;
+  overflow: auto;
+}
+
+.wallsTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.wallsTable th,
+.wallsTable td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  vertical-align: top;
+}
+
+.wallsTable th {
+  position: sticky;
+  top: 0;
+  background: rgba(36, 36, 36, 0.96);
+  color: #fff;
+}
+
+.mono {
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+}
+
+.emptyCell {
+  padding: 14px 10px;
+  opacity: 0.8;
+}
