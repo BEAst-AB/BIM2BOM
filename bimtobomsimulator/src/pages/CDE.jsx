@@ -4,10 +4,18 @@ import CdeBomSidebar from "../components/CdeBomSidebar.jsx";
 import { useBom } from "../context/useBom.js";
 
 export default function CDE() {
-  const { bomResult, setBomResult } = useBom();
+  const {
+    bomByCdeid,
+    draftBomByCdeid,
+    setDraftBomForCdeid,
+    clearDraftBomForCdeid,
+    setBomResult,
+  } = useBom();
   const cdeid = "CDE1";
-  const [draftBomResult, setDraftBomResult] = useState(null);
-  const [hasUnsentDraft, setHasUnsentDraft] = useState(false);
+
+  const publishedBom = bomByCdeid?.[cdeid] ?? null;
+  const draftBomResult = draftBomByCdeid?.[cdeid] ?? null;
+  const hasUnsentDraft = !!draftBomResult;
 
   const onBomLoaded = useCallback(
     (result) => {
@@ -15,17 +23,19 @@ export default function CDE() {
         ? { cdeid, items: result }
         : { ...(result ?? {}), cdeid, items: result?.items ?? [] };
 
-      setDraftBomResult(normalized);
-      setHasUnsentDraft(true);
+      // Avoid resetting the CDE table every time you navigate back to this page.
+      // If a BOM is already published and there's no active unsent draft, ignore reloads.
+      if (publishedBom && !draftBomResult) return;
+      setDraftBomForCdeid(cdeid, normalized);
     },
-    [cdeid],
+    [cdeid, publishedBom, draftBomResult, setDraftBomForCdeid],
   );
 
   const onPublishToBuyingSystem = useCallback(() => {
     if (!draftBomResult) return;
     setBomResult(draftBomResult);
-    setHasUnsentDraft(false);
-  }, [draftBomResult, setBomResult]);
+    clearDraftBomForCdeid(cdeid);
+  }, [cdeid, clearDraftBomForCdeid, draftBomResult, setBomResult]);
 
   const [sidebarWidth, setSidebarWidth] = useState(() => {
     const viewportWidth =
@@ -106,11 +116,17 @@ export default function CDE() {
         onPointerDown={onSplitterPointerDown}
       />
       <div className="sidebarPane" style={{ width: `${sidebarWidth}px` }}>
+        {(() => {
+          const tableBom = hasUnsentDraft ? draftBomResult : publishedBom;
+
+          return (
         <CdeBomSidebar
           hasUnsentDraft={hasUnsentDraft}
           onPublishToBuyingSystem={onPublishToBuyingSystem}
-          bomResult={hasUnsentDraft ? draftBomResult : bomResult}
+          bomResult={tableBom}
         />
+          );
+        })()}
       </div>
     </div>
   );

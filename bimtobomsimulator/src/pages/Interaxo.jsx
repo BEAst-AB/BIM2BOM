@@ -1,11 +1,10 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useBom } from "../context/useBom.js";
 import CdeBomSidebar from "../components/CdeBomSidebar.jsx";
 import { createBeastProp, createBomResult } from "../helpers/bomTemplates.js";
 
 export default function Interaxo() {
-  const { setBomResult } = useBom();
-  const [hasUnsentDraft, setHasUnsentDraft] = useState(true);
+  const { bomByCdeid, setBomResult } = useBom();
 
   const dummyBom = useMemo(() => {
     const items = [
@@ -38,8 +37,11 @@ export default function Interaxo() {
 
   const onPublishToBuyingSystem = () => {
     setBomResult(dummyBom);
-    setHasUnsentDraft(false);
   };
+
+  const publishedBom = bomByCdeid?.interaxo;
+  const hasUnsentDraft = !publishedBom;
+  const tableBom = hasUnsentDraft ? dummyBom : publishedBom;
 
   return (
     <div className="pageShell">
@@ -58,7 +60,7 @@ export default function Interaxo() {
 
             <div style={{ marginTop: 12 }}>
               <CdeBomSidebar
-                bomResult={dummyBom}
+                bomResult={tableBom}
                 hasUnsentDraft={hasUnsentDraft}
                 onPublishToBuyingSystem={onPublishToBuyingSystem}
               />

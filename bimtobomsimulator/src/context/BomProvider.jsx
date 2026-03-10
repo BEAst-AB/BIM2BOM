@@ -53,29 +53,62 @@ export function BomProvider({ children }) {
     cdeid: "",
     items: [],
   }));
+  const [bomByCdeid, setBomByCdeid] = useState(() => ({}));
+  const [draftBomByCdeid, setDraftBomByCdeid] = useState(() => ({}));
   const [selectedBomItems, setSelectedBomItems] = useState([]);
   const [buySummaryLines, setBuySummaryLines] = useState([]);
   const [sellingSystem1Order, setSellingSystem1Order] = useState(null);
   const [sellingSystem2Order, setSellingSystem2Order] = useState(null);
   const [incomingOrders, setIncomingOrders] = useState([]);
   const [acceptedOrders, setAcceptedOrders] = useState([]);
-  const [bomOverridesByGuid, setBomOverridesByGuid] = useState(() => ({}));
+  const [bomOverridesByCdeid, setBomOverridesByCdeid] = useState(() => ({}));
 
-  const bomOverridesRef = useRef(bomOverridesByGuid);
+  const bomOverridesRef = useRef(bomOverridesByCdeid);
 
   useEffect(() => {
-    bomOverridesRef.current = bomOverridesByGuid;
-  }, [bomOverridesByGuid]);
+    bomOverridesRef.current = bomOverridesByCdeid;
+  }, [bomOverridesByCdeid]);
 
   // Keep this function stable so IfcViewer doesn't reload when context updates.
   const setBomResult = useCallback((next) => {
     setBomResultState((prev) => {
       const resolved = typeof next === "function" ? next(prev) : next;
       const normalized = normalizeBomResult(resolved);
-      return {
+      const resolvedCdeid = (normalized?.cdeid ?? "").toString().trim();
+      const overridesByGuid = bomOverridesRef.current?.[resolvedCdeid] ?? {};
+      const applied = {
         ...normalized,
-        items: applyBomOverrides(normalized.items, bomOverridesRef.current),
+        items: applyBomOverrides(normalized.items, overridesByGuid),
       };
+
+      setBomByCdeid((prevByCde) => ({
+        ...prevByCde,
+        [resolvedCdeid]: applied,
+      }));
+
+      return applied;
+    });
+  }, []);
+
+  const setDraftBomForCdeid = useCallback((cdeid, nextDraft) => {
+    const resolvedCdeid = (cdeid ?? "").toString().trim();
+    const normalized = normalizeBomResult(nextDraft);
+    setDraftBomByCdeid((prev) => ({
+      ...prev,
+      [resolvedCdeid]: {
+        ...normalized,
+        cdeid: resolvedCdeid,
+      },
+    }));
+  }, []);
+
+  const clearDraftBomForCdeid = useCallback((cdeid) => {
+    const resolvedCdeid = (cdeid ?? "").toString().trim();
+    setDraftBomByCdeid((prev) => {
+      if (!prev || !(resolvedCdeid in prev)) return prev;
+      const next = { ...prev };
+      delete next[resolvedCdeid];
+      return next;
     });
   }, []);
 
@@ -97,15 +130,28 @@ export function BomProvider({ children }) {
 
       const order = prev[index];
       const payload = order?.payload;
+      const targetCdeid = (payload?.cdeid ?? "").toString().trim();
+
+      if (!targetCdeid) {
+        console.warn(
+          "acceptIncomingOrder: payload missing cdeid; skipping BOM update",
+          payload,
+        );
+      }
 
       // Update the CDE BOM table by matching GUID and copying in Seller + price.
       // Keep the incoming payload intact; never replace the BOM item objects.
-      if (payload && Array.isArray(payload.items)) {
+      if (targetCdeid && payload && Array.isArray(payload.items)) {
         const updatesByGuid = {};
         const seller = payload.company ?? payload.SellingSystem ?? "";
 
         for (const line of payload.items) {
-          const guid = line?.item?.GUID;
+          const guid =
+            line?.item?.GUID ??
+            line?.GUID ??
+            line?.guid ??
+            line?.itemGuid ??
+            line?.itemGUID;
           if (!guid) continue;
           updatesByGuid[guid] = {
             Seller: seller,
@@ -114,17 +160,36 @@ export function BomProvider({ children }) {
         }
 
         if (Object.keys(updatesByGuid).length > 0) {
-          setBomOverridesByGuid((prevOverrides) => ({
+          const existingOverrides = bomOverridesRef.current?.[targetCdeid] ?? {};
+          const mergedOverrides = { ...existingOverrides, ...updatesByGuid };
+
+          setBomOverridesByCdeid((prevOverrides) => ({
             ...prevOverrides,
-            ...updatesByGuid,
+            [targetCdeid]: mergedOverrides,
           }));
 
-          const merged = { ...bomOverridesRef.current, ...updatesByGuid };
+          // Update the per-CDE BOM table.
+          setBomByCdeid((prevByCde) => {
+            const current = prevByCde[targetCdeid];
+            if (!current) return prevByCde;
+            const normalized = normalizeBomResult(current);
+            return {
+              ...prevByCde,
+              [targetCdeid]: {
+                ...normalized,
+                items: applyBomOverrides(normalized.items, mergedOverrides),
+              },
+            };
+          });
+
+          // Update the BuyingSystem BOM only if it belongs to the same CDE.
           setBomResultState((bomPrev) => {
             const normalized = normalizeBomResult(bomPrev);
+            if (((normalized?.cdeid ?? "").toString() || "") !== targetCdeid)
+              return bomPrev;
             return {
               ...normalized,
-              items: applyBomOverrides(normalized.items, merged),
+              items: applyBomOverrides(normalized.items, mergedOverrides),
             };
           });
         }
@@ -141,7 +206,11 @@ export function BomProvider({ children }) {
   const value = useMemo(
     () => ({
       bomResult,
+      bomByCdeid,
+      draftBomByCdeid,
       setBomResult,
+      setDraftBomForCdeid,
+      clearDraftBomForCdeid,
       selectedBomItems,
       setSelectedBomItems,
       buySummaryLines,
@@ -157,6 +226,8 @@ export function BomProvider({ children }) {
     }),
     [
       bomResult,
+      bomByCdeid,
+      draftBomByCdeid,
       selectedBomItems,
       buySummaryLines,
       sellingSystem1Order,
@@ -164,6 +235,8 @@ export function BomProvider({ children }) {
       incomingOrders,
       acceptedOrders,
       setBomResult,
+      setDraftBomForCdeid,
+      clearDraftBomForCdeid,
     ],
   );
 
