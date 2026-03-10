@@ -4,8 +4,7 @@ import IfcWallsTable from "../components/IfcWallsTable.jsx";
 import { useBom } from "../context/useBom.js";
 
 export default function CDE() {
-  const { bomResult, setBomResult, incomingOrders, acceptIncomingOrder } =
-    useBom();
+  const { bomResult, setBomResult } = useBom();
   const [sidebarWidth, setSidebarWidth] = useState(() => {
     const viewportWidth =
       typeof window !== "undefined" ? window.innerWidth : 1200;
@@ -85,11 +84,7 @@ export default function CDE() {
         onPointerDown={onSplitterPointerDown}
       />
       <div className="sidebarPane" style={{ width: `${sidebarWidth}px` }}>
-        <IfcWallsTable
-          bomResult={bomResult}
-          incomingOrders={incomingOrders}
-          onAcceptIncomingOrder={acceptIncomingOrder}
-        />
+        <IfcWallsTable bomResult={bomResult} />
       </div>
     </div>
   );

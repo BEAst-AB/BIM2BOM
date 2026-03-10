@@ -1,10 +1,4 @@
-import IncomingOrdersPanel from "./IncomingOrdersPanel";
-
-export default function IfcWallsTable({
-  bomResult,
-  incomingOrders = [],
-  onAcceptIncomingOrder,
-}) {
+export default function IfcWallsTable({ bomResult }) {
   const items = bomResult ?? [];
 
   return (
@@ -44,11 +38,6 @@ export default function IfcWallsTable({
           </tbody>
         </table>
       </div>
-
-      <IncomingOrdersPanel
-        incomingOrders={incomingOrders}
-        onAcceptIncomingOrder={onAcceptIncomingOrder}
-      />
     </div>
   );
 }

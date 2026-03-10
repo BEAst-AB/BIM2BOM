@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState } from "react";
 import { useBom } from "../context/useBom.js";
 import BuyingSystemOrderPanel from "../components/BuyingSystemOrderPanel.jsx";
+import IncomingOrdersPanel from "../components/IncomingOrdersPanel.jsx";
 import XmlViewer from "../components/XmlViewer.jsx";
 
 const getRowKey = (item, index) => item?.GUID ?? item?.id ?? index;
@@ -18,7 +19,12 @@ const readLength = (item) => {
 };
 
 export default function BuyingSystem() {
-  const { bomResult, setSelectedBomItems } = useBom();
+  const {
+    bomResult,
+    setSelectedBomItems,
+    incomingOrders,
+    acceptIncomingOrder,
+  } = useBom();
   const items = useMemo(() => bomResult ?? [], [bomResult]);
 
   const shellRef = useRef(null);
@@ -183,6 +189,11 @@ export default function BuyingSystem() {
               <BuyingSystemOrderPanel
                 selectedItems={selectedList}
                 onRequestSent={() => setShowXml(true)}
+              />
+
+              <IncomingOrdersPanel
+                incomingOrders={incomingOrders}
+                onAcceptIncomingOrder={acceptIncomingOrder}
               />
 
               <XmlViewer show={showXml} emptyText="Press BUY to generate XML" />
