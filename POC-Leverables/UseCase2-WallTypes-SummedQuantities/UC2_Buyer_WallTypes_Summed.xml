@@ -76,12 +76,14 @@
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>thickness</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">thickness</cbc:NameCode>
                 <cbc:Value>350 mm</cbc:Value>
                 <cbc:ValueQuantity unitCode="MMT">350</cbc:ValueQuantity>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>net area</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">net area</cbc:NameCode>
                 <cbc:Value>79.81 m2</cbc:Value>
                 <cbc:ValueQuantity unitCode="MTK">79.81</cbc:ValueQuantity>
             </cac:AdditionalItemProperty>

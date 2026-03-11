@@ -91,21 +91,25 @@
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>AuthoringToolId</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">AuthoringToolId</cbc:NameCode>
                 <cbc:Value>1192287</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>CDEGuid</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">CDEGuid</cbc:NameCode>
                 <cbc:Value>3pLKJPvHT21uNqX1l9FcUN</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>ItemType</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
                 <cbc:Value>BIMObject</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>RecipeType</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">RecipeType</cbc:NameCode>
                 <cbc:Value>Dumb</cbc:Value>
             </cac:AdditionalItemProperty>
         </cac:Item>
@@ -143,6 +147,7 @@
             <!-- Seller's AuthoringToolId only -->
             <cac:AdditionalItemProperty>
                 <cbc:Name>AuthoringToolId</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">AuthoringToolId</cbc:NameCode>
                 <cbc:Value>VE-PKG-001</cbc:Value>
             </cac:AdditionalItemProperty>
             
@@ -150,11 +155,13 @@
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>ItemType</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
                 <cbc:Value>PackageArticle</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>Traceability</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">Traceability</cbc:NameCode>
                 <cbc:Value>None - Package level only</cbc:Value>
             </cac:AdditionalItemProperty>
         </cac:Item>
@@ -189,16 +196,19 @@
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>AuthoringToolId</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">AuthoringToolId</cbc:NameCode>
                 <cbc:Value>VE-PKG-002</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>ItemType</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
                 <cbc:Value>PackageArticle</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>Traceability</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">Traceability</cbc:NameCode>
                 <cbc:Value>None - Package level only</cbc:Value>
             </cac:AdditionalItemProperty>
         </cac:Item>
@@ -233,16 +243,19 @@
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>AuthoringToolId</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">AuthoringToolId</cbc:NameCode>
                 <cbc:Value>VE-PKG-003</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>ItemType</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
                 <cbc:Value>PackageArticle</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>Traceability</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">Traceability</cbc:NameCode>
                 <cbc:Value>None - Package level only</cbc:Value>
             </cac:AdditionalItemProperty>
         </cac:Item>

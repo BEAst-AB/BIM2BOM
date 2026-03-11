@@ -80,6 +80,7 @@
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>RecipeType</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">RecipeType</cbc:NameCode>
                 <cbc:Value>Aggregated</cbc:Value>
             </cac:AdditionalItemProperty>
         </cac:Item>
@@ -111,11 +112,13 @@
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>ParentItemID</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">ParentItemID</cbc:NameCode>
                 <cbc:Value>YV01-350</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>RecipeArticle</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">RecipeArticle</cbc:NameCode>
                 <cbc:Value>Yes</cbc:Value>
             </cac:AdditionalItemProperty>
         </cac:Item>
@@ -147,11 +150,13 @@
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>ParentItemID</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">ParentItemID</cbc:NameCode>
                 <cbc:Value>YV01-350</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>RecipeArticle</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">RecipeArticle</cbc:NameCode>
                 <cbc:Value>Yes</cbc:Value>
             </cac:AdditionalItemProperty>
         </cac:Item>
@@ -183,11 +188,13 @@
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>ParentItemID</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">ParentItemID</cbc:NameCode>
                 <cbc:Value>YV01-350</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>RecipeArticle</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">RecipeArticle</cbc:NameCode>
                 <cbc:Value>Yes</cbc:Value>
             </cac:AdditionalItemProperty>
         </cac:Item>

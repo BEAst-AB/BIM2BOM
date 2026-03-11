@@ -79,12 +79,14 @@
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>thickness</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">thickness</cbc:NameCode>
                 <cbc:Value>350 mm</cbc:Value>
                 <cbc:ValueQuantity unitCode="MMT">350</cbc:ValueQuantity>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>LeadTime</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">LeadTime</cbc:NameCode>
                 <cbc:Value>14 dagar</cbc:Value>
             </cac:AdditionalItemProperty>
         </cac:Item>

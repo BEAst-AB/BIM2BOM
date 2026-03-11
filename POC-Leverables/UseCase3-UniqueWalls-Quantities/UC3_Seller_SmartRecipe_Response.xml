@@ -99,21 +99,25 @@
             <!-- Original BIM AuthoringToolId -->
             <cac:AdditionalItemProperty>
                 <cbc:Name>AuthoringToolId</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">AuthoringToolId</cbc:NameCode>
                 <cbc:Value>1192287</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>CDEGuid</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">CDEGuid</cbc:NameCode>
                 <cbc:Value>3pLKJPvHT21uNqX1l9FcUN</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>ItemType</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
                 <cbc:Value>BIMObject</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>RecipeType</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">RecipeType</cbc:NameCode>
                 <cbc:Value>Smart</cbc:Value>
             </cac:AdditionalItemProperty>
         </cac:Item>
@@ -151,27 +155,32 @@
             <!-- Seller's own AuthoringToolId - DIFFERENT from BIM -->
             <cac:AdditionalItemProperty>
                 <cbc:Name>AuthoringToolId</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">AuthoringToolId</cbc:NameCode>
                 <cbc:Value>VE-2001</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <!-- SAME CDEGuid as parent - key for smart recipe -->
             <cac:AdditionalItemProperty>
                 <cbc:Name>CDEGuid</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">CDEGuid</cbc:NameCode>
                 <cbc:Value>3pLKJPvHT21uNqX1l9FcUN</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>ItemType</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
                 <cbc:Value>RecipeArticle</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>ParentAuthoringToolId</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">ParentAuthoringToolId</cbc:NameCode>
                 <cbc:Value>1192287</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>thickness</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">thickness</cbc:NameCode>
                 <cbc:Value>110 mm</cbc:Value>
                 <cbc:ValueQuantity unitCode="MMT">110</cbc:ValueQuantity>
             </cac:AdditionalItemProperty>
@@ -208,26 +217,31 @@
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>AuthoringToolId</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">AuthoringToolId</cbc:NameCode>
                 <cbc:Value>VE-2002</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>CDEGuid</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">CDEGuid</cbc:NameCode>
                 <cbc:Value>3pLKJPvHT21uNqX1l9FcUN</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>ItemType</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
                 <cbc:Value>RecipeArticle</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>ParentAuthoringToolId</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">ParentAuthoringToolId</cbc:NameCode>
                 <cbc:Value>1192287</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>thickness</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">thickness</cbc:NameCode>
                 <cbc:Value>195 mm</cbc:Value>
                 <cbc:ValueQuantity unitCode="MMT">195</cbc:ValueQuantity>
             </cac:AdditionalItemProperty>
@@ -264,26 +278,31 @@
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>AuthoringToolId</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">AuthoringToolId</cbc:NameCode>
                 <cbc:Value>VE-2003</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>CDEGuid</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">CDEGuid</cbc:NameCode>
                 <cbc:Value>3pLKJPvHT21uNqX1l9FcUN</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>ItemType</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
                 <cbc:Value>RecipeArticle</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>ParentAuthoringToolId</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">ParentAuthoringToolId</cbc:NameCode>
                 <cbc:Value>1192287</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>thickness</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">thickness</cbc:NameCode>
                 <cbc:Value>13 mm</cbc:Value>
                 <cbc:ValueQuantity unitCode="MMT">13</cbc:ValueQuantity>
             </cac:AdditionalItemProperty>

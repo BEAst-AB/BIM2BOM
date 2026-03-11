@@ -67,21 +67,25 @@
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>AuthoringToolId</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">AuthoringToolId</cbc:NameCode>
                 <cbc:Value>1192287</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>CDEGuid</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">CDEGuid</cbc:NameCode>
                 <cbc:Value>3pLKJPvHT21uNqX1l9FcUN</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>ItemType</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
                 <cbc:Value>BIMObject</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>SourceSystem</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">SourceSystem</cbc:NameCode>
                 <cbc:Value>BIM Modellen</cbc:Value>
             </cac:AdditionalItemProperty>
         </cac:Item>
@@ -105,21 +109,25 @@
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>AuthoringToolId</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">AuthoringToolId</cbc:NameCode>
                 <cbc:Value>VE-MFG-001</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>CDEGuid</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">CDEGuid</cbc:NameCode>
                 <cbc:Value>3pLKJPvHT21uNqX1l9FcUN</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>ItemType</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
                 <cbc:Value>ManufacturingArticle</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>SourceSystem</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">SourceSystem</cbc:NameCode>
                 <cbc:Value>Selling System</cbc:Value>
             </cac:AdditionalItemProperty>
         </cac:Item>
@@ -143,21 +151,25 @@
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>AuthoringToolId</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">AuthoringToolId</cbc:NameCode>
                 <cbc:Value>VE-MFG-002</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>CDEGuid</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">CDEGuid</cbc:NameCode>
                 <cbc:Value>3pLKJPvHT21uNqX1l9FcUN</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>ItemType</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
                 <cbc:Value>ManufacturingArticle</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>SourceSystem</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">SourceSystem</cbc:NameCode>
                 <cbc:Value>Selling System</cbc:Value>
             </cac:AdditionalItemProperty>
         </cac:Item>

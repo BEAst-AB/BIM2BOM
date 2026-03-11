@@ -85,56 +85,66 @@
             <!-- AuthoringToolId (Revit Element ID) -->
             <cac:AdditionalItemProperty>
                 <cbc:Name>AuthoringToolId</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">AuthoringToolId</cbc:NameCode>
                 <cbc:Value>1192287</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <!-- CDEGuid (same as IFC GlobalId) -->
             <cac:AdditionalItemProperty>
                 <cbc:Name>CDEGuid</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">CDEGuid</cbc:NameCode>
                 <cbc:Value>3pLKJPvHT21uNqX1l9FcUN</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>TypeID</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">TypeID</cbc:NameCode>
                 <cbc:Value>YVxx</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>thickness</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">thickness</cbc:NameCode>
                 <cbc:Value>350 mm</cbc:Value>
                 <cbc:ValueQuantity unitCode="MMT">350</cbc:ValueQuantity>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>height</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">height</cbc:NameCode>
                 <cbc:Value>5628 mm</cbc:Value>
                 <cbc:ValueQuantity unitCode="MMT">5628</cbc:ValueQuantity>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>length</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">length</cbc:NameCode>
                 <cbc:Value>16060 mm</cbc:Value>
                 <cbc:ValueQuantity unitCode="MMT">16060</cbc:ValueQuantity>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>net area</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">net area</cbc:NameCode>
                 <cbc:Value>79.81 m2</cbc:Value>
                 <cbc:ValueQuantity unitCode="MTK">79.81</cbc:ValueQuantity>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>is load bearing</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">is load bearing</cbc:NameCode>
                 <cbc:Value>Yes</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>is external</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">is external</cbc:NameCode>
                 <cbc:Value>Yes</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>floor</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">floor</cbc:NameCode>
                 <cbc:Value>010</cbc:Value>
             </cac:AdditionalItemProperty>
         </cac:Item>
