@@ -24,6 +24,7 @@ export default function BuyingSystem() {
     setSelectedBomItems,
     incomingOrders,
     acceptIncomingOrder,
+    declineIncomingOrder,
   } = useBom();
   const items = useMemo(() => {
     if (Array.isArray(bomResult)) return bomResult;
@@ -223,6 +224,7 @@ export default function BuyingSystem() {
               <IncomingOrdersPanel
                 incomingOrders={incomingOrders}
                 onAcceptIncomingOrder={acceptIncomingOrder}
+                onDeclineIncomingOrder={declineIncomingOrder}
               />
 
               <XmlViewer

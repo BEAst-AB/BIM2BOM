@@ -19,18 +19,34 @@ const applyBomOverrides = (items, overridesByGuid) => {
   if (!overridesByGuid || Object.keys(overridesByGuid).length === 0)
     return list;
 
-  return list.map((item) => {
-    const guid = item?.GUID;
-    if (!guid) return item;
-    const override = overridesByGuid[guid];
-    if (!override) return item;
+  const applyToItem = (item) => {
+    if (!item || typeof item !== "object") return item;
+
+    const children = Array.isArray(item.itemchildren)
+      ? item.itemchildren
+      : null;
+    const nextChildren = children
+      ? children.map((child) => applyToItem(child))
+      : null;
+
+    const key = getItemStableKey(item, "");
+    const override = key ? overridesByGuid[key] : null;
+
+    if (!override && !nextChildren) return item;
 
     return {
       ...item,
-      Seller: override.Seller,
-      price: override.price,
+      ...(nextChildren ? { itemchildren: nextChildren } : {}),
+      ...(override
+        ? {
+            Seller: override.Seller,
+            price: override.price,
+          }
+        : {}),
     };
-  });
+  };
+
+  return list.map((item) => applyToItem(item));
 };
 
 const normalizeBomResult = (value) => {
@@ -46,6 +62,51 @@ const normalizeBomResult = (value) => {
   }
 
   return { cdeid: "", items: [] };
+};
+
+const getItemStableKey = (item, fallback) => {
+  const guid = item?.GUID;
+  if (guid != null && String(guid).trim() !== "") return String(guid);
+  const id = item?.id;
+  if (id != null && String(id).trim() !== "") return String(id);
+  return fallback;
+};
+
+const mergeIncomingChildrenByGuid = (items, childrenByGuid) => {
+  if (!childrenByGuid || Object.keys(childrenByGuid).length === 0) return items;
+  const list = Array.isArray(items) ? items : [];
+
+  return list.map((item, index) => {
+    if (!item || typeof item !== "object") return item;
+    const guid = getItemStableKey(item, "");
+    const incomingChildren = guid ? childrenByGuid[guid] : null;
+    if (!Array.isArray(incomingChildren) || incomingChildren.length === 0)
+      return item;
+
+    const existingChildren = Array.isArray(item.itemchildren)
+      ? item.itemchildren
+      : [];
+
+    const existingKeys = new Set(
+      existingChildren.map((child, childIndex) =>
+        getItemStableKey(child, `existing:${index}:${childIndex}`),
+      ),
+    );
+
+    const mergedChildren = [...existingChildren];
+    for (let i = 0; i < incomingChildren.length; i += 1) {
+      const child = incomingChildren[i];
+      const key = getItemStableKey(child, `incoming:${index}:${i}`);
+      if (existingKeys.has(key)) continue;
+      existingKeys.add(key);
+      mergedChildren.push(child);
+    }
+
+    return {
+      ...item,
+      itemchildren: mergedChildren,
+    };
+  });
 };
 
 export function BomProvider({ children }) {
@@ -123,6 +184,16 @@ export function BomProvider({ children }) {
     ]);
   };
 
+  const declineIncomingOrder = (incomingId) => {
+    setIncomingOrders((prev) => {
+      const index = prev.findIndex((o) => o.id === incomingId);
+      if (index === -1) return prev;
+      const next = prev.slice();
+      next.splice(index, 1);
+      return next;
+    });
+  };
+
   const acceptIncomingOrder = (incomingId) => {
     setIncomingOrders((prev) => {
       const index = prev.findIndex((o) => o.id === incomingId);
@@ -143,41 +214,56 @@ export function BomProvider({ children }) {
       // Keep the incoming payload intact; never replace the BOM item objects.
       if (targetCdeid && payload && Array.isArray(payload.items)) {
         const updatesByGuid = {};
+        const childrenByGuid = {};
         const seller = payload.company ?? payload.SellingSystem ?? "";
 
         for (const line of payload.items) {
-          const guid =
-            line?.item?.GUID ??
-            line?.GUID ??
-            line?.guid ??
-            line?.itemGuid ??
-            line?.itemGUID;
+          const item = line?.item ?? line;
+          const incomingChildren = item?.itemchildren;
+          const guid = getItemStableKey(item, "");
           if (!guid) continue;
+
+          if (Array.isArray(incomingChildren) && incomingChildren.length > 0) {
+            childrenByGuid[guid] = incomingChildren;
+          }
+
           updatesByGuid[guid] = {
             Seller: seller,
             price: line?.price ?? "",
           };
         }
 
-        if (Object.keys(updatesByGuid).length > 0) {
-          const existingOverrides = bomOverridesRef.current?.[targetCdeid] ?? {};
-          const mergedOverrides = { ...existingOverrides, ...updatesByGuid };
+        const hasOverrides = Object.keys(updatesByGuid).length > 0;
+        const hasChildren = Object.keys(childrenByGuid).length > 0;
 
-          setBomOverridesByCdeid((prevOverrides) => ({
-            ...prevOverrides,
-            [targetCdeid]: mergedOverrides,
-          }));
+        if (hasOverrides || hasChildren) {
+          const existingOverrides =
+            bomOverridesRef.current?.[targetCdeid] ?? {};
+          const mergedOverrides = hasOverrides
+            ? { ...existingOverrides, ...updatesByGuid }
+            : existingOverrides;
+
+          if (hasOverrides) {
+            setBomOverridesByCdeid((prevOverrides) => ({
+              ...prevOverrides,
+              [targetCdeid]: mergedOverrides,
+            }));
+          }
 
           // Update the per-CDE BOM table.
           setBomByCdeid((prevByCde) => {
             const current = prevByCde[targetCdeid];
             if (!current) return prevByCde;
             const normalized = normalizeBomResult(current);
+            const mergedChildren = mergeIncomingChildrenByGuid(
+              normalized.items,
+              childrenByGuid,
+            );
             return {
               ...prevByCde,
               [targetCdeid]: {
                 ...normalized,
-                items: applyBomOverrides(normalized.items, mergedOverrides),
+                items: applyBomOverrides(mergedChildren, mergedOverrides),
               },
             };
           });
@@ -189,7 +275,10 @@ export function BomProvider({ children }) {
               return bomPrev;
             return {
               ...normalized,
-              items: applyBomOverrides(normalized.items, mergedOverrides),
+              items: applyBomOverrides(
+                mergeIncomingChildrenByGuid(normalized.items, childrenByGuid),
+                mergedOverrides,
+              ),
             };
           });
         }
@@ -222,6 +311,7 @@ export function BomProvider({ children }) {
       incomingOrders,
       addIncomingOrder,
       acceptIncomingOrder,
+      declineIncomingOrder,
       acceptedOrders,
     }),
     [

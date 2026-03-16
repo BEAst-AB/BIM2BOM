@@ -11,6 +11,7 @@ export const createBeastProp = ({
   RevitID = "",
   propertySet = "",
   property,
+  itemchildren,
   Seller = "",
   price = "",
 } = {}) => ({
@@ -21,6 +22,7 @@ export const createBeastProp = ({
   RevitID,
   propertySet,
   property: Array.isArray(property) ? property : [],
+  itemchildren: Array.isArray(itemchildren) ? itemchildren : [],
   Seller,
   price,
 });

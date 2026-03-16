@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { useBom } from "../context/useBom.js";
+import { createBeastProp } from "../helpers/bomTemplates.js";
 
 const readLengthNumber = (item) => {
   const properties = item?.property ?? [];
@@ -26,6 +27,19 @@ const createBuyingSystemId = () => {
   const nowPart = Date.now().toString(36);
   const randomPart = Math.random().toString(36).slice(2, 10);
   return `buy-${nowPart}-${randomPart}`;
+};
+
+const createManualItemId = () => {
+  if (
+    typeof crypto !== "undefined" &&
+    typeof crypto.randomUUID === "function"
+  ) {
+    return crypto.randomUUID();
+  }
+
+  const nowPart = Date.now().toString(36);
+  const randomPart = Math.random().toString(36).slice(2, 10);
+  return `manual-${nowPart}-${randomPart}`;
 };
 
 const groupByNameAndSumLength = (selectedItems) => {
@@ -57,14 +71,65 @@ export default function BuyingSystemOrderPanel({
   } = useBom();
 
   const [selectedCompany, setSelectedCompany] = useState("Company 1");
+  const [manualItemsByLineName, setManualItemsByLineName] = useState(
+    () => ({}),
+  );
 
   const groupedSummary = useMemo(
     () => groupByNameAndSumLength(selectedItems),
     [selectedItems],
   );
 
+  const addManualItemForLine = (lineName) => {
+    const item = createBeastProp({
+      id: createManualItemId(),
+      Name: "",
+      GUID: "",
+      property: [],
+      itemchildren: [],
+      Seller: "",
+      price: "",
+    });
+
+    setManualItemsByLineName((prev) => {
+      const next = { ...(prev ?? {}) };
+      const list = Array.isArray(next[lineName]) ? next[lineName] : [];
+      next[lineName] = [...list, item];
+      return next;
+    });
+  };
+
+  const updateManualItem = (lineName, id, patch) => {
+    setManualItemsByLineName((prev) => {
+      const list = prev?.[lineName];
+      if (!Array.isArray(list) || list.length === 0) return prev;
+      const nextList = list.map((item) =>
+        item?.id === id ? { ...item, ...patch } : item,
+      );
+      return { ...prev, [lineName]: nextList };
+    });
+  };
+
   const onBuy = () => {
-    const itemsToBuy = selectedItems ?? [];
+    const baseItems = selectedItems ?? [];
+    const seenNames = new Set();
+    const itemsToBuy = baseItems.map((item) => {
+      const name = (item?.Name ?? "-").toString();
+      const extras = manualItemsByLineName?.[name] ?? [];
+      if (!Array.isArray(extras) || extras.length === 0) return item;
+      if (seenNames.has(name)) return item;
+      seenNames.add(name);
+
+      const existingChildren = Array.isArray(item?.itemchildren)
+        ? item.itemchildren
+        : [];
+
+      return {
+        ...item,
+        itemchildren: [...existingChildren, ...extras],
+      };
+    });
+
     setSelectedBomItems(itemsToBuy);
 
     const resolvedCdeId = (
@@ -139,23 +204,85 @@ export default function BuyingSystemOrderPanel({
                 <th style={{ width: 90 }}>Count</th>
                 <th>Name</th>
                 <th style={{ width: 140 }}>Total lenght</th>
+                <th style={{ width: 140 }} />
               </tr>
             </thead>
             <tbody>
               {selectedItems?.length === 0 ? (
                 <tr>
-                  <td colSpan={3} className="emptyCell">
+                  <td colSpan={4} className="emptyCell">
                     Select items on the left to prepare a buy order
                   </td>
                 </tr>
               ) : (
-                groupedSummary.map((line) => (
-                  <tr key={line.Name}>
-                    <td className="mono">{line.Count}</td>
-                    <td>{line.Name}</td>
-                    <td className="mono">{line.TotalLength}</td>
-                  </tr>
-                ))
+                groupedSummary.flatMap((line) => {
+                  const extras = manualItemsByLineName?.[line.Name] ?? [];
+                  const rows = [
+                    <tr key={line.Name}>
+                      <td className="mono">{line.Count}</td>
+                      <td>{line.Name}</td>
+                      <td className="mono">{line.TotalLength}</td>
+                      <td style={{ textAlign: "right" }}>
+                        <button
+                          type="button"
+                          onClick={() => addManualItemForLine(line.Name)}
+                          style={{ padding: "0.35em 0.6em" }}
+                        >
+                          Add item
+                        </button>
+                      </td>
+                    </tr>,
+                  ];
+
+                  if (Array.isArray(extras) && extras.length > 0) {
+                    for (let i = 0; i < extras.length; i += 1) {
+                      const extra = extras[i];
+                      const extraKey = extra?.id ?? `${line.Name}-extra-${i}`;
+
+                      rows.push(
+                        <tr key={extraKey}>
+                          <td colSpan={4} style={{ paddingLeft: 16 }}>
+                            <div
+                              style={{
+                                display: "flex",
+                                gap: 8,
+                                alignItems: "center",
+                              }}
+                            >
+                              <span className="pageMeta">Item {i + 1}</span>
+                              <input
+                                className="buySelect"
+                                type="text"
+                                value={extra?.Name ?? ""}
+                                onChange={(e) =>
+                                  updateManualItem(line.Name, extra?.id, {
+                                    Name: e.target.value,
+                                  })
+                                }
+                                placeholder="Name"
+                                aria-label={`Manual item name for ${line.Name}`}
+                              />
+                              <input
+                                className="buySelect"
+                                type="text"
+                                value={extra?.GUID ?? ""}
+                                onChange={(e) =>
+                                  updateManualItem(line.Name, extra?.id, {
+                                    GUID: e.target.value,
+                                  })
+                                }
+                                placeholder="GUID"
+                                aria-label={`Manual item GUID for ${line.Name}`}
+                              />
+                            </div>
+                          </td>
+                        </tr>,
+                      );
+                    }
+                  }
+
+                  return rows;
+                })
               )}
             </tbody>
           </table>

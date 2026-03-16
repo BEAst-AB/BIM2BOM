@@ -1,5 +1,45 @@
 import { useMemo, useState } from "react";
 
+const buildItemRows = (items, shouldVisitChildren) => {
+  const list = Array.isArray(items) ? items : [];
+  const out = [];
+
+  const getStableKey = (item, fallback) => {
+    const guid = item?.GUID;
+    if (guid != null && String(guid).trim() !== "") return String(guid);
+    const id = item?.id;
+    if (id != null && String(id).trim() !== "") return String(id);
+    return fallback;
+  };
+
+  const visit = (item, depth, pathKey) => {
+    if (!item) return;
+    const rowKey = getStableKey(item, pathKey);
+    const children = item?.itemchildren;
+    const hasChildren = Array.isArray(children) && children.length > 0;
+    const row = { item, depth, rowKey, hasChildren };
+    out.push(row);
+
+    if (!hasChildren) return;
+    if (
+      typeof shouldVisitChildren === "function" &&
+      !shouldVisitChildren(row)
+    ) {
+      return;
+    }
+
+    for (let i = 0; i < children.length; i += 1) {
+      visit(children[i], depth + 1, `${rowKey}:${i}`);
+    }
+  };
+
+  for (let i = 0; i < list.length; i += 1) {
+    visit(list[i], 0, `root:${i}`);
+  }
+
+  return out;
+};
+
 const readLength = (item) => {
   const properties = item?.property ?? [];
   const lengthProp = properties.find((p) => {
@@ -12,7 +52,8 @@ const readLength = (item) => {
   return String(value);
 };
 
-const getItemKey = (item, index) => item?.GUID ?? item?.id ?? index;
+const getItemKey = (row, index) =>
+  row?.rowKey ?? row?.item?.GUID ?? row?.item?.id ?? index;
 
 export default function SellingSystemComponent({
   order,
@@ -21,7 +62,28 @@ export default function SellingSystemComponent({
   sellingSystemName,
   companyTitle,
 }) {
-  const items = useMemo(() => order?.items ?? [], [order]);
+  const rowsAll = useMemo(
+    () => buildItemRows(order?.items ?? [], () => true),
+    [order],
+  );
+
+  const expandableKeys = useMemo(() => {
+    const keys = [];
+    for (const row of rowsAll) {
+      if (row?.hasChildren) keys.push(row.rowKey);
+    }
+    return keys;
+  }, [rowsAll]);
+
+  // `null` means "default expanded" (show all children) until user toggles.
+  const [expandedKeys, setExpandedKeys] = useState(null);
+
+  const rowsVisible = useMemo(() => {
+    const isExpanded = (rowKey) =>
+      expandedKeys === null ? true : expandedKeys.has(rowKey);
+
+    return buildItemRows(order?.items ?? [], (row) => isExpanded(row.rowKey));
+  }, [order, expandedKeys]);
 
   const [priceByKey, setPriceByKey] = useState(() => ({}));
   const [sendStatus, setSendStatus] = useState("");
@@ -32,6 +94,16 @@ export default function SellingSystemComponent({
     setPriceByKey((prev) => ({ ...prev, [key]: value }));
   };
 
+  const toggleRowExpanded = (rowKey) => {
+    setExpandedKeys((prev) => {
+      const next =
+        prev === null ? new Set(expandableKeys) : new Set(prev ?? []);
+      if (next.has(rowKey)) next.delete(rowKey);
+      else next.add(rowKey);
+      return next;
+    });
+  };
+
   const onSend = () => {
     if (!order) return;
 
@@ -40,12 +112,12 @@ export default function SellingSystemComponent({
       cdeid: order.cdeid ?? "",
       company: order.company,
       SellingSystem: sellingSystemName,
-      items: items.map((item, index) => {
-        const key = getItemKey(item, index);
+      items: rowsAll.map((row, index) => {
+        const key = getItemKey(row, index);
         const raw = priceByKey[key];
         const parsed = raw === "" || raw == null ? null : Number(raw);
         const price = Number.isFinite(parsed) ? parsed : null;
-        return { item, price };
+        return { item: row?.item, price };
       }),
     };
 
@@ -130,20 +202,69 @@ ${(payload.items ?? [])
                         </tr>
                       </thead>
                       <tbody>
-                        {items.length === 0 ? (
+                        {rowsVisible.length === 0 ? (
                           <tr>
                             <td colSpan={4} className="emptyCell">
                               Order contains no items
                             </td>
                           </tr>
                         ) : (
-                          items.map((item, index) => {
-                            const key = getItemKey(item, index);
+                          rowsVisible.map((row, index) => {
+                            const key = getItemKey(row, index);
                             const value = priceByKey[key] ?? "";
+                            const item = row?.item;
+                            const isExpanded =
+                              expandedKeys === null
+                                ? true
+                                : expandedKeys.has(row.rowKey);
 
                             return (
                               <tr key={key}>
-                                <td>{item?.Name || "-"}</td>
+                                <td>
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      alignItems: "center",
+                                      gap: 6,
+                                      paddingLeft:
+                                        (row?.depth ?? 0) > 0
+                                          ? 18 * row.depth
+                                          : undefined,
+                                    }}
+                                  >
+                                    {row?.hasChildren ? (
+                                      <button
+                                        type="button"
+                                        onClick={() =>
+                                          toggleRowExpanded(row.rowKey)
+                                        }
+                                        aria-label={
+                                          isExpanded
+                                            ? "Collapse children"
+                                            : "Expand children"
+                                        }
+                                        title={
+                                          isExpanded ? "Collapse" : "Expand"
+                                        }
+                                        style={{
+                                          padding: "0 4px",
+                                          minWidth: 18,
+                                          lineHeight: "18px",
+                                        }}
+                                      >
+                                        {isExpanded ? "▼" : "▶"}
+                                      </button>
+                                    ) : (
+                                      <span
+                                        style={{
+                                          display: "inline-block",
+                                          width: 18,
+                                        }}
+                                      />
+                                    )}
+                                    <span>{item?.Name || "-"}</span>
+                                  </div>
+                                </td>
                                 <td className="mono">{item?.GUID || "-"}</td>
                                 <td className="mono">{readLength(item)}</td>
                                 <td>
