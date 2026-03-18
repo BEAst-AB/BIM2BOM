@@ -101,7 +101,7 @@ export default function CDE() {
   };
 
   return (
-    <div className="appShell" ref={shellRef}>
+    <div className="appShell cdePage" ref={shellRef}>
       <div className="viewerPane">
         <IfcViewer
           ifcUrl="/web-ifc/A-40-V-000_BIM2BOM.ifc"

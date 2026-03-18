@@ -3,6 +3,25 @@
   height: 100vh;
 }
 
+/* Option B: per-page accents (different "apps") */
+.cdePage {
+  --ui-accent: #0f766e;
+  --ui-accent-hover: #115e59;
+  --ui-accent-soft: #ecfeff;
+}
+
+.buyingSystemPage {
+  --ui-accent: #b45309;
+  --ui-accent-hover: #92400e;
+  --ui-accent-soft: #fffbeb;
+}
+
+.sellingSystemPage {
+  --ui-accent: #be185d;
+  --ui-accent-hover: #9d174d;
+  --ui-accent-soft: #fff1f2;
+}
+
 .appFrame {
   display: flex;
   flex-direction: column;
@@ -15,14 +34,15 @@
   display: flex;
   gap: 8px;
   padding: 10px 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid var(--ui-border);
+  background: var(--ui-surface);
 }
 
 .tabButton {
   display: inline-flex;
   align-items: center;
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--ui-border);
   padding: 8px 12px;
   border-radius: 10px;
   line-height: 1;
@@ -31,12 +51,12 @@
 }
 
 .tabButton[aria-current="page"] {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.24);
+  background: var(--ui-accent-soft);
+  border-color: var(--ui-accent);
 }
 
 .tabButton:hover {
-  border-color: rgba(255, 255, 255, 0.24);
+  border-color: var(--ui-accent);
 }
 
 .tabContent {
@@ -67,8 +87,8 @@
   cursor: col-resize;
   touch-action: none;
   user-select: none;
-  border-left: 1px solid rgba(255, 255, 255, 0.12);
-  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  border-left: 1px solid var(--ui-border);
+  border-right: 1px solid var(--ui-border);
 }
 
 .sidebarPane {
@@ -93,7 +113,8 @@
 
 .pageHeader {
   padding: 12px 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid var(--ui-border);
+  background: var(--ui-accent-soft);
 }
 
 .pageBody {
@@ -154,7 +175,7 @@
   margin: auto;
   padding: 0;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--ui-border);
   background: #ffffff;
   color: #111111;
   width: min(900px, 90vw);
@@ -178,7 +199,8 @@
 
 .panelHeader {
   padding: 12px 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid var(--ui-border);
+  background: var(--ui-accent-soft);
   font-weight: 600;
 }
 
@@ -215,9 +237,28 @@
 .buySelect {
   padding: 8px 10px;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(0, 0, 0, 0.2);
-  color: inherit;
+  border: 1px solid var(--ui-border);
+  background: var(--ui-surface);
+  color: var(--ui-text);
+}
+
+.buySelect:focus,
+.buySelect:focus-visible {
+  outline: 3px solid var(--ui-accent);
+  outline-offset: 2px;
+}
+
+.buyControls > button,
+.pageActions > button {
+  background: var(--ui-accent);
+  border-color: var(--ui-accent);
+  color: #ffffff;
+}
+
+.buyControls > button:hover,
+.pageActions > button:hover {
+  background: var(--ui-accent-hover);
+  border-color: var(--ui-accent-hover);
 }
 
 .pageActions {
@@ -225,7 +266,7 @@
   align-items: center;
   gap: 12px;
   padding: 12px 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid var(--ui-border);
 }
 
 .pageMeta {
@@ -291,20 +332,20 @@
 }
 
 .buyingSystemPage .rightRowsBuying > * {
-  border: 1px solid rgba(0, 0, 0, 0.18);
+  border: 1px solid var(--ui-border);
   border-radius: 14px;
-  background: #ffffff;
-  color: #111111;
+  background: var(--ui-surface);
+  color: var(--ui-text);
   overflow: hidden;
 }
 
 .buyingSystemPage .rightRowsBuying > * .panelHeader {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid var(--ui-border);
 }
 
 .buyingSystemPage .rightRowsBuying > * .wallsTable th,
 .buyingSystemPage .rightRowsBuying > * .wallsTable td {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid var(--ui-border);
 }
 
 .placeholderPane {
@@ -332,7 +373,8 @@
 
 .sidebarHeader {
   padding: 12px 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid var(--ui-border);
+  background: var(--ui-accent-soft);
 }
 
 .sidebarTitle {
@@ -358,15 +400,15 @@
 .wallsTable td {
   text-align: left;
   padding: 8px 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--ui-border);
   vertical-align: top;
 }
 
 .wallsTable th {
   position: sticky;
   top: 0;
-  background: rgba(36, 36, 36, 0.96);
-  color: #fff;
+  background: var(--ui-accent-soft);
+  color: var(--ui-text);
 }
 
 .mono {

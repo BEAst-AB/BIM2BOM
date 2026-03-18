@@ -169,7 +169,7 @@ ${(payload.items ?? [])
     peppolXml;
 
   return (
-    <div className="pageShell">
+    <div className="pageShell sellingSystemPage">
       <div className="pageHeader">
         <div className="pageTitle">{companyTitle}</div>
         <div className="pageMeta">
