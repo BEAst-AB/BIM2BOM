@@ -111,6 +111,8 @@ export default function BuyingSystemOrderPanel({
       GUID: "",
       property: [],
       itemchildren: [],
+      Unit: "pcs",
+      Quantity: "",
       Seller: "",
       price: "",
     });
@@ -325,16 +327,31 @@ export default function BuyingSystemOrderPanel({
                               />
                               <input
                                 className="buySelect"
-                                type="text"
-                                value={extra?.GUID ?? ""}
+                                type="number"
+                                value={extra?.Quantity ?? ""}
                                 onChange={(e) =>
                                   updateManualItem(line.Name, extra?.id, {
-                                    GUID: e.target.value,
+                                    Quantity: e.target.value,
                                   })
                                 }
-                                placeholder="GUID"
-                                aria-label={`Manual item GUID for ${line.Name}`}
+                                placeholder="Quantity"
+                                aria-label={`Manual item quantity for ${line.Name}`}
                               />
+                              <select
+                                className="buySelect"
+                                value={extra?.Unit ?? "pcs"}
+                                onChange={(e) =>
+                                  updateManualItem(line.Name, extra?.id, {
+                                    Unit: e.target.value,
+                                  })
+                                }
+                                aria-label={`Manual item unit for ${line.Name}`}
+                              >
+                                <option value="m">m</option>
+                                <option value="m2">m2</option>
+                                <option value="m3">m3</option>
+                                <option value="pcs">pcs</option>
+                              </select>
                             </div>
                           </td>
                         </tr>,

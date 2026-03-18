@@ -121,6 +121,35 @@ export default function IfcViewer({ ifcUrl, onBomLoaded }) {
 
         const BOMresult = createBomResult();
 
+        const readLengthNumber = (item) => {
+          const properties = item?.property ?? [];
+          const lengthProp = properties.find((p) => {
+            const name = (p?.Name ?? "").toString().trim().toLowerCase();
+            return name === "length" || name === "lenght";
+          });
+
+          const value = lengthProp?.Value;
+          if (value == null || value === "") return null;
+          if (typeof value === "number")
+            return Number.isFinite(value) ? value : null;
+          const parsed = Number.parseFloat(String(value));
+          return Number.isFinite(parsed) ? parsed : null;
+        };
+
+        const toMeters = (lengthValue, lengthUnit) => {
+          if (lengthValue == null) return "";
+          const unitText = (lengthUnit ?? "").toString().toLowerCase();
+
+          // Prefer explicit unit when present.
+          if (unitText.includes("mm")) return lengthValue / 1000;
+          if (unitText === "m" || unitText.includes("meter"))
+            return lengthValue;
+
+          // Heuristic fallback: if it looks like millimeters, convert to meters.
+          if (lengthValue > 1000) return lengthValue / 1000;
+          return lengthValue;
+        };
+
         for (const prop in data) {
           const propData = data[prop];
 
@@ -152,7 +181,17 @@ export default function IfcViewer({ ifcUrl, onBomLoaded }) {
             });
           }
 
-          if (hasBip) BOMresult.items.push(beastProp);
+          if (hasBip) {
+            beastProp.Unit = "m";
+            const lengthValue = readLengthNumber(beastProp);
+            const lengthProp = (beastProp?.property ?? []).find((p) => {
+              const name = (p?.Name ?? "").toString().trim().toLowerCase();
+              return name === "length" || name === "lenght";
+            });
+            const meters = toMeters(lengthValue, lengthProp?.Unit);
+            beastProp.Quantity = meters === "" ? "" : meters;
+            BOMresult.items.push(beastProp);
+          }
         }
 
         // console.log(BOMresult);

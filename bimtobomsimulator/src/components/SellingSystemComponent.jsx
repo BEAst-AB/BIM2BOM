@@ -40,16 +40,29 @@ const buildItemRows = (items, shouldVisitChildren) => {
   return out;
 };
 
-const readLength = (item) => {
+const readUnit = (item) => {
+  const unit = item?.Unit ?? item?.unit;
+  if (unit != null && String(unit).trim() !== "") return String(unit);
+  return "m";
+};
+
+const readQuantity = (item) => {
+  const raw = item?.Quantity ?? item?.quantity;
+  if (raw != null && String(raw).trim() !== "") return String(raw);
+
   const properties = item?.property ?? [];
   const lengthProp = properties.find((p) => {
     const name = (p?.Name ?? "").toString().trim().toLowerCase();
     return name === "length" || name === "lenght";
   });
-
   const value = lengthProp?.Value;
   if (value == null || value === "") return "-";
-  return String(value);
+
+  const parsed =
+    typeof value === "number" ? value : Number.parseFloat(String(value));
+  if (!Number.isFinite(parsed)) return "-";
+  // assume mm -> m
+  return String(parsed > 1000 ? parsed / 1000 : parsed);
 };
 
 const getItemKey = (row, index) =>
@@ -219,14 +232,15 @@ ${(payload.items ?? [])
                         <tr>
                           <th>Name</th>
                           <th>GUID</th>
-                          <th style={{ width: 140 }}>Lenght</th>
+                          <th style={{ width: 140 }}>Quantity</th>
+                          <th style={{ width: 90 }}>Unit</th>
                           <th style={{ width: 140 }}>Price</th>
                         </tr>
                       </thead>
                       <tbody>
                         {rowsVisible.length === 0 ? (
                           <tr>
-                            <td colSpan={4} className="emptyCell">
+                            <td colSpan={5} className="emptyCell">
                               Order contains no items
                             </td>
                           </tr>
@@ -288,7 +302,8 @@ ${(payload.items ?? [])
                                   </div>
                                 </td>
                                 <td className="mono">{item?.GUID || "-"}</td>
-                                <td className="mono">{readLength(item)}</td>
+                                <td className="mono">{readQuantity(item)}</td>
+                                <td className="mono">{readUnit(item)}</td>
                                 <td>
                                   <input
                                     className="buySelect"

@@ -7,16 +7,38 @@ import XmlViewer from "../components/XmlViewer.jsx";
 
 const getRowKey = (item, index) => item?.GUID ?? item?.id ?? index;
 
-const readLength = (item) => {
+const readUnit = (item) => {
+  const unit = item?.Unit ?? item?.unit;
+  if (unit != null && String(unit).trim() !== "") return String(unit);
+
+  const properties = item?.property ?? [];
+  const unitProp = properties.find((p) => {
+    const name = (p?.Name ?? "").toString().trim().toLowerCase();
+    return name === "unit";
+  });
+  const propUnit = unitProp?.Value;
+  if (propUnit != null && String(propUnit).trim() !== "")
+    return String(propUnit);
+  return "m";
+};
+
+const readQuantity = (item) => {
+  const raw = item?.Quantity ?? item?.quantity;
+  if (raw != null && String(raw).trim() !== "") return String(raw);
+
   const properties = item?.property ?? [];
   const lengthProp = properties.find((p) => {
     const name = (p?.Name ?? "").toString().trim().toLowerCase();
     return name === "length" || name === "lenght";
   });
-
   const value = lengthProp?.Value;
   if (value == null || value === "") return "-";
-  return String(value);
+
+  const parsed =
+    typeof value === "number" ? value : Number.parseFloat(String(value));
+  if (!Number.isFinite(parsed)) return "-";
+  // assume mm -> m
+  return String(parsed > 1000 ? parsed / 1000 : parsed);
 };
 
 const readStatus = (item) => {
@@ -257,14 +279,15 @@ export default function BuyingSystem() {
                       <th style={{ width: 44 }} aria-label="Select" />
                       <th>Name</th>
                       <th>GUID</th>
-                      <th>Lenght</th>
+                      <th>Quantity</th>
+                      <th style={{ width: 90 }}>Unit</th>
                       <th>Status</th>
                     </tr>
                   </thead>
                   <tbody>
                     {items.length === 0 ? (
                       <tr>
-                        <td colSpan={5} className="emptyCell">
+                        <td colSpan={6} className="emptyCell">
                           No BOM data loaded yet (open CDE first)
                         </td>
                       </tr>
@@ -285,7 +308,8 @@ export default function BuyingSystem() {
                             </td>
                             <td>{item?.Name || "-"}</td>
                             <td className="mono">{item?.GUID || "-"}</td>
-                            <td className="mono">{readLength(item)}</td>
+                            <td className="mono">{readQuantity(item)}</td>
+                            <td className="mono">{readUnit(item)}</td>
                             <td>{readStatus(item)}</td>
                           </tr>
                         );
