@@ -62,8 +62,26 @@ const normalizeStatus = (value) => {
   return text.toLowerCase() === "unchaged" ? "Unchanged" : text;
 };
 
+const deepClone = (value) => {
+  if (value == null) return value;
+  if (typeof structuredClone === "function") {
+    try {
+      return structuredClone(value);
+    } catch {
+      // Fallback below.
+    }
+  }
+
+  try {
+    return JSON.parse(JSON.stringify(value));
+  } catch {
+    return value;
+  }
+};
+
 export default function BuyingSystemOrderPanel({
   cdeid: cdeidProp,
+  existingOrderNumbers,
   selectedItems,
   onRequestSent,
   xmlCreated,
@@ -116,6 +134,27 @@ export default function BuyingSystemOrderPanel({
     });
   };
 
+  const createOrderNumber = () => {
+    const used =
+      existingOrderNumbers instanceof Set
+        ? existingOrderNumbers
+        : new Set(
+            Array.isArray(existingOrderNumbers) ? existingOrderNumbers : [],
+          );
+
+    for (let attempt = 0; attempt < 20; attempt += 1) {
+      const n = Math.floor(Math.random() * 1_000_000);
+      const sixDigits = String(n).padStart(6, "0");
+      if (!used.has(sixDigits)) return sixDigits;
+    }
+
+    const fallback = String(Math.floor(Math.random() * 1_000_000)).padStart(
+      6,
+      "0",
+    );
+    return fallback;
+  };
+
   const onBuy = () => {
     const baseItems = selectedItems ?? [];
     const seenNames = new Set();
@@ -148,23 +187,32 @@ export default function BuyingSystemOrderPanel({
       cdeidProp ?? (Array.isArray(bomResult) ? "" : (bomResult?.cdeid ?? ""))
     ).toString();
 
+    const createdAt = Date.now();
+    const orderNumber = createOrderNumber();
+
+    const itemsSnapshot = deepClone(itemsToBuy);
+
     const order = {
       buyingSystem: createBuyingSystemId(),
+      orderNumber,
       status: "New",
       company: selectedCompany,
       cdeid: resolvedCdeId,
-      items: itemsToBuy,
+      items: itemsSnapshot,
+      createdAt,
     };
 
     if (selectedCompany === "Company 1") {
-      setSellingSystem1Order(order);
-      onRequestSent?.(order);
+      const snapshot = deepClone(order);
+      setSellingSystem1Order(snapshot);
+      onRequestSent?.(snapshot);
       return;
     }
 
     if (selectedCompany === "Company 2") {
-      setSellingSystem2Order(order);
-      onRequestSent?.(order);
+      const snapshot = deepClone(order);
+      setSellingSystem2Order(snapshot);
+      onRequestSent?.(snapshot);
       return;
     }
 

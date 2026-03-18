@@ -1,6 +1,23 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BomContext } from "./BomContext.js";
 
+const deepClone = (value) => {
+  if (value == null) return value;
+  if (typeof structuredClone === "function") {
+    try {
+      return structuredClone(value);
+    } catch {
+      // Fallback below.
+    }
+  }
+
+  try {
+    return JSON.parse(JSON.stringify(value));
+  } catch {
+    return value;
+  }
+};
+
 const createIncomingOrderId = () => {
   if (
     typeof crypto !== "undefined" &&
@@ -174,6 +191,7 @@ export function BomProvider({ children }) {
   const [buySummaryLines, setBuySummaryLines] = useState([]);
   const [sellingSystem1Order, setSellingSystem1Order] = useState(null);
   const [sellingSystem2Order, setSellingSystem2Order] = useState(null);
+  const [buyingOrders, setBuyingOrders] = useState(() => []);
   const [incomingOrders, setIncomingOrders] = useState([]);
   const [acceptedOrders, setAcceptedOrders] = useState([]);
   const [bomOverridesByCdeid, setBomOverridesByCdeid] = useState(() => ({}));
@@ -183,6 +201,15 @@ export function BomProvider({ children }) {
   useEffect(() => {
     bomOverridesRef.current = bomOverridesByCdeid;
   }, [bomOverridesByCdeid]);
+
+  // Ensure existing orders are snapshots (no shared references with live BOM state).
+  useEffect(() => {
+    setBuyingOrders((prev) => {
+      const list = Array.isArray(prev) ? prev : [];
+      if (list.length === 0) return prev;
+      return list.map((order) => deepClone(order));
+    });
+  }, []);
 
   // Keep this function stable so IfcViewer doesn't reload when context updates.
   const setBomResult = useCallback((next) => {
@@ -353,6 +380,41 @@ export function BomProvider({ children }) {
     });
   };
 
+  const addBuyingOrder = useCallback((order) => {
+    if (!order || typeof order !== "object") return;
+    const snapshot = deepClone(order);
+    setBuyingOrders((prev) => {
+      const list = Array.isArray(prev) ? prev : [];
+      const key = snapshot?.orderNumber ?? snapshot?.buyingSystem;
+      if (!key) return [snapshot, ...list];
+
+      const next = [snapshot];
+      for (const existing of list) {
+        const existingKey = existing?.orderNumber ?? existing?.buyingSystem;
+        if (existingKey === key) continue;
+        next.push(existing);
+      }
+      return next;
+    });
+  }, []);
+
+  const updateBuyingOrder = useCallback((order) => {
+    if (!order || typeof order !== "object") return;
+    const snapshot = deepClone(order);
+    const key = snapshot?.orderNumber ?? snapshot?.buyingSystem;
+    if (!key) return;
+
+    setBuyingOrders((prev) => {
+      const list = Array.isArray(prev) ? prev : [];
+      const next = list.map((existing) => {
+        const existingKey = existing?.orderNumber ?? existing?.buyingSystem;
+        if (existingKey !== key) return existing;
+        return snapshot;
+      });
+      return next;
+    });
+  }, []);
+
   const value = useMemo(
     () => ({
       bomResult,
@@ -369,6 +431,9 @@ export function BomProvider({ children }) {
       setSellingSystem1Order,
       sellingSystem2Order,
       setSellingSystem2Order,
+      buyingOrders,
+      addBuyingOrder,
+      updateBuyingOrder,
       incomingOrders,
       addIncomingOrder,
       acceptIncomingOrder,
@@ -383,11 +448,14 @@ export function BomProvider({ children }) {
       buySummaryLines,
       sellingSystem1Order,
       sellingSystem2Order,
+      buyingOrders,
       incomingOrders,
       acceptedOrders,
       setBomResult,
       setDraftBomForCdeid,
       clearDraftBomForCdeid,
+      addBuyingOrder,
+      updateBuyingOrder,
     ],
   );
 

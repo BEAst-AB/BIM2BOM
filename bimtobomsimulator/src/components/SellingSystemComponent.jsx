@@ -194,6 +194,9 @@ ${(payload.items ?? [])
                 {order ? (
                   <div>Status: {normalizeOrderStatus(order?.status)}</div>
                 ) : null}
+                {order ? (
+                  <div>Order No: {order?.orderNumber ?? "-"}</div>
+                ) : null}
               </div>
             </div>
             <div className="panelBody">

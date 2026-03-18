@@ -2,6 +2,7 @@ import { useMemo, useRef, useState } from "react";
 import { useBom } from "../context/useBom.js";
 import BuyingSystemOrderPanel from "../components/BuyingSystemOrderPanel.jsx";
 import IncomingOrdersPanel from "../components/IncomingOrdersPanel.jsx";
+import OrdersPanel from "../components/OrdersPanel.jsx";
 import XmlViewer from "../components/XmlViewer.jsx";
 
 const getRowKey = (item, index) => item?.GUID ?? item?.id ?? index;
@@ -47,10 +48,32 @@ const readStatus = (item) => {
   return STATUS_UNCHANGED;
 };
 
+const deepClone = (value) => {
+  if (value == null) return value;
+  if (typeof structuredClone === "function") {
+    try {
+      return structuredClone(value);
+    } catch {
+      // Fallback below.
+    }
+  }
+
+  try {
+    return JSON.parse(JSON.stringify(value));
+  } catch {
+    return value;
+  }
+};
+
 export default function BuyingSystem() {
   const {
     bomResult,
     setSelectedBomItems,
+    buyingOrders,
+    addBuyingOrder,
+    updateBuyingOrder,
+    setSellingSystem1Order,
+    setSellingSystem2Order,
     incomingOrders,
     acceptIncomingOrder,
     declineIncomingOrder,
@@ -81,6 +104,58 @@ export default function BuyingSystem() {
   const [selectedKeys, setSelectedKeys] = useState(() => new Set());
   const [showXml, setShowXml] = useState(false);
   const [xmlOrder, setXmlOrder] = useState(null);
+
+  const TAB_CREATE = "create";
+  const TAB_ORDERS = "orders";
+  const TAB_INCOMING = "incoming";
+
+  const [activeTab, setActiveTab] = useState(TAB_CREATE);
+
+  const orders = buyingOrders;
+
+  const existingOrderNumbers = useMemo(() => {
+    const set = new Set();
+    for (const order of Array.isArray(orders) ? orders : []) {
+      const value = order?.orderNumber;
+      if (value == null || value === "") continue;
+      set.add(String(value));
+    }
+    return set;
+  }, [orders]);
+
+  const getItemStableKey = (item, fallback) =>
+    item?.GUID ?? item?.id ?? fallback;
+
+  const mergeOrderItemsUnique = (baseItems, extraItems) => {
+    const baseList = Array.isArray(baseItems) ? baseItems : [];
+    const extraList = Array.isArray(extraItems) ? extraItems : [];
+    if (extraList.length === 0) return baseList;
+
+    const keys = new Set(
+      baseList.map((item, index) => String(getItemStableKey(item, index))),
+    );
+    const merged = [...baseList];
+    for (let i = 0; i < extraList.length; i += 1) {
+      const item = extraList[i];
+      const key = String(getItemStableKey(item, `extra:${i}`));
+      if (keys.has(key)) continue;
+      keys.add(key);
+      merged.push(item);
+    }
+    return merged;
+  };
+
+  const sendOrderToSellingSystem = (order) => {
+    if (!order) return;
+    const snapshot = deepClone(order);
+    if (order.company === "Company 1") {
+      setSellingSystem1Order(snapshot);
+      return;
+    }
+    if (order.company === "Company 2") {
+      setSellingSystem2Order(snapshot);
+    }
+  };
 
   const openXmlModal = () => {
     if (!showXml) return;
@@ -241,22 +316,95 @@ export default function BuyingSystem() {
 
           <div className="splitRight">
             <div className="rightRows rightRowsBuying">
-              <BuyingSystemOrderPanel
-                cdeid={cdeid}
-                selectedItems={selectedList}
-                onRequestSent={(order) => {
-                  setXmlOrder(order);
-                  setShowXml(true);
-                }}
-                xmlCreated={showXml}
-                onOpenXml={openXmlModal}
-              />
+              <div
+                className="buyingTabsBar"
+                role="tablist"
+                aria-label="Buying system tabs"
+              >
+                <button
+                  type="button"
+                  role="tab"
+                  className="buyingTabButton"
+                  aria-selected={activeTab === TAB_CREATE}
+                  onClick={() => setActiveTab(TAB_CREATE)}
+                >
+                  Create Order
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  className="buyingTabButton"
+                  aria-selected={activeTab === TAB_ORDERS}
+                  onClick={() => setActiveTab(TAB_ORDERS)}
+                >
+                  Orders
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  className="buyingTabButton"
+                  aria-selected={activeTab === TAB_INCOMING}
+                  onClick={() => setActiveTab(TAB_INCOMING)}
+                >
+                  Incoming Orders
+                </button>
+              </div>
 
-              <IncomingOrdersPanel
-                incomingOrders={incomingOrders}
-                onAcceptIncomingOrder={acceptIncomingOrder}
-                onDeclineIncomingOrder={declineIncomingOrder}
-              />
+              <div className="buyingTabPanel" role="tabpanel">
+                {activeTab === TAB_CREATE ? (
+                  <BuyingSystemOrderPanel
+                    cdeid={cdeid}
+                    existingOrderNumbers={existingOrderNumbers}
+                    selectedItems={selectedList}
+                    onRequestSent={(order) => {
+                      setXmlOrder(order);
+                      setShowXml(true);
+                      addBuyingOrder(order);
+                    }}
+                    xmlCreated={showXml}
+                    onOpenXml={openXmlModal}
+                  />
+                ) : null}
+
+                {activeTab === TAB_ORDERS ? (
+                  <OrdersPanel
+                    orders={orders}
+                    selectedItems={selectedList}
+                    onAddSelectedToOrder={(order) => {
+                      const next = {
+                        ...(order ?? {}),
+                        items: mergeOrderItemsUnique(
+                          order?.items,
+                          selectedList,
+                        ),
+                        updatedAt: Date.now(),
+                      };
+                      updateBuyingOrder(next);
+                    }}
+                    onSendOrderUpdate={(order) => {
+                      const next = {
+                        ...(order ?? {}),
+                        status: "Updated",
+                        items: mergeOrderItemsUnique(
+                          order?.items,
+                          selectedList,
+                        ),
+                        updatedAt: Date.now(),
+                      };
+                      updateBuyingOrder(next);
+                      sendOrderToSellingSystem(next);
+                    }}
+                  />
+                ) : null}
+
+                {activeTab === TAB_INCOMING ? (
+                  <IncomingOrdersPanel
+                    incomingOrders={incomingOrders}
+                    onAcceptIncomingOrder={acceptIncomingOrder}
+                    onDeclineIncomingOrder={declineIncomingOrder}
+                  />
+                ) : null}
+              </div>
 
               <XmlViewer
                 show={showXml}
