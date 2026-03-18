@@ -56,6 +56,12 @@ const groupByNameAndSumLength = (selectedItems) => {
   return Array.from(map.values()).sort((a, b) => a.Name.localeCompare(b.Name));
 };
 
+const normalizeStatus = (value) => {
+  const text = value == null ? "" : String(value).trim();
+  if (!text) return "Unchanged";
+  return text.toLowerCase() === "unchaged" ? "Unchanged" : text;
+};
+
 export default function BuyingSystemOrderPanel({
   cdeid: cdeidProp,
   selectedItems,
@@ -120,13 +126,19 @@ export default function BuyingSystemOrderPanel({
       if (seenNames.has(name)) return item;
       seenNames.add(name);
 
+      const parentStatus = normalizeStatus(item?.status ?? item?.Status);
+      const normalizedExtras = extras.map((extra) => ({
+        ...extra,
+        status: parentStatus,
+      }));
+
       const existingChildren = Array.isArray(item?.itemchildren)
         ? item.itemchildren
         : [];
 
       return {
         ...item,
-        itemchildren: [...existingChildren, ...extras],
+        itemchildren: [...existingChildren, ...normalizedExtras],
       };
     });
 
@@ -138,6 +150,7 @@ export default function BuyingSystemOrderPanel({
 
     const order = {
       buyingSystem: createBuyingSystemId(),
+      status: "New",
       company: selectedCompany,
       cdeid: resolvedCdeId,
       items: itemsToBuy,

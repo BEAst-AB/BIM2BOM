@@ -19,7 +19,7 @@ const readLength = (item) => {
 };
 
 const readStatus = (item) => {
-  const STATUS_UNCHAGED = "Unchaged";
+  const STATUS_UNCHANGED = "Unchanged";
   const raw = item?.status ?? item?.Status;
 
   const unwrap = (value) => {
@@ -32,7 +32,8 @@ const readStatus = (item) => {
   };
 
   const direct = unwrap(raw).trim();
-  if (direct) return direct;
+  if (direct)
+    return direct.toLowerCase() === "unchaged" ? STATUS_UNCHANGED : direct;
 
   const properties = item?.property ?? [];
   const statusProp = properties.find((p) => {
@@ -40,9 +41,10 @@ const readStatus = (item) => {
     return name === "status";
   });
   const fromProp = unwrap(statusProp?.Value).trim();
-  if (fromProp) return fromProp;
+  if (fromProp)
+    return fromProp.toLowerCase() === "unchaged" ? STATUS_UNCHANGED : fromProp;
 
-  return STATUS_UNCHAGED;
+  return STATUS_UNCHANGED;
 };
 
 export default function BuyingSystem() {

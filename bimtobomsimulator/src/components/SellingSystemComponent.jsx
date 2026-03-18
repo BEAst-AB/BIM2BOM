@@ -55,6 +55,13 @@ const readLength = (item) => {
 const getItemKey = (row, index) =>
   row?.rowKey ?? row?.item?.GUID ?? row?.item?.id ?? index;
 
+const normalizeOrderStatus = (value) => {
+  const text = value == null ? "" : String(value).trim();
+  if (!text) return "-";
+  if (text.toLowerCase() === "unchaged") return "Unchanged";
+  return text;
+};
+
 export default function SellingSystemComponent({
   order,
   addIncomingOrder,
@@ -174,8 +181,20 @@ ${(payload.items ?? [])
         <div className="rightRows">
           <section className="panel">
             <div className="panelHeader">
-              Incoming order
-              {order?.buyingSystem ? ` : ${order.buyingSystem}` : ""}
+              <div
+                style={{
+                  display: "grid",
+                  rowGap: 2,
+                }}
+              >
+                <div>
+                  Incoming order
+                  {order?.buyingSystem ? ` : ${order.buyingSystem}` : ""}
+                </div>
+                {order ? (
+                  <div>Status: {normalizeOrderStatus(order?.status)}</div>
+                ) : null}
+              </div>
             </div>
             <div className="panelBody">
               {!order ? (

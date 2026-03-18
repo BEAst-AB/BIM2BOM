@@ -12,7 +12,7 @@ export const createBeastProp = ({
   propertySet = "",
   property,
   itemchildren,
-  status = "Unchaged",
+  status = "Unchanged",
   Seller = "",
   price = "",
 } = {}) => ({

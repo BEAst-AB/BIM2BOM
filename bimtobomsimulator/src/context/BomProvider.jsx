@@ -110,7 +110,7 @@ const mergeIncomingChildrenByGuid = (items, childrenByGuid) => {
 };
 
 const ensureDefaultStatus = (items) => {
-  const STATUS_UNCHAGED = "Unchaged";
+  const STATUS_UNCHANGED = "Unchanged";
   const list = Array.isArray(items) ? items : [];
 
   const unwrap = (value) => {
@@ -120,6 +120,13 @@ const ensureDefaultStatus = (items) => {
       if ("Value" in value) return String(value.Value ?? "");
     }
     return String(value);
+  };
+
+  const normalizeStatus = (value) => {
+    const text = unwrap(value).trim();
+    if (!text) return "";
+    if (text.toLowerCase() === "unchaged") return STATUS_UNCHANGED;
+    return text;
   };
 
   const normalizeItem = (item) => {
@@ -132,10 +139,10 @@ const ensureDefaultStatus = (items) => {
       ? children.map((child) => normalizeItem(child))
       : null;
 
-    const statusText = unwrap(item.status).trim();
-    const statusAltText = unwrap(item.Status).trim();
-    const resolvedStatus = statusText || statusAltText || STATUS_UNCHAGED;
-    const shouldUpdateStatus = statusText !== resolvedStatus;
+    const statusText = normalizeStatus(item.status);
+    const statusAltText = normalizeStatus(item.Status);
+    const resolvedStatus = statusText || statusAltText || STATUS_UNCHANGED;
+    const shouldUpdateStatus = unwrap(item.status).trim() !== resolvedStatus;
 
     const shouldUpdateChildren =
       !!children &&

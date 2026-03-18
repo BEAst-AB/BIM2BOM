@@ -46,8 +46,15 @@ export default function IfcWallsTable({ bomResult }) {
     [bomResult],
   );
 
-  const STATUS_UNCHAGED = "Unchaged";
+  const STATUS_UNCHANGED = "Unchanged";
   const STATUS_NEW = "New";
+
+  const normalizeStatus = (value) => {
+    const text = value == null ? "" : String(value).trim();
+    if (!text) return "";
+    if (text.toLowerCase() === "unchaged") return STATUS_UNCHANGED;
+    return text;
+  };
 
   const rowsAll = useMemo(() => buildRows(items, () => true), [items]);
 
@@ -160,10 +167,9 @@ export default function IfcWallsTable({ bomResult }) {
                       <select
                         className="buySelect"
                         value={
-                          statusByRowKey?.[row.rowKey] ??
-                          (item?.status && String(item.status).trim() !== ""
-                            ? String(item.status)
-                            : STATUS_UNCHAGED)
+                          normalizeStatus(statusByRowKey?.[row.rowKey]) ||
+                          normalizeStatus(item?.status) ||
+                          STATUS_UNCHANGED
                         }
                         onChange={(event) => {
                           const nextStatus = event.target.value;
@@ -176,8 +182,8 @@ export default function IfcWallsTable({ bomResult }) {
                           item.status = nextStatus;
                         }}
                       >
-                        <option value={STATUS_UNCHAGED}>
-                          {STATUS_UNCHAGED}
+                        <option value={STATUS_UNCHANGED}>
+                          {STATUS_UNCHANGED}
                         </option>
                         <option value={STATUS_NEW}>{STATUS_NEW}</option>
                       </select>
