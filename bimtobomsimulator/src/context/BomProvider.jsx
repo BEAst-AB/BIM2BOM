@@ -109,6 +109,53 @@ const mergeIncomingChildrenByGuid = (items, childrenByGuid) => {
   });
 };
 
+const ensureDefaultStatus = (items) => {
+  const STATUS_UNCHAGED = "Unchaged";
+  const list = Array.isArray(items) ? items : [];
+
+  const unwrap = (value) => {
+    if (value == null) return "";
+    if (typeof value === "object") {
+      if ("value" in value) return String(value.value ?? "");
+      if ("Value" in value) return String(value.Value ?? "");
+    }
+    return String(value);
+  };
+
+  const normalizeItem = (item) => {
+    if (!item || typeof item !== "object") return item;
+
+    const children = Array.isArray(item.itemchildren)
+      ? item.itemchildren
+      : null;
+    const nextChildren = children
+      ? children.map((child) => normalizeItem(child))
+      : null;
+
+    const statusText = unwrap(item.status).trim();
+    const statusAltText = unwrap(item.Status).trim();
+    const resolvedStatus = statusText || statusAltText || STATUS_UNCHAGED;
+    const shouldUpdateStatus = statusText !== resolvedStatus;
+
+    const shouldUpdateChildren =
+      !!children &&
+      !!nextChildren &&
+      children.some((child, index) => child !== nextChildren[index]);
+
+    if (!shouldUpdateStatus && !shouldUpdateChildren) return item;
+
+    return {
+      ...item,
+      status: resolvedStatus,
+      ...(shouldUpdateChildren ? { itemchildren: nextChildren } : {}),
+    };
+  };
+
+  const next = list.map((item) => normalizeItem(item));
+  const changed = list.some((item, index) => item !== next[index]);
+  return changed ? next : items;
+};
+
 export function BomProvider({ children }) {
   const [bomResult, setBomResultState] = useState(() => ({
     cdeid: "",
@@ -137,9 +184,11 @@ export function BomProvider({ children }) {
       const normalized = normalizeBomResult(resolved);
       const resolvedCdeid = (normalized?.cdeid ?? "").toString().trim();
       const overridesByGuid = bomOverridesRef.current?.[resolvedCdeid] ?? {};
+
+      const itemsWithDefaults = ensureDefaultStatus(normalized.items);
       const applied = {
         ...normalized,
-        items: applyBomOverrides(normalized.items, overridesByGuid),
+        items: applyBomOverrides(itemsWithDefaults, overridesByGuid),
       };
 
       setBomByCdeid((prevByCde) => ({
@@ -263,7 +312,10 @@ export function BomProvider({ children }) {
               ...prevByCde,
               [targetCdeid]: {
                 ...normalized,
-                items: applyBomOverrides(mergedChildren, mergedOverrides),
+                items: applyBomOverrides(
+                  ensureDefaultStatus(mergedChildren),
+                  mergedOverrides,
+                ),
               },
             };
           });
@@ -276,7 +328,9 @@ export function BomProvider({ children }) {
             return {
               ...normalized,
               items: applyBomOverrides(
-                mergeIncomingChildrenByGuid(normalized.items, childrenByGuid),
+                ensureDefaultStatus(
+                  mergeIncomingChildrenByGuid(normalized.items, childrenByGuid),
+                ),
                 mergedOverrides,
               ),
             };

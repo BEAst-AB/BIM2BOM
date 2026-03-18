@@ -120,11 +120,11 @@ export default function CDE() {
           const tableBom = hasUnsentDraft ? draftBomResult : publishedBom;
 
           return (
-        <CdeBomSidebar
-          hasUnsentDraft={hasUnsentDraft}
-          onPublishToBuyingSystem={onPublishToBuyingSystem}
-          bomResult={tableBom}
-        />
+            <CdeBomSidebar
+              hasUnsentDraft={hasUnsentDraft}
+              onPublishToBuyingSystem={onPublishToBuyingSystem}
+              bomResult={tableBom}
+            />
           );
         })()}
       </div>

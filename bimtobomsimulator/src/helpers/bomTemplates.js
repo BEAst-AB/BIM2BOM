@@ -12,6 +12,7 @@ export const createBeastProp = ({
   propertySet = "",
   property,
   itemchildren,
+  status = "Unchaged",
   Seller = "",
   price = "",
 } = {}) => ({
@@ -23,6 +24,7 @@ export const createBeastProp = ({
   propertySet,
   property: Array.isArray(property) ? property : [],
   itemchildren: Array.isArray(itemchildren) ? itemchildren : [],
+  status,
   Seller,
   price,
 });

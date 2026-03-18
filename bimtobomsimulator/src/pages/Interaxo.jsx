@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useBom } from "../context/useBom.js";
 import CdeBomSidebar from "../components/CdeBomSidebar.jsx";
+import InteraxoConnection from "../components/InteraxoConnection.jsx";
 import { createBeastProp, createBomResult } from "../helpers/bomTemplates.js";
 
 export default function Interaxo() {
@@ -56,6 +57,10 @@ export default function Interaxo() {
             <div style={{ fontWeight: 600, marginBottom: 6 }}>Interaxo</div>
             <div className="pageMeta">
               This page is a placeholder for future Interaxo integration.
+            </div>
+
+            <div style={{ marginTop: 12 }}>
+              <InteraxoConnection />
             </div>
 
             <div style={{ marginTop: 12 }}>

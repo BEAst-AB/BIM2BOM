@@ -45,7 +45,14 @@ export default function IfcWallsTable({ bomResult }) {
     () => (Array.isArray(bomResult) ? bomResult : (bomResult?.items ?? [])),
     [bomResult],
   );
+
+  const STATUS_UNCHAGED = "Unchaged";
+  const STATUS_NEW = "New";
+
   const rowsAll = useMemo(() => buildRows(items, () => true), [items]);
+
+  const [statusByRowKey, setStatusByRowKey] = useState(() => ({}));
+
   const expandableKeys = useMemo(() => {
     const keys = [];
     for (const row of rowsAll) {
@@ -86,6 +93,7 @@ export default function IfcWallsTable({ bomResult }) {
             <tr>
               <th>Name</th>
               <th>GUID</th>
+              <th>Status</th>
               <th>Seller</th>
               <th>Price</th>
             </tr>
@@ -93,7 +101,7 @@ export default function IfcWallsTable({ bomResult }) {
           <tbody>
             {items.length === 0 ? (
               <tr>
-                <td colSpan={4} className="emptyCell">
+                <td colSpan={5} className="emptyCell">
                   No BOM data loaded yet
                 </td>
               </tr>
@@ -148,6 +156,32 @@ export default function IfcWallsTable({ bomResult }) {
                       </div>
                     </td>
                     <td className="mono">{item?.GUID || "-"}</td>
+                    <td>
+                      <select
+                        className="buySelect"
+                        value={
+                          statusByRowKey?.[row.rowKey] ??
+                          (item?.status && String(item.status).trim() !== ""
+                            ? String(item.status)
+                            : STATUS_UNCHAGED)
+                        }
+                        onChange={(event) => {
+                          const nextStatus = event.target.value;
+                          setStatusByRowKey((prev) => ({
+                            ...(prev ?? {}),
+                            [row.rowKey]: nextStatus,
+                          }));
+
+                          if (!item || typeof item !== "object") return;
+                          item.status = nextStatus;
+                        }}
+                      >
+                        <option value={STATUS_UNCHAGED}>
+                          {STATUS_UNCHAGED}
+                        </option>
+                        <option value={STATUS_NEW}>{STATUS_NEW}</option>
+                      </select>
+                    </td>
                     <td>{renderOptionalValue(item?.Seller)}</td>
                     <td className="mono">{renderOptionalValue(item?.price)}</td>
                   </tr>

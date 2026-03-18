@@ -18,6 +18,33 @@ const readLength = (item) => {
   return String(value);
 };
 
+const readStatus = (item) => {
+  const STATUS_UNCHAGED = "Unchaged";
+  const raw = item?.status ?? item?.Status;
+
+  const unwrap = (value) => {
+    if (value == null) return "";
+    if (typeof value === "object") {
+      if ("value" in value) return String(value.value ?? "");
+      if ("Value" in value) return String(value.Value ?? "");
+    }
+    return String(value);
+  };
+
+  const direct = unwrap(raw).trim();
+  if (direct) return direct;
+
+  const properties = item?.property ?? [];
+  const statusProp = properties.find((p) => {
+    const name = (p?.Name ?? "").toString().trim().toLowerCase();
+    return name === "status";
+  });
+  const fromProp = unwrap(statusProp?.Value).trim();
+  if (fromProp) return fromProp;
+
+  return STATUS_UNCHAGED;
+};
+
 export default function BuyingSystem() {
   const {
     bomResult,
@@ -154,12 +181,13 @@ export default function BuyingSystem() {
                       <th>Name</th>
                       <th>GUID</th>
                       <th>Lenght</th>
+                      <th>Status</th>
                     </tr>
                   </thead>
                   <tbody>
                     {items.length === 0 ? (
                       <tr>
-                        <td colSpan={4} className="emptyCell">
+                        <td colSpan={5} className="emptyCell">
                           No BOM data loaded yet (open CDE first)
                         </td>
                       </tr>
@@ -181,6 +209,7 @@ export default function BuyingSystem() {
                             <td>{item?.Name || "-"}</td>
                             <td className="mono">{item?.GUID || "-"}</td>
                             <td className="mono">{readLength(item)}</td>
+                            <td>{readStatus(item)}</td>
                           </tr>
                         );
                       })

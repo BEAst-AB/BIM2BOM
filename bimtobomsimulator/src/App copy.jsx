@@ -113,7 +113,6 @@ export default function App() {
 
         await loadIfc("/web-ifc/A-40-V-000_BIM2BOM.ifc");
       } catch (error) {
-        // eslint-disable-next-line no-console
         console.error("Viewer init failed:", error);
       }
     })();
