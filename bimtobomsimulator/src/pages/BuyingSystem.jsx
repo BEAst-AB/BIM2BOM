@@ -70,6 +70,16 @@ const readStatus = (item) => {
   return STATUS_UNCHANGED;
 };
 
+const formatStatusLabel = (value) => {
+  const text = value == null ? "" : String(value).trim();
+  if (!text) return "-";
+  if (text.toLowerCase() === "unchaged" || text === "Unchanged")
+    return "Oförändrad";
+  if (text === "New") return "Ny";
+  if (text === "Updated") return "Uppdaterad";
+  return text;
+};
+
 const deepClone = (value) => {
   if (value == null) return value;
   if (typeof structuredClone === "function") {
@@ -264,7 +274,7 @@ export default function BuyingSystem() {
       <div className="pageHeader">
         <div className="pageTitle">Inköpssystem</div>
         <div className="pageMeta">
-          {items.length} BOM items from {cdeid || "-"}
+          {items.length} BOM-objekt från {cdeid || "-"}
         </div>
       </div>
 
@@ -276,11 +286,11 @@ export default function BuyingSystem() {
                 <table className="wallsTable">
                   <thead>
                     <tr>
-                      <th style={{ width: 44 }} aria-label="Select" />
-                      <th>Name</th>
+                      <th style={{ width: 44 }} aria-label="Välj" />
+                      <th>Namn</th>
                       <th>GUID</th>
-                      <th>Quantity</th>
-                      <th style={{ width: 90 }}>Unit</th>
+                      <th>Kvantitet</th>
+                      <th style={{ width: 90 }}>Enhet</th>
                       <th>Status</th>
                     </tr>
                   </thead>
@@ -288,7 +298,7 @@ export default function BuyingSystem() {
                     {items.length === 0 ? (
                       <tr>
                         <td colSpan={6} className="emptyCell">
-                          No BOM data loaded yet (open CDE first)
+                          Ingen BOM-data inladdad ännu (öppna CDE först)
                         </td>
                       </tr>
                     ) : (
@@ -303,14 +313,14 @@ export default function BuyingSystem() {
                                 type="checkbox"
                                 checked={checked}
                                 onChange={() => toggleRow(key)}
-                                aria-label={`Select ${item?.Name ?? "row"}`}
+                                aria-label={`Välj ${item?.Name ?? "rad"}`}
                               />
                             </td>
                             <td>{item?.Name || "-"}</td>
                             <td className="mono">{item?.GUID || "-"}</td>
                             <td className="mono">{readQuantity(item)}</td>
                             <td className="mono">{readUnit(item)}</td>
-                            <td>{readStatus(item)}</td>
+                            <td>{formatStatusLabel(readStatus(item))}</td>
                           </tr>
                         );
                       })
@@ -321,10 +331,10 @@ export default function BuyingSystem() {
 
               <div className="pageActions">
                 <button type="button" onClick={onGetSelected}>
-                  Get selected ({selectedCount})
+                  Hämta valda ({selectedCount})
                 </button>
                 <div className="pageMeta">
-                  Selected list: {selectedList.length}
+                  Vald lista: {selectedList.length}
                 </div>
               </div>
             </div>
@@ -334,7 +344,7 @@ export default function BuyingSystem() {
             className="paneSplitter"
             role="separator"
             aria-orientation="vertical"
-            aria-label="Resize buying columns"
+            aria-label="Ändra storlek på inköpskolumner"
             onPointerDown={onSplitterPointerDown}
           />
 
@@ -343,7 +353,7 @@ export default function BuyingSystem() {
               <div
                 className="buyingTabsBar"
                 role="tablist"
-                aria-label="Buying system tabs"
+                aria-label="Inköpssystem-flikar"
               >
                 <button
                   type="button"
@@ -432,7 +442,7 @@ export default function BuyingSystem() {
 
               <XmlViewer
                 show={showXml}
-                emptyText="Press BUY to generate XML"
+                emptyText="Tryck SKICKA för att generera XML"
                 renderPanel={false}
                 dialogRef={xmlDialogRef}
                 payload={xmlOrder}

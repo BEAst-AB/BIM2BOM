@@ -112,7 +112,7 @@ export default function CDE() {
         className="paneSplitter"
         role="separator"
         aria-orientation="vertical"
-        aria-label="Resize walls table"
+        aria-label="Ändra storlek på väggtabell"
         onPointerDown={onSplitterPointerDown}
       />
       <div className="sidebarPane" style={{ width: `${sidebarWidth}px` }}>

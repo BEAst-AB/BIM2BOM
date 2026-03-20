@@ -9,12 +9,12 @@ const DEFAULT_BUYING_SYSTEM_XML = `<?xml version="1.0" encoding="utf-8"?>
   </Header>
   <Lines>
     <Line>
-      <Name>Wall A</Name>
+      <Name>Vägg A</Name>
       <GUID>3pLKJPvHT21uNqX1l9FcUN</GUID>
       <Length unit="mm">4200</Length>
     </Line>
     <Line>
-      <Name>Wall B</Name>
+      <Name>Vägg B</Name>
       <GUID>0Zk_ExampleGuid_123</GUID>
       <Length unit="mm">2800</Length>
     </Line>
@@ -25,7 +25,7 @@ const DEFAULT_BUYING_SYSTEM_XML = `<?xml version="1.0" encoding="utf-8"?>
 export default function XmlViewer({
   show,
   title = "XML",
-  emptyText = "Press BUY to generate XML",
+  emptyText = "Tryck SKICKA för att generera XML",
   xml = DEFAULT_BUYING_SYSTEM_XML,
   height = 240,
   renderPanel = true,
@@ -75,8 +75,8 @@ export default function XmlViewer({
           <button
             type="button"
             onClick={closeModal}
-            aria-label="Close"
-            title="Close"
+            aria-label="Stäng"
+            title="Stäng"
             style={{ padding: "0.4em 0.6em" }}
           >
             ✕
@@ -104,8 +104,8 @@ export default function XmlViewer({
           type="button"
           onClick={openModal}
           disabled={!canOpen}
-          aria-label="Open XML in resizable window"
-          title={canOpen ? "Open" : "Generate XML first"}
+          aria-label="Öppna XML i ändringsbart fönster"
+          title={canOpen ? "Öppna" : "Generera XML först"}
           style={{ padding: "0.4em 0.6em" }}
         >
           ⤢
@@ -128,8 +128,8 @@ export default function XmlViewer({
           <button
             type="button"
             onClick={closeModal}
-            aria-label="Close"
-            title="Close"
+            aria-label="Stäng"
+            title="Stäng"
             style={{ padding: "0.4em 0.6em" }}
           >
             ✕

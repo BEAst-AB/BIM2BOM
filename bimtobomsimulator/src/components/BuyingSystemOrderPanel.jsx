@@ -228,7 +228,7 @@ export default function BuyingSystemOrderPanel({
       <div className="panelBody">
         <div className="buyControls">
           <label className="buyLabel">
-            <span className="buyLabelText">Select Company</span>
+            <span className="buyLabelText">Välj säljare</span>
             <select
               className="buySelect"
               value={selectedCompany}
@@ -239,7 +239,7 @@ export default function BuyingSystemOrderPanel({
             </select>
           </label>
           <button type="button" onClick={onBuy}>
-            Send request
+            Skicka begäran
           </button>
         </div>
 
@@ -247,13 +247,13 @@ export default function BuyingSystemOrderPanel({
           className="pageMeta"
           style={{ display: "flex", alignItems: "center", gap: 8 }}
         >
-          {xmlCreated ? "XML created" : "Press BUY to generate XML"}
+          {xmlCreated ? "XML skapad" : "Tryck SKICKA för att generera XML"}
           <button
             type="button"
             onClick={onOpenXml}
             disabled={!xmlCreated}
-            aria-label="Open XML in resizable window"
-            title={xmlCreated ? "Open" : "Generate XML first"}
+            aria-label="Öppna XML i ändringsbart fönster"
+            title={xmlCreated ? "Öppna" : "Generera XML först"}
             style={{ padding: "0.4em 0.6em" }}
           >
             ⤢
@@ -264,9 +264,9 @@ export default function BuyingSystemOrderPanel({
           <table className="wallsTable">
             <thead>
               <tr>
-                <th style={{ width: 90 }}>Count</th>
-                <th>Name</th>
-                <th style={{ width: 140 }}>Total lenght</th>
+                <th style={{ width: 90 }}>Antal</th>
+                <th>Namn</th>
+                <th style={{ width: 140 }}>Total längd</th>
                 <th style={{ width: 140 }} />
               </tr>
             </thead>
@@ -274,7 +274,7 @@ export default function BuyingSystemOrderPanel({
               {selectedItems?.length === 0 ? (
                 <tr>
                   <td colSpan={4} className="emptyCell">
-                    Select items on the left to prepare a buy order
+                    Välj objekt till vänster för att förbereda en inköpsorder
                   </td>
                 </tr>
               ) : (
@@ -291,7 +291,7 @@ export default function BuyingSystemOrderPanel({
                           onClick={() => addManualItemForLine(line.Name)}
                           style={{ padding: "0.35em 0.6em" }}
                         >
-                          Add item
+                          Lägg till objekt
                         </button>
                       </td>
                     </tr>,
@@ -312,7 +312,7 @@ export default function BuyingSystemOrderPanel({
                                 alignItems: "center",
                               }}
                             >
-                              <span className="pageMeta">Item {i + 1}</span>
+                              <span className="pageMeta">Objekt {i + 1}</span>
                               <input
                                 className="buySelect"
                                 type="text"
@@ -322,8 +322,8 @@ export default function BuyingSystemOrderPanel({
                                     Name: e.target.value,
                                   })
                                 }
-                                placeholder="Name"
-                                aria-label={`Manual item name for ${line.Name}`}
+                                placeholder="Namn"
+                                aria-label={`Manuellt objektnamn för ${line.Name}`}
                               />
                               <input
                                 className="buySelect"
@@ -334,8 +334,8 @@ export default function BuyingSystemOrderPanel({
                                     Quantity: e.target.value,
                                   })
                                 }
-                                placeholder="Quantity"
-                                aria-label={`Manual item quantity for ${line.Name}`}
+                                placeholder="Kvantitet"
+                                aria-label={`Manuell objektkvantitet för ${line.Name}`}
                               />
                               <select
                                 className="buySelect"
@@ -345,7 +345,7 @@ export default function BuyingSystemOrderPanel({
                                     Unit: e.target.value,
                                   })
                                 }
-                                aria-label={`Manual item unit for ${line.Name}`}
+                                aria-label={`Manuell objektenhet för ${line.Name}`}
                               >
                                 <option value="m">m</option>
                                 <option value="m2">m2</option>

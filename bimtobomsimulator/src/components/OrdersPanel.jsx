@@ -23,6 +23,16 @@ const normalizeStatus = (value) => {
   return text.toLowerCase() === "unchaged" ? "Unchanged" : text;
 };
 
+const formatStatusLabel = (value) => {
+  const text = value == null ? "" : String(value).trim();
+  if (!text || text === "-") return "-";
+  if (text.toLowerCase() === "unchaged" || text === "Unchanged")
+    return "Oförändrad";
+  if (text === "New") return "Ny";
+  if (text === "Updated") return "Uppdaterad";
+  return text;
+};
+
 const formatCompanyLabel = (value) => {
   const text = value == null ? "" : String(value).trim();
   if (!text) return "-";
@@ -53,17 +63,17 @@ export default function OrdersPanel({
       <div className="panelHeader">Ordrar</div>
       <div className="panelBody">
         {rows.length === 0 ? (
-          <div className="emptyCell">No orders created yet</div>
+          <div className="emptyCell">Inga ordrar skapade ännu</div>
         ) : (
           <div className="tableWrap">
             <table className="wallsTable">
               <thead>
                 <tr>
-                  <th style={{ width: 160 }}>Created</th>
-                  <th style={{ width: 140 }}>Order No</th>
-                  <th style={{ width: 160 }}>Company</th>
+                  <th style={{ width: 160 }}>Skapad</th>
+                  <th style={{ width: 140 }}>Ordernr</th>
+                  <th style={{ width: 160 }}>Säljare</th>
                   <th style={{ width: 140 }}>Status</th>
-                  <th style={{ width: 90 }}>Items</th>
+                  <th style={{ width: 90 }}>Objekt</th>
                 </tr>
               </thead>
               <tbody>
@@ -89,7 +99,7 @@ export default function OrdersPanel({
                     <td className="mono">{formatDateTime(order?.createdAt)}</td>
                     <td className="mono">{order?.orderNumber ?? "-"}</td>
                     <td>{formatCompanyLabel(order?.company)}</td>
-                    <td>{normalizeStatus(order?.status)}</td>
+                    <td>{formatStatusLabel(normalizeStatus(order?.status))}</td>
                     <td className="mono">
                       {Array.isArray(order?.items) ? order.items.length : 0}
                     </td>
@@ -103,8 +113,7 @@ export default function OrdersPanel({
         {selectedOrder ? (
           <div className="pageActions" style={{ marginTop: 12 }}>
             <div className="pageMeta" style={{ flex: 1 }}>
-              Selected order: {selectedOrder?.orderNumber ?? "-"} • Items in
-              selection:{" "}
+              Vald order: {selectedOrder?.orderNumber ?? "-"} • Objekt i urval:{" "}
               {Array.isArray(selectedItems) ? selectedItems.length : 0}
             </div>
             <button
@@ -114,14 +123,14 @@ export default function OrdersPanel({
                 !Array.isArray(selectedItems) || selectedItems.length === 0
               }
             >
-              Add selected items
+              Lägg till valda objekt
             </button>
             <button
               type="button"
               onClick={() => onSendOrderUpdate?.(selectedOrder)}
               disabled={!selectedOrder}
             >
-              Send update
+              Skicka uppdatering
             </button>
           </div>
         ) : null}

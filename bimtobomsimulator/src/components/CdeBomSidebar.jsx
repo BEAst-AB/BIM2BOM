@@ -13,12 +13,12 @@ export default function CdeBomSidebar({
           onClick={onPublishToBuyingSystem}
           disabled={!hasUnsentDraft}
         >
-          Send BOM to Buying System
+          Skicka BOM till inköpssystem
         </button>
         <div className="pageMeta">
           {hasUnsentDraft
-            ? "BOM loaded (not sent)"
-            : "BOM sent to Buying System"}
+            ? "BOM inladdad (ej skickad)"
+            : "BOM skickad till inköpssystem"}
         </div>
       </div>
 

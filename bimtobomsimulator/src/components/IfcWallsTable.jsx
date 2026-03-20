@@ -45,6 +45,8 @@ const formatSellerLabel = (value) => {
   if (!text) return value;
   if (text === "Company 1") return "Säljare 1";
   if (text === "Company 2") return "Säljare 2";
+  if (text === "Selling System 1") return "Säljsystem 1";
+  if (text === "Selling System 2") return "Säljsystem 2";
   return value;
 };
 
@@ -98,26 +100,26 @@ export default function IfcWallsTable({ bomResult }) {
   return (
     <div className="sidebar">
       <div className="sidebarHeader">
-        <div className="sidebarTitle">BOM Result</div>
-        <div className="sidebarMeta">{items.length} found</div>
+        <div className="sidebarTitle">BOM-resultat</div>
+        <div className="sidebarMeta">{items.length} hittade</div>
       </div>
 
       <div className="tableWrap">
         <table className="wallsTable">
           <thead>
             <tr>
-              <th>Name</th>
+              <th>Namn</th>
               <th>GUID</th>
               <th>Status</th>
-              <th>Seller</th>
-              <th>Price</th>
+              <th>Säljare</th>
+              <th>Pris</th>
             </tr>
           </thead>
           <tbody>
             {items.length === 0 ? (
               <tr>
                 <td colSpan={5} className="emptyCell">
-                  No BOM data loaded yet
+                  Ingen BOM-data inladdad ännu
                 </td>
               </tr>
             ) : (
@@ -150,10 +152,10 @@ export default function IfcWallsTable({ bomResult }) {
                             onClick={() => toggleExpanded(row.rowKey)}
                             aria-label={
                               isExpanded
-                                ? "Collapse children"
-                                : "Expand children"
+                                ? "Dölj underordnade"
+                                : "Visa underordnade"
                             }
-                            title={isExpanded ? "Collapse" : "Expand"}
+                            title={isExpanded ? "Dölj" : "Visa"}
                             style={{
                               padding: "0 4px",
                               minWidth: 18,
@@ -190,10 +192,8 @@ export default function IfcWallsTable({ bomResult }) {
                           item.status = nextStatus;
                         }}
                       >
-                        <option value={STATUS_UNCHANGED}>
-                          {STATUS_UNCHANGED}
-                        </option>
-                        <option value={STATUS_NEW}>{STATUS_NEW}</option>
+                        <option value={STATUS_UNCHANGED}>Oförändrad</option>
+                        <option value={STATUS_NEW}>Ny</option>
                       </select>
                     </td>
                     <td>

@@ -26,17 +26,17 @@ export default function InteraxoConnection() {
 
   return (
     <section className="panel">
-      <div className="panelHeader">Interaxo connection test</div>
+      <div className="panelHeader">Interaxo anslutningstest</div>
       <div className="panelBody">
         <div className="buyControls" style={{ alignItems: "stretch" }}>
           <label className="buyLabel" style={{ flex: 1, minWidth: 280 }}>
-            <span className="buyLabelText">Access token</span>
+            <span className="buyLabelText">Åtkomsttoken</span>
             <input
               className="buySelect"
               type="text"
               value={accessToken}
               onChange={(event) => setAccessToken(event.target.value)}
-              placeholder="Paste access token (e.g. 'Bearer …' if required)"
+              placeholder="Klistra in åtkomsttoken (t.ex. 'Bearer …' om det krävs)"
               spellCheck={false}
               autoCapitalize="off"
               autoCorrect="off"
@@ -48,14 +48,14 @@ export default function InteraxoConnection() {
             onClick={onTestGetDataGrid}
             disabled={isLoading}
           >
-            {isLoading ? "Loading…" : "Test getDataGrid"}
+            {isLoading ? "Läser in…" : "Testa getDataGrid"}
           </button>
         </div>
 
         <div className="pageMeta">
-          Calls <span className="mono">getDataGrid</span> for project{" "}
-          <span className="mono">{PROJECT_ID}</span> and logs the result to the
-          console.
+          Anropar <span className="mono">getDataGrid</span> för projekt{" "}
+          <span className="mono">{PROJECT_ID}</span> och loggar resultatet till
+          konsolen.
         </div>
       </div>
     </section>

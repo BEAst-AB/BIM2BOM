@@ -75,6 +75,16 @@ const normalizeOrderStatus = (value) => {
   return text;
 };
 
+const formatStatusLabel = (value) => {
+  const text = value == null ? "" : String(value).trim();
+  if (!text || text === "-") return "-";
+  if (text.toLowerCase() === "unchaged" || text === "Unchanged")
+    return "Oförändrad";
+  if (text === "New") return "Ny";
+  if (text === "Updated") return "Uppdaterad";
+  return text;
+};
+
 export default function SellingSystemComponent({
   order,
   addIncomingOrder,
@@ -143,7 +153,7 @@ export default function SellingSystemComponent({
 
     console.log("SEND", payload);
     addIncomingOrder?.(payload);
-    setSendStatus("Sent to CDE");
+    setSendStatus("Skickat till CDE");
 
     const created = new Date().toISOString();
     const xml = `<?xml version="1.0" encoding="utf-8"?>
@@ -186,7 +196,7 @@ ${(payload.items ?? [])
       <div className="pageHeader">
         <div className="pageTitle">{companyTitle}</div>
         <div className="pageMeta">
-          {order ? "Order received" : "No order yet"}
+          {order ? "Order mottagen" : "Ingen order ännu"}
         </div>
       </div>
 
@@ -201,27 +211,28 @@ ${(payload.items ?? [])
                 }}
               >
                 <div>
-                  Incoming order
+                  Inkommande order
                   {order?.buyingSystem ? ` : ${order.buyingSystem}` : ""}
                 </div>
                 {order ? (
-                  <div>Status: {normalizeOrderStatus(order?.status)}</div>
+                  <div>
+                    Status:{" "}
+                    {formatStatusLabel(normalizeOrderStatus(order?.status))}
+                  </div>
                 ) : null}
-                {order ? (
-                  <div>Order No: {order?.orderNumber ?? "-"}</div>
-                ) : null}
+                {order ? <div>Ordernr: {order?.orderNumber ?? "-"}</div> : null}
               </div>
             </div>
             <div className="panelBody">
               {!order ? (
                 <div className="emptyCell">
-                  Waiting for an order from Buying System
+                  Väntar på order från inköpssystem
                 </div>
               ) : (
                 <>
                   <div className="buyControls">
                     <button type="button" onClick={onSend}>
-                      Send
+                      Skicka
                     </button>
                     <div className="pageMeta">{sendStatus}</div>
                   </div>
@@ -230,18 +241,18 @@ ${(payload.items ?? [])
                     <table className="wallsTable">
                       <thead>
                         <tr>
-                          <th>Name</th>
+                          <th>Namn</th>
                           <th>GUID</th>
-                          <th style={{ width: 140 }}>Quantity</th>
-                          <th style={{ width: 90 }}>Unit</th>
-                          <th style={{ width: 140 }}>Price</th>
+                          <th style={{ width: 140 }}>Kvantitet</th>
+                          <th style={{ width: 90 }}>Enhet</th>
+                          <th style={{ width: 140 }}>Pris</th>
                         </tr>
                       </thead>
                       <tbody>
                         {rowsVisible.length === 0 ? (
                           <tr>
                             <td colSpan={5} className="emptyCell">
-                              Order contains no items
+                              Ordern innehåller inga objekt
                             </td>
                           </tr>
                         ) : (
@@ -276,12 +287,10 @@ ${(payload.items ?? [])
                                         }
                                         aria-label={
                                           isExpanded
-                                            ? "Collapse children"
-                                            : "Expand children"
+                                            ? "Dölj underordnade"
+                                            : "Visa underordnade"
                                         }
-                                        title={
-                                          isExpanded ? "Collapse" : "Expand"
-                                        }
+                                        title={isExpanded ? "Dölj" : "Visa"}
                                         style={{
                                           padding: "0 4px",
                                           minWidth: 18,
@@ -313,7 +322,7 @@ ${(payload.items ?? [])
                                       onPriceChange(key, e.target.value)
                                     }
                                     placeholder="0"
-                                    aria-label={`Price for ${item?.Name ?? "item"}`}
+                                    aria-label={`Pris för ${item?.Name ?? "artikel"}`}
                                   />
                                 </td>
                               </tr>
@@ -335,7 +344,7 @@ ${(payload.items ?? [])
                 <pre className="xmlPre">{peppolXml}</pre>
               ) : (
                 <div className="emptyCell">
-                  Press Send to generate PEPPOL XML
+                  Tryck Skicka för att generera PEPPOL XML
                 </div>
               )}
             </div>

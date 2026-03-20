@@ -82,6 +82,14 @@ const buildOrderRows = ({ lines, isExpanded }) => {
   return { rows, totalPrice };
 };
 
+const formatSellingSystemLabel = (value) => {
+  const text = value == null ? "" : String(value).trim();
+  if (!text) return "-";
+  if (text === "Selling System 1") return "Säljsystem 1";
+  if (text === "Selling System 2") return "Säljsystem 2";
+  return text;
+};
+
 export default function IncomingOrdersPanel({
   incomingOrders = [],
   onAcceptIncomingOrder,
@@ -158,9 +166,12 @@ export default function IncomingOrdersPanel({
                     style={{ display: "flex", gap: 12, flexWrap: "wrap" }}
                   >
                     <span className="mono">CDE: {payload?.cdeid || "-"}</span>
-                    <span>Selling system: {payload?.SellingSystem || "-"}</span>
+                    <span>
+                      Säljsystem:{" "}
+                      {formatSellingSystemLabel(payload?.SellingSystem)}
+                    </span>
                     <span className="mono">
-                      Total price: {formatTotal(totalPrice)}
+                      Totalt pris: {formatTotal(totalPrice)}
                     </span>
                   </div>
 
@@ -169,16 +180,16 @@ export default function IncomingOrdersPanel({
                       <table className="wallsTable">
                         <thead>
                           <tr>
-                            <th>Name</th>
+                            <th>Namn</th>
                             <th>GUID</th>
-                            <th style={{ width: 140 }}>Price</th>
+                            <th style={{ width: 140 }}>Pris</th>
                           </tr>
                         </thead>
                         <tbody>
                           {rows.length === 0 ? (
                             <tr>
                               <td colSpan={3} className="emptyCell">
-                                Order contains no items
+                                Ordern innehåller inga objekt
                               </td>
                             </tr>
                           ) : (
@@ -215,12 +226,10 @@ export default function IncomingOrdersPanel({
                                           }
                                           aria-label={
                                             isExpanded
-                                              ? "Collapse children"
-                                              : "Expand children"
+                                              ? "Dölj underordnade"
+                                              : "Visa underordnade"
                                           }
-                                          title={
-                                            isExpanded ? "Collapse" : "Expand"
-                                          }
+                                          title={isExpanded ? "Dölj" : "Visa"}
                                           style={{
                                             padding: "0 4px",
                                             minWidth: 18,
@@ -266,7 +275,7 @@ export default function IncomingOrdersPanel({
                         type="button"
                         onClick={() => onAcceptIncomingOrder?.(order.id)}
                       >
-                        Accept
+                        Acceptera
                       </button>
                       <button
                         type="button"
@@ -279,7 +288,7 @@ export default function IncomingOrdersPanel({
                           onDeclineIncomingOrder?.(order.id);
                         }}
                       >
-                        Remove
+                        Ta bort
                       </button>
                     </div>
                   </div>

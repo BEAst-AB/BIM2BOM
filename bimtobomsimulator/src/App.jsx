@@ -7,7 +7,7 @@ export default function App() {
 
   return (
     <div className="appFrame">
-      <div className="tabsBar" role="tablist" aria-label="Systems">
+      <div className="tabsBar" role="tablist" aria-label="System">
         <NavLink to="/cde" role="tab" className="tabButton">
           CDE
         </NavLink>

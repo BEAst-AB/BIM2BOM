@@ -12,23 +12,23 @@ export default function Interaxo() {
       createBeastProp({
         id: "interaxo-1",
         GUID: "INTERAXO_GUID_001",
-        Name: "Interaxo wall A",
+        Name: "Interaxo vägg A",
         RevitID: "INT-001",
         propertySet: "INTERAXO",
         property: [
           { Name: "Length", Value: 4200, Unit: "mm" },
-          { Name: "Material", Value: "Concrete", Unit: "" },
+          { Name: "Material", Value: "Betong", Unit: "" },
         ],
       }),
       createBeastProp({
         id: "interaxo-2",
         GUID: "INTERAXO_GUID_002",
-        Name: "Interaxo wall B",
+        Name: "Interaxo vägg B",
         RevitID: "INT-002",
         propertySet: "INTERAXO",
         property: [
           { Name: "Length", Value: 2800, Unit: "mm" },
-          { Name: "Material", Value: "Steel", Unit: "" },
+          { Name: "Material", Value: "Stål", Unit: "" },
         ],
       }),
     ];
@@ -48,7 +48,7 @@ export default function Interaxo() {
     <div className="pageShell">
       <div className="pageHeader">
         <div className="pageTitle">Interaxo</div>
-        <div className="pageMeta">Dummy integration</div>
+        <div className="pageMeta">Testintegrering</div>
       </div>
 
       <div className="pageBody">
@@ -56,7 +56,8 @@ export default function Interaxo() {
           <div>
             <div style={{ fontWeight: 600, marginBottom: 6 }}>Interaxo</div>
             <div className="pageMeta">
-              This page is a placeholder for future Interaxo integration.
+              Den här sidan är en platshållare för framtida
+              Interaxo-integration.
             </div>
 
             <div style={{ marginTop: 12 }}>

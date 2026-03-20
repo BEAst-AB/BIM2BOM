@@ -40,7 +40,7 @@ export default function IfcViewer({ ifcUrl, onBomLoaded }) {
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error(
-          `Failed to fetch IFC: ${response.status} ${response.statusText}`,
+          `Misslyckades att hämta IFC: ${response.status} ${response.statusText}`,
         );
       }
       const data = await response.arrayBuffer();
