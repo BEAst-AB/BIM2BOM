@@ -74,9 +74,11 @@ const buildOrderRows = ({ lines, isExpanded }) => {
     visit(rootItems[i].item, 0, `root:${i}`);
   }
 
+  // Total should be independent of expand/collapse and include children.
+  // `priceByKey` contains one (latest) price per unique item key.
   let totalPrice = 0;
-  for (const row of rows) {
-    if (row.price != null) totalPrice += row.price;
+  for (const price of priceByKey.values()) {
+    if (price != null) totalPrice += price;
   }
 
   return { rows, totalPrice };
