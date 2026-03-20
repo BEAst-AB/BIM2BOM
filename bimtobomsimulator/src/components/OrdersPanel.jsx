@@ -23,6 +23,14 @@ const normalizeStatus = (value) => {
   return text.toLowerCase() === "unchaged" ? "Unchanged" : text;
 };
 
+const formatCompanyLabel = (value) => {
+  const text = value == null ? "" : String(value).trim();
+  if (!text) return "-";
+  if (text === "Company 1") return "Säljare 1";
+  if (text === "Company 2") return "Säljare 2";
+  return text;
+};
+
 export default function OrdersPanel({
   orders = [],
   selectedItems = [],
@@ -42,7 +50,7 @@ export default function OrdersPanel({
 
   return (
     <section className="panel">
-      <div className="panelHeader">Orders</div>
+      <div className="panelHeader">Ordrar</div>
       <div className="panelBody">
         {rows.length === 0 ? (
           <div className="emptyCell">No orders created yet</div>
@@ -80,7 +88,7 @@ export default function OrdersPanel({
                   >
                     <td className="mono">{formatDateTime(order?.createdAt)}</td>
                     <td className="mono">{order?.orderNumber ?? "-"}</td>
-                    <td>{order?.company ?? "-"}</td>
+                    <td>{formatCompanyLabel(order?.company)}</td>
                     <td>{normalizeStatus(order?.status)}</td>
                     <td className="mono">
                       {Array.isArray(order?.items) ? order.items.length : 0}

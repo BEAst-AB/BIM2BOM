@@ -40,6 +40,14 @@ const renderOptionalValue = (value, emptyText = "-") => {
   return String(value);
 };
 
+const formatSellerLabel = (value) => {
+  const text = value == null ? "" : String(value).trim();
+  if (!text) return value;
+  if (text === "Company 1") return "Säljare 1";
+  if (text === "Company 2") return "Säljare 2";
+  return value;
+};
+
 export default function IfcWallsTable({ bomResult }) {
   const items = useMemo(
     () => (Array.isArray(bomResult) ? bomResult : (bomResult?.items ?? [])),
@@ -188,7 +196,9 @@ export default function IfcWallsTable({ bomResult }) {
                         <option value={STATUS_NEW}>{STATUS_NEW}</option>
                       </select>
                     </td>
-                    <td>{renderOptionalValue(item?.Seller)}</td>
+                    <td>
+                      {renderOptionalValue(formatSellerLabel(item?.Seller))}
+                    </td>
                     <td className="mono">{renderOptionalValue(item?.price)}</td>
                   </tr>
                 );

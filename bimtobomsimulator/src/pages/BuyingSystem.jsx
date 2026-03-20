@@ -262,7 +262,7 @@ export default function BuyingSystem() {
   return (
     <div className="pageShell buyingSystemPage">
       <div className="pageHeader">
-        <div className="pageTitle">Buying System</div>
+        <div className="pageTitle">Inköpssystem</div>
         <div className="pageMeta">
           {items.length} BOM items from {cdeid || "-"}
         </div>
@@ -352,7 +352,7 @@ export default function BuyingSystem() {
                   aria-selected={activeTab === TAB_CREATE}
                   onClick={() => setActiveTab(TAB_CREATE)}
                 >
-                  Create Order
+                  Skapa order
                 </button>
                 <button
                   type="button"
@@ -361,7 +361,7 @@ export default function BuyingSystem() {
                   aria-selected={activeTab === TAB_ORDERS}
                   onClick={() => setActiveTab(TAB_ORDERS)}
                 >
-                  Orders
+                  Ordrar
                 </button>
                 <button
                   type="button"
@@ -370,7 +370,7 @@ export default function BuyingSystem() {
                   aria-selected={activeTab === TAB_INCOMING}
                   onClick={() => setActiveTab(TAB_INCOMING)}
                 >
-                  Incoming Orders
+                  Ordersvar
                 </button>
               </div>
 

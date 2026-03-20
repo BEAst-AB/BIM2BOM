@@ -224,7 +224,7 @@ export default function BuyingSystemOrderPanel({
 
   return (
     <section className="panel">
-      <div className="panelHeader">Create order</div>
+      <div className="panelHeader">Skapa order</div>
       <div className="panelBody">
         <div className="buyControls">
           <label className="buyLabel">
@@ -234,8 +234,8 @@ export default function BuyingSystemOrderPanel({
               value={selectedCompany}
               onChange={(e) => setSelectedCompany(e.target.value)}
             >
-              <option>Company 1</option>
-              <option>Company 2</option>
+              <option value="Company 1">Säljare 1</option>
+              <option value="Company 2">Säljare 2</option>
             </select>
           </label>
           <button type="button" onClick={onBuy}>

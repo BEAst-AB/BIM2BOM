@@ -13,7 +13,7 @@ export default function SellingSystem1() {
         setSellingSystem1Order((prev) => (prev ? { ...prev, items: [] } : prev))
       }
       sellingSystemName="Selling System 1"
-      companyTitle="Company 1"
+      companyTitle="Säljare 1"
     />
   );
 }

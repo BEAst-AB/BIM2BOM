@@ -135,10 +135,10 @@ export default function IncomingOrdersPanel({
 
   return (
     <section className="panel">
-      <div className="panelHeader">Incoming orders</div>
+      <div className="panelHeader">Ordersvar</div>
       <div className="panelBody">
         {visibleOrders.length === 0 ? (
-          <div className="emptyCell">No incoming orders yet</div>
+          <div className="emptyCell">Inga ordersvar ännu</div>
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {visibleOrders.map((order) => {
