@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    Manufacturing BOM: Smart Recipe with Unique Articles
+    Manufacturing BOM: Traceable Catalogue with Unique Articles
     
     Shows how Manufacturing BOM maintains 1:1 traceability.
-    All recipe articles share the same CDEGuid as the parent BIM object,
+    All child lines share the same CDEGuid as the parent BIM object,
     enabling the receiving system to build a hierarchy.
-    
+    Child lines include cac:ComponentRelatedItem (CatalogueLineID → parent line "1").
+
     Based on diagram: "Manufacturing BOM - Supplier responded with UNIQUE recipe articles"
 -->
 <Catalogue xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2"
@@ -15,9 +16,9 @@
     <cbc:CustomizationID>urn:fdc:peppol.eu:poacc:trns:catalogue:3</cbc:CustomizationID>
     <cbc:ProfileID>urn:fdc:peppol.eu:poacc:bis:catalogue_only:3</cbc:ProfileID>
     
-    <cbc:ID>MBOM-SMART-001</cbc:ID>
+    <cbc:ID>MBOM-TRACEABLE-001</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
-    <cbc:Name>Manufacturing BOM - Smart Recept (1:1 Spårbarhet)</cbc:Name>
+    <cbc:Name>Manufacturing BOM - Spårbar Katalog (1:1 Spårbarhet)</cbc:Name>
     <cbc:IssueDate>2026-02-06</cbc:IssueDate>
     
     <cac:ValidityPeriod>
@@ -61,9 +62,17 @@
             <cbc:Description>Huvudobjekt från BIM-modell med underliggande tillverkningsartiklar.</cbc:Description>
             <cbc:Name>YV01 350 - Yttre bärande yttervägg</cbc:Name>
             
+            <cac:BuyersItemIdentification>
+                <cbc:ID>YV01</cbc:ID>
+            </cac:BuyersItemIdentification>
+            
             <cac:SellersItemIdentification>
                 <cbc:ID>3pLKJPvHT21uNqX1l9FcUN</cbc:ID>
             </cac:SellersItemIdentification>
+            
+            <cac:StandardItemIdentification>
+                <cbc:ID schemeID="0160">7318937172601</cbc:ID>
+            </cac:StandardItemIdentification>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>AuthoringToolId</cbc:Name>
@@ -75,12 +84,6 @@
                 <cbc:Name>CDEGuid</cbc:Name>
                 <cbc:NameCode listID="ORG:BEAst">CDEGuid</cbc:NameCode>
                 <cbc:Value>3pLKJPvHT21uNqX1l9FcUN</cbc:Value>
-            </cac:AdditionalItemProperty>
-            
-            <cac:AdditionalItemProperty>
-                <cbc:Name>ItemType</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
-                <cbc:Value>BIMObject</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
@@ -99,13 +102,26 @@
         <cbc:OrderableUnit>MTK</cbc:OrderableUnit>
         <cbc:ContentUnitQuantity unitCode="MTK">90.31</cbc:ContentUnitQuantity>
         
+        <cac:ComponentRelatedItem>
+            <cbc:ID schemeID="CatalogueLineID">1</cbc:ID>
+            <cbc:Quantity unitCode="MTK">90.31</cbc:Quantity>
+        </cac:ComponentRelatedItem>
+        
         <cac:Item>
             <cbc:Description>Tegelfasad murning. Tillverkningsartikel med 1:1 spårbarhet via delad CDEGuid.</cbc:Description>
             <cbc:Name>Tegelfasad 110mm</cbc:Name>
             
+            <cac:BuyersItemIdentification>
+                <cbc:ID>YV01</cbc:ID>
+            </cac:BuyersItemIdentification>
+            
             <cac:SellersItemIdentification>
                 <cbc:ID>3pLKJPvHT21uNqX1l9FcUN</cbc:ID>
             </cac:SellersItemIdentification>
+            
+            <cac:StandardItemIdentification>
+                <cbc:ID schemeID="0160">7318937172608</cbc:ID>
+            </cac:StandardItemIdentification>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>AuthoringToolId</cbc:Name>
@@ -141,13 +157,26 @@
         <cbc:OrderableUnit>MTK</cbc:OrderableUnit>
         <cbc:ContentUnitQuantity unitCode="MTK">90.31</cbc:ContentUnitQuantity>
         
+        <cac:ComponentRelatedItem>
+            <cbc:ID schemeID="CatalogueLineID">1</cbc:ID>
+            <cbc:Quantity unitCode="MTK">90.31</cbc:Quantity>
+        </cac:ComponentRelatedItem>
+        
         <cac:Item>
             <cbc:Description>Träregelstomme med isolering. Tillverkningsartikel med 1:1 spårbarhet.</cbc:Description>
             <cbc:Name>Regelstomme C24 195mm + mineralull</cbc:Name>
             
+            <cac:BuyersItemIdentification>
+                <cbc:ID>YV01</cbc:ID>
+            </cac:BuyersItemIdentification>
+            
             <cac:SellersItemIdentification>
                 <cbc:ID>3pLKJPvHT21uNqX1l9FcUN</cbc:ID>
             </cac:SellersItemIdentification>
+            
+            <cac:StandardItemIdentification>
+                <cbc:ID schemeID="0160">7318937172615</cbc:ID>
+            </cac:StandardItemIdentification>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>AuthoringToolId</cbc:Name>

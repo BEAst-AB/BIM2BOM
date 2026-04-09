@@ -3,7 +3,7 @@
     Use Case 2: Buyer Wall Type with Summed Quantity
     
     Scenario: Buyer sends wall type with aggregated quantity from BIM model.
-              This is the "dumb" approach - quantity is summed, no individual traceability.
+              This is the standard approach - quantity is summed, no individual traceability.
 -->
 <Catalogue xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2"
            xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
@@ -65,6 +65,10 @@
         <cac:Item>
             <cbc:Description>Yttre bärande yttervägg, 350 mm. Summerad längd från BIM-modell: 16.06 m</cbc:Description>
             <cbc:Name>YV01 350 - Yttre bärande yttervägg</cbc:Name>
+            
+            <cac:BuyersItemIdentification>
+                <cbc:ID>YV01</cbc:ID>
+            </cac:BuyersItemIdentification>
             
             <cac:SellersItemIdentification>
                 <cbc:ID>YV01-350</cbc:ID>

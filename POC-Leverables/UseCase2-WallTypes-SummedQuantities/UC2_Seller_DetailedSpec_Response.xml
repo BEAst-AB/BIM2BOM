@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    Use Case 2: Seller Detailed Specification with Recipe (Dumb)
+    Use Case 2: Seller Detailed Specification with Standard Catalogue
     
-    Scenario: Seller responds with recipe articles for aggregated wall type.
-              This is a "dumb" recipe - no 1:1 traceability since input was aggregated.
+    Scenario: Seller responds with child lines for aggregated wall type.
+              This is a standard catalogue - no 1:1 traceability since input was aggregated.
 -->
 <Catalogue xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2"
            xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
@@ -70,6 +70,10 @@
             <cbc:Description>Yttre bärande yttervägg, 350 mm. Se recept-artiklar (rad 2-4) för materiallista.</cbc:Description>
             <cbc:Name>YV01 350 - Yttre bärande yttervägg</cbc:Name>
             
+            <cac:BuyersItemIdentification>
+                <cbc:ID>YV01</cbc:ID>
+            </cac:BuyersItemIdentification>
+            
             <cac:SellersItemIdentification>
                 <cbc:ID>VE-YV01-350-MAIN</cbc:ID>
             </cac:SellersItemIdentification>
@@ -78,11 +82,9 @@
                 <cbc:ID>YVxx</cbc:ID>
             </cac:ManufacturersItemIdentification>
             
-            <cac:AdditionalItemProperty>
-                <cbc:Name>RecipeType</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">RecipeType</cbc:NameCode>
-                <cbc:Value>Aggregated</cbc:Value>
-            </cac:AdditionalItemProperty>
+            <cac:StandardItemIdentification>
+                <cbc:ID schemeID="0160">7318937172201</cbc:ID>
+            </cac:StandardItemIdentification>
         </cac:Item>
     </cac:CatalogueLine>
     
@@ -106,9 +108,17 @@
             <cbc:Description>Tegelfasad murning 110mm för YV01 350. Recept-artikel.</cbc:Description>
             <cbc:Name>Tegelfasad 110mm</cbc:Name>
             
+            <cac:BuyersItemIdentification>
+                <cbc:ID>YV01</cbc:ID>
+            </cac:BuyersItemIdentification>
+            
             <cac:SellersItemIdentification>
                 <cbc:ID>VE-TEGEL-110</cbc:ID>
             </cac:SellersItemIdentification>
+            
+            <cac:StandardItemIdentification>
+                <cbc:ID schemeID="0160">7318937172208</cbc:ID>
+            </cac:StandardItemIdentification>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>ParentItemID</cbc:Name>
@@ -144,9 +154,17 @@
             <cbc:Description>Träregelstomme C24 195mm med mineralullsisolering. Recept-artikel.</cbc:Description>
             <cbc:Name>Regelstomme C24 195mm + mineralull</cbc:Name>
             
+            <cac:BuyersItemIdentification>
+                <cbc:ID>YV01</cbc:ID>
+            </cac:BuyersItemIdentification>
+            
             <cac:SellersItemIdentification>
                 <cbc:ID>VE-REGEL-195</cbc:ID>
             </cac:SellersItemIdentification>
+            
+            <cac:StandardItemIdentification>
+                <cbc:ID schemeID="0160">7318937172215</cbc:ID>
+            </cac:StandardItemIdentification>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>ParentItemID</cbc:Name>
@@ -182,9 +200,17 @@
             <cbc:Description>Gipsskiva 13mm. Recept-artikel.</cbc:Description>
             <cbc:Name>Gips 13mm</cbc:Name>
             
+            <cac:BuyersItemIdentification>
+                <cbc:ID>YV01</cbc:ID>
+            </cac:BuyersItemIdentification>
+            
             <cac:SellersItemIdentification>
                 <cbc:ID>VE-GIPS-13</cbc:ID>
             </cac:SellersItemIdentification>
+            
+            <cac:StandardItemIdentification>
+                <cbc:ID schemeID="0160">7318937172222</cbc:ID>
+            </cac:StandardItemIdentification>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>ParentItemID</cbc:Name>

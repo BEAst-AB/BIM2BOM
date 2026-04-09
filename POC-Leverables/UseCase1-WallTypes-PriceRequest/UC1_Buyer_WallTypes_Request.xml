@@ -60,6 +60,10 @@
             <cbc:Description>Yttre bärande yttervägg, 350 mm. Materials: Tegel fasad 110 / Luft 30 / Vindskydd 9 / Regelstomme C24 195 + mineralull / Ångbroms / Installationsregel 45 + isolering / Gips 13</cbc:Description>
             <cbc:Name>YV01 350 - Yttre bärande yttervägg</cbc:Name>
             
+            <cac:BuyersItemIdentification>
+                <cbc:ID>YV01</cbc:ID>
+            </cac:BuyersItemIdentification>
+            
             <cac:SellersItemIdentification>
                 <cbc:ID>YV01-350</cbc:ID>
             </cac:SellersItemIdentification>

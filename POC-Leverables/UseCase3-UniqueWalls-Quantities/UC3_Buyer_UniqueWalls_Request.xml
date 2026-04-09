@@ -4,7 +4,7 @@
     
     Scenario: Buyer sends catalogue with a unique wall instance from the BIM model.
               The wall has IFCGuid/CDEGuid for 1:1 traceability back to the model.
-              Seller can respond with either "smart" or "dumb" recipes.
+              Seller can respond with either a traceable or a standard catalogue.
     
     Wall instance from IFC model: A-40-V-000_BIM2BOM.ifc
     IFC GlobalId: 3pLKJPvHT21uNqX1l9FcUN (YV01 350)
@@ -63,6 +63,10 @@
             <cbc:Description>Yttre bärande yttervägg, 350 mm. Unik vägginstans från BIM-modell med full spårbarhet.</cbc:Description>
             <cbc:Name>YV01 350 - Yttre bärande yttervägg (Plan 010)</cbc:Name>
             
+            <cac:BuyersItemIdentification>
+                <cbc:ID>IV01</cbc:ID>
+            </cac:BuyersItemIdentification>
+            
             <!-- IFC GlobalId used as SellersItemIdentification for BIM traceability -->
             <cac:SellersItemIdentification>
                 <cbc:ID>3pLKJPvHT21uNqX1l9FcUN</cbc:ID>
@@ -99,7 +103,7 @@
             <cac:AdditionalItemProperty>
                 <cbc:Name>TypeID</cbc:Name>
                 <cbc:NameCode listID="SE:BIP-koder">TypeID</cbc:NameCode>
-                <cbc:Value>YVxx</cbc:Value>
+                <cbc:Value>IV01</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>

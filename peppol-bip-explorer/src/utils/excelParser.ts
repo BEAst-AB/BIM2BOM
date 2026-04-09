@@ -1,12 +1,7 @@
 import * as XLSX from 'xlsx';
-import type { BIPProperty, PeppolExample, PeppolProperty, Discipline, DocumentReference } from '@/types/bip-peppol';
+import type { BIPProperty, PeppolExample, PeppolProperty, Discipline } from '@/types/bip-peppol';
+import { expandSheetExampleToVariants, type BaseSheetExample } from '@/data/catalogueVariantTemplates';
 import { generateIFCGuid } from './ifcGuid';
-import { generateUUID } from './uuid';
-
-// Helper function to generate a unique authoring tool ID (6-digit integer)
-function generateAuthoringToolId(): string {
-  return String(Math.floor(Math.random() * 900000) + 100000);
-}
 
 // Helper function to generate TypeID based on discipline
 function generateTypeId(discipline: string, itemIndex: number): string {
@@ -22,13 +17,6 @@ function generateTypeId(discipline: string, itemIndex: number): string {
     default:
       return `TYPE${String(itemIndex).padStart(2, '0')}`;
   }
-}
-
-// Helper function to generate IFC model URI based on discipline and item name
-function generateIfcModelUri(discipline: string, itemName: string): string {
-  const cleanName = itemName.replace(/[^a-zA-Z0-9]/g, '_');
-  const revision = `Rev${String(Math.floor(Math.random() * 10) + 1).padStart(2, '0')}`;
-  return `https://cde.example.com/models/${discipline}_${cleanName}_${revision}.ifc`;
 }
 
 export async function parseBIPMapping(): Promise<BIPProperty[]> {
@@ -117,7 +105,6 @@ export async function parsePeppolExamples(): Promise<PeppolExample[]> {
     console.log('Sheet names:', workbook.SheetNames);
     
     const examples: PeppolExample[] = [];
-    let runningNumber = 1; // Running number for CatalogueLine IDs
     
     // Map sheet names to disciplines - skip the first sheet (Overview)
     const sheetMapping: Record<string, Discipline> = {
@@ -128,8 +115,7 @@ export async function parsePeppolExamples(): Promise<PeppolExample[]> {
     };
     
     // Process all sheets except the first one (Overview)
-    workbook.SheetNames.slice(1).forEach((sheetName) => {
-      let disciplineItemIndex = 1; // Counter for generating TypeID per discipline
+    workbook.SheetNames.slice(1).forEach((sheetName, sheetIndex) => {
       const worksheet = workbook.Sheets[sheetName];
       const data: any[][] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
       
@@ -240,83 +226,34 @@ export async function parsePeppolExamples(): Promise<PeppolExample[]> {
           prop.listID = 'https://identifier.buildingsmart.org/uri/buildingsmart/ifc/4.3/prop/FireRating';
         }
       });
-      
-      // Add AuthoringToolId as first property
-      properties.unshift({
-        name: 'AuthoringToolId',
-        nameCode: 'AuthoringToolId',
-        listID: '',
-        value: generateAuthoringToolId(),
-        description: 'System specific identifier of the component in the originating BIM tool',
-      });
-      
-      // Add CDEGuid as second property
-      properties.splice(1, 0, {
-        name: 'CDEGuid',
-        nameCode: 'CDEGuid',
-        listID: '',
-        value: generateUUID(),
-        description: 'Common Data Environment unique identifier for the component',
-      });
-      
-      // Always ensure manufacturerName matches brandName
-      if (brandName) {
+
+      if (brandName && !manufacturerName) {
         manufacturerName = brandName;
-      } else if (manufacturerName) {
+      } else if (manufacturerName && !brandName) {
         brandName = manufacturerName;
       }
-      
-      // Generate contextual LotNumberID if not provided
-      if (!lotNumberId && itemName) {
-        // Extract meaningful context from item name
-        const lowerName = itemName.toLowerCase();
-        let category = 'item';
-        
-        if (lowerName.includes('door')) category = 'doors';
-        else if (lowerName.includes('beam') || lowerName.includes('column')) category = 'structural';
-        else if (lowerName.includes('diffuser') || lowerName.includes('air') || lowerName.includes('vent')) category = 'ventilation';
-        else if (lowerName.includes('light') || lowerName.includes('led') || lowerName.includes('panel')) category = 'lighting';
-        else if (lowerName.includes('window')) category = 'windows';
-        else if (lowerName.includes('wall')) category = 'walls';
-        
-        const location = ['floor', 'section', 'area', 'zone'][Math.floor(Math.random() * 4)];
-        const batchNum = String(Math.floor(Math.random() * 100) + 1).padStart(3, '0');
-        lotNumberId = `${category}_${location}_${batchNum}`;
-      }
-      
+
       if (itemName) {
-        // Generate discipline-specific TypeID
-        typeId = generateTypeId(discipline, disciplineItemIndex++);
-        
-        console.log(`Found example in ${sheetName}:`, { 
-          itemName, 
-          brandName, 
-          manufacturerName,
-          lotNumberId,
-          typeId,
-          areEqual: brandName === manufacturerName,
-          propertiesCount: properties.length 
-        });
-        
-        // Create document references
-        const documentReferences: DocumentReference[] = [{
-          id: '1',
-          documentDescription: 'IFC model file - Originating BIM model',
-          uri: generateIfcModelUri(discipline, itemName)
-        }];
-        
-        examples.push({
-          id: String(runningNumber++), // Running number instead of GUID
-          ifcGuid: generateIFCGuid(), // IFC GUID stored separately
-          discipline,
+        typeId = generateTypeId(discipline, sheetIndex + 1);
+
+        const base: BaseSheetExample = {
           itemName,
           description,
           brandName,
           lotNumberId,
           typeId,
           manufacturerName,
-          properties: properties.filter(p => p.name),
-          documentReferences,
+          properties: properties.filter((p) => p.name),
+        };
+
+        const cdeGuid = generateIFCGuid();
+        const expanded = expandSheetExampleToVariants(base, discipline, cdeGuid, sheetIndex);
+        examples.push(...expanded);
+
+        console.log(`Expanded ${sheetName} (${discipline}):`, {
+          itemName,
+          variants: expanded.length,
+          propertiesCount: base.properties.length,
         });
       }
     });

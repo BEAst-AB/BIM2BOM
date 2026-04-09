@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    Use Case 3: Seller DUMB Recipe Response
+    Use Case 3: Seller Traceable Catalogue Response
     
-    DUMB RECIPE APPROACH:
-    ====================
-    - Recipe articles do NOT maintain 1:1 traceability to BIM objects
-    - Recipe articles have their own IDs, NOT matching the parent wall's CDEGuid
-    - Articles are aggregated - no individual connection back to BIM model
-    - Simpler but LOSES correlation to specific BIM model objects
+    TRACEABLE CATALOGUE APPROACH:
+    =============================
+    - Child catalogue lines maintain 1:1 traceability to BIM objects
+    - Each child line has the SAME CDEGuid as the parent wall
+    - Child lines have DIFFERENT AuthoringToolId (seller's own ID)
+    - This enables the buying system to create hierarchy and trace back to BIM model
     
-    Note from diagram: "Notera här har vi ingen koppling tillbaka på dom unika dörrarna"
-    (Note: here we have NO connection back to the unique doors/walls)
+    Parent Wall CDEGuid: 3pLKJPvHT21uNqX1l9FcUN (from BIM model)
+    Parent AuthoringToolId: 1192287 (Revit Element ID)
     
+    Child lines all share CDEGuid but have seller's AuthoringToolId:
+    - VE-2001: Tegelfasad
+    - VE-2002: Regelstomme  
+    - VE-2003: Gips
+    
+    On lines 2–4: cac:ComponentRelatedItem with cbc:ID[@schemeID="CatalogueLineID"] = "1"
+    (child row → parent wall catalogue line); complements shared CDEGuid / IFC GlobalId.
+
     Response to: UC3_Buyer_UniqueWalls_Request.xml
 -->
 <Catalogue xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2"
@@ -21,9 +29,9 @@
     <cbc:CustomizationID>urn:fdc:peppol.eu:poacc:trns:catalogue:3</cbc:CustomizationID>
     <cbc:ProfileID>urn:fdc:peppol.eu:poacc:bis:catalogue_only:3</cbc:ProfileID>
     
-    <cbc:ID>UC3-RESP-DUMB-001</cbc:ID>
+    <cbc:ID>UC3-RESP-TRACEABLE-001</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
-    <cbc:Name>Offert Dumma Recept - INGEN BIM-spårbarhet</cbc:Name>
+    <cbc:Name>Offert Spårbar Katalog - 1:1 Spårbarhet till BIM</cbc:Name>
     <cbc:IssueDate>2026-02-05</cbc:IssueDate>
     
     <cac:ValidityPeriod>
@@ -60,7 +68,9 @@
     </cac:ReceiverParty>
     
     <!-- ================================================================ -->
-    <!-- LINE 1: MAIN WALL from BIM Model (keeps CDEGuid)                -->
+    <!-- LINE 1: MAIN WALL from BIM Model                                -->
+    <!-- CDEGuid: 3pLKJPvHT21uNqX1l9FcUN                                 -->
+    <!-- AuthoringToolId: 1192287 (original from BIM)                    -->
     <!-- ================================================================ -->
     <cac:CatalogueLine>
         <cbc:ID>1</cbc:ID>
@@ -78,8 +88,12 @@
         </cac:RequiredItemLocationQuantity>
         
         <cac:Item>
-            <cbc:Description>Yttre bärande yttervägg, 350 mm. Recept-artiklar utan 1:1 koppling till BIM-objekt.</cbc:Description>
+            <cbc:Description>Yttre bärande yttervägg, 350 mm. Huvudobjekt från BIM-modell. Se katalog-artiklar (rad 2-4) med samma CDEGuid för 1:1 spårbarhet.</cbc:Description>
             <cbc:Name>YV01 350 - Yttre bärande yttervägg (Plan 010)</cbc:Name>
+            
+            <cac:BuyersItemIdentification>
+                <cbc:ID>IV01</cbc:ID>
+            </cac:BuyersItemIdentification>
             
             <cac:SellersItemIdentification>
                 <cbc:ID>3pLKJPvHT21uNqX1l9FcUN</cbc:ID>
@@ -89,6 +103,11 @@
                 <cbc:ID>YVxx</cbc:ID>
             </cac:ManufacturersItemIdentification>
             
+            <cac:StandardItemIdentification>
+                <cbc:ID schemeID="0160">7318937172312</cbc:ID>
+            </cac:StandardItemIdentification>
+            
+            <!-- Original BIM AuthoringToolId -->
             <cac:AdditionalItemProperty>
                 <cbc:Name>AuthoringToolId</cbc:Name>
                 <cbc:NameCode listID="ORG:BEAst">AuthoringToolId</cbc:NameCode>
@@ -100,25 +119,13 @@
                 <cbc:NameCode listID="ORG:BEAst">CDEGuid</cbc:NameCode>
                 <cbc:Value>3pLKJPvHT21uNqX1l9FcUN</cbc:Value>
             </cac:AdditionalItemProperty>
-            
-            <cac:AdditionalItemProperty>
-                <cbc:Name>ItemType</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
-                <cbc:Value>BIMObject</cbc:Value>
-            </cac:AdditionalItemProperty>
-            
-            <cac:AdditionalItemProperty>
-                <cbc:Name>RecipeType</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">RecipeType</cbc:NameCode>
-                <cbc:Value>Dumb</cbc:Value>
-            </cac:AdditionalItemProperty>
         </cac:Item>
     </cac:CatalogueLine>
     
     <!-- ================================================================ -->
-    <!-- LINE 2: RECIPE ARTICLE - Tegelfasad (AGGREGATED)                -->
-    <!-- NO CDEGuid matching BIM object - JUST seller's own ID           -->
-    <!-- "Notera här har vi ingen koppling tillbaka"                     -->
+    <!-- LINE 2: RECIPE ARTICLE - Tegelfasad                             -->
+    <!-- SAME CDEGuid: 3pLKJPvHT21uNqX1l9FcUN (enables hierarchy)        -->
+    <!-- DIFFERENT AuthoringToolId: VE-2001 (seller's ID)                -->
     <!-- ================================================================ -->
     <cac:CatalogueLine>
         <cbc:ID>2</cbc:ID>
@@ -126,6 +133,11 @@
         <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
         <cbc:OrderableUnit>MTK</cbc:OrderableUnit>
         <cbc:ContentUnitQuantity unitCode="MTK">90.31</cbc:ContentUnitQuantity>
+        
+        <cac:ComponentRelatedItem>
+            <cbc:ID schemeID="CatalogueLineID">1</cbc:ID>
+            <cbc:Quantity unitCode="MTK">90.31</cbc:Quantity>
+        </cac:ComponentRelatedItem>
         
         <cac:RequiredItemLocationQuantity>
             <cbc:MinimumQuantity unitCode="MTK">90.31</cbc:MinimumQuantity>
@@ -136,40 +148,61 @@
         </cac:RequiredItemLocationQuantity>
         
         <cac:Item>
-            <cbc:Description>Tegelfasad murning 110mm. Aggregerad recept-artikel - INGEN koppling till enskilda väggar i BIM-modellen.</cbc:Description>
-            <cbc:Name>Tegelfasad 110mm (paket-artikel)</cbc:Name>
+            <cbc:Description>Tegelfasad murning 110mm. Spårbar katalog-artikel med 1:1 spårbarhet till BIM-objekt via delad CDEGuid.</cbc:Description>
+            <cbc:Name>Tegelfasad 110mm (för vägg 1192287)</cbc:Name>
             
-            <!-- Seller's own ID - NOT matching any BIM CDEGuid -->
+            <cac:BuyersItemIdentification>
+                <cbc:ID>IV01</cbc:ID>
+            </cac:BuyersItemIdentification>
+            
+            <!-- SAME CDEGuid as parent wall - THIS ENABLES 1:1 TRACEABILITY -->
             <cac:SellersItemIdentification>
-                <cbc:ID>VE-TEGEL-110-PKG</cbc:ID>
+                <cbc:ID>3pLKJPvHT21uNqX1l9FcUN</cbc:ID>
             </cac:SellersItemIdentification>
             
-            <!-- Seller's AuthoringToolId only -->
+            <cac:StandardItemIdentification>
+                <cbc:ID schemeID="0160">7318937172329</cbc:ID>
+            </cac:StandardItemIdentification>
+            
+            <!-- Seller's own AuthoringToolId - DIFFERENT from BIM -->
             <cac:AdditionalItemProperty>
                 <cbc:Name>AuthoringToolId</cbc:Name>
                 <cbc:NameCode listID="ORG:BEAst">AuthoringToolId</cbc:NameCode>
-                <cbc:Value>VE-PKG-001</cbc:Value>
+                <cbc:Value>VE-2001</cbc:Value>
             </cac:AdditionalItemProperty>
             
-            <!-- NOTE: NO CDEGuid - this is the key difference from Smart Recipe -->
+            <!-- SAME CDEGuid as parent - key for traceable catalogue -->
+            <cac:AdditionalItemProperty>
+                <cbc:Name>CDEGuid</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">CDEGuid</cbc:NameCode>
+                <cbc:Value>3pLKJPvHT21uNqX1l9FcUN</cbc:Value>
+            </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>ItemType</cbc:Name>
                 <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
-                <cbc:Value>PackageArticle</cbc:Value>
+                <cbc:Value>RecipeArticle</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
-                <cbc:Name>Traceability</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">Traceability</cbc:NameCode>
-                <cbc:Value>None - Package level only</cbc:Value>
+                <cbc:Name>ParentAuthoringToolId</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">ParentAuthoringToolId</cbc:NameCode>
+                <cbc:Value>1192287</cbc:Value>
+            </cac:AdditionalItemProperty>
+            
+            <cac:AdditionalItemProperty>
+                <cbc:Name>thickness</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">thickness</cbc:NameCode>
+                <cbc:Value>110 mm</cbc:Value>
+                <cbc:ValueQuantity unitCode="MMT">110</cbc:ValueQuantity>
             </cac:AdditionalItemProperty>
         </cac:Item>
     </cac:CatalogueLine>
     
     <!-- ================================================================ -->
-    <!-- LINE 3: RECIPE ARTICLE - Regelstomme (AGGREGATED)               -->
-    <!-- NO CDEGuid - no traceability to BIM                             -->
+    <!-- LINE 3: RECIPE ARTICLE - Regelstomme + mineralull               -->
+    <!-- SAME CDEGuid: 3pLKJPvHT21uNqX1l9FcUN                            -->
+    <!-- DIFFERENT AuthoringToolId: VE-2002                              -->
     <!-- ================================================================ -->
     <cac:CatalogueLine>
         <cbc:ID>3</cbc:ID>
@@ -177,6 +210,11 @@
         <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
         <cbc:OrderableUnit>MTK</cbc:OrderableUnit>
         <cbc:ContentUnitQuantity unitCode="MTK">90.31</cbc:ContentUnitQuantity>
+        
+        <cac:ComponentRelatedItem>
+            <cbc:ID schemeID="CatalogueLineID">1</cbc:ID>
+            <cbc:Quantity unitCode="MTK">90.31</cbc:Quantity>
+        </cac:ComponentRelatedItem>
         
         <cac:RequiredItemLocationQuantity>
             <cbc:MinimumQuantity unitCode="MTK">90.31</cbc:MinimumQuantity>
@@ -187,36 +225,58 @@
         </cac:RequiredItemLocationQuantity>
         
         <cac:Item>
-            <cbc:Description>Träregelstomme C24 195mm med mineralullsisolering. Aggregerad artikel - ingen BIM-koppling.</cbc:Description>
-            <cbc:Name>Regelstomme C24 195mm + mineralull (paket-artikel)</cbc:Name>
+            <cbc:Description>Träregelstomme C24 195mm med mineralullsisolering. Spårbar katalog-artikel med 1:1 spårbarhet.</cbc:Description>
+            <cbc:Name>Regelstomme C24 195mm + mineralull (för vägg 1192287)</cbc:Name>
+            
+            <cac:BuyersItemIdentification>
+                <cbc:ID>IV01</cbc:ID>
+            </cac:BuyersItemIdentification>
             
             <cac:SellersItemIdentification>
-                <cbc:ID>VE-REGEL-195-PKG</cbc:ID>
+                <cbc:ID>3pLKJPvHT21uNqX1l9FcUN</cbc:ID>
             </cac:SellersItemIdentification>
+            
+            <cac:StandardItemIdentification>
+                <cbc:ID schemeID="0160">7318937172336</cbc:ID>
+            </cac:StandardItemIdentification>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>AuthoringToolId</cbc:Name>
                 <cbc:NameCode listID="ORG:BEAst">AuthoringToolId</cbc:NameCode>
-                <cbc:Value>VE-PKG-002</cbc:Value>
+                <cbc:Value>VE-2002</cbc:Value>
+            </cac:AdditionalItemProperty>
+            
+            <cac:AdditionalItemProperty>
+                <cbc:Name>CDEGuid</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">CDEGuid</cbc:NameCode>
+                <cbc:Value>3pLKJPvHT21uNqX1l9FcUN</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>ItemType</cbc:Name>
                 <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
-                <cbc:Value>PackageArticle</cbc:Value>
+                <cbc:Value>RecipeArticle</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
-                <cbc:Name>Traceability</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">Traceability</cbc:NameCode>
-                <cbc:Value>None - Package level only</cbc:Value>
+                <cbc:Name>ParentAuthoringToolId</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">ParentAuthoringToolId</cbc:NameCode>
+                <cbc:Value>1192287</cbc:Value>
+            </cac:AdditionalItemProperty>
+            
+            <cac:AdditionalItemProperty>
+                <cbc:Name>thickness</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">thickness</cbc:NameCode>
+                <cbc:Value>195 mm</cbc:Value>
+                <cbc:ValueQuantity unitCode="MMT">195</cbc:ValueQuantity>
             </cac:AdditionalItemProperty>
         </cac:Item>
     </cac:CatalogueLine>
     
     <!-- ================================================================ -->
-    <!-- LINE 4: RECIPE ARTICLE - Gips (AGGREGATED)                      -->
-    <!-- NO CDEGuid - no traceability to BIM                             -->
+    <!-- LINE 4: RECIPE ARTICLE - Gips                                   -->
+    <!-- SAME CDEGuid: 3pLKJPvHT21uNqX1l9FcUN                            -->
+    <!-- DIFFERENT AuthoringToolId: VE-2003                              -->
     <!-- ================================================================ -->
     <cac:CatalogueLine>
         <cbc:ID>4</cbc:ID>
@@ -224,6 +284,11 @@
         <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
         <cbc:OrderableUnit>MTK</cbc:OrderableUnit>
         <cbc:ContentUnitQuantity unitCode="MTK">90.31</cbc:ContentUnitQuantity>
+        
+        <cac:ComponentRelatedItem>
+            <cbc:ID schemeID="CatalogueLineID">1</cbc:ID>
+            <cbc:Quantity unitCode="MTK">90.31</cbc:Quantity>
+        </cac:ComponentRelatedItem>
         
         <cac:RequiredItemLocationQuantity>
             <cbc:MinimumQuantity unitCode="MTK">90.31</cbc:MinimumQuantity>
@@ -234,29 +299,50 @@
         </cac:RequiredItemLocationQuantity>
         
         <cac:Item>
-            <cbc:Description>Gipsskiva 13mm. Aggregerad artikel - ingen BIM-koppling.</cbc:Description>
-            <cbc:Name>Gips 13mm (paket-artikel)</cbc:Name>
+            <cbc:Description>Gipsskiva 13mm invändig. Spårbar katalog-artikel med 1:1 spårbarhet.</cbc:Description>
+            <cbc:Name>Gips 13mm (för vägg 1192287)</cbc:Name>
+            
+            <cac:BuyersItemIdentification>
+                <cbc:ID>IV01</cbc:ID>
+            </cac:BuyersItemIdentification>
             
             <cac:SellersItemIdentification>
-                <cbc:ID>VE-GIPS-13-PKG</cbc:ID>
+                <cbc:ID>3pLKJPvHT21uNqX1l9FcUN</cbc:ID>
             </cac:SellersItemIdentification>
+            
+            <cac:StandardItemIdentification>
+                <cbc:ID schemeID="0160">7318937172305</cbc:ID>
+            </cac:StandardItemIdentification>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>AuthoringToolId</cbc:Name>
                 <cbc:NameCode listID="ORG:BEAst">AuthoringToolId</cbc:NameCode>
-                <cbc:Value>VE-PKG-003</cbc:Value>
+                <cbc:Value>VE-2003</cbc:Value>
+            </cac:AdditionalItemProperty>
+            
+            <cac:AdditionalItemProperty>
+                <cbc:Name>CDEGuid</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">CDEGuid</cbc:NameCode>
+                <cbc:Value>3pLKJPvHT21uNqX1l9FcUN</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>ItemType</cbc:Name>
                 <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
-                <cbc:Value>PackageArticle</cbc:Value>
+                <cbc:Value>RecipeArticle</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
-                <cbc:Name>Traceability</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">Traceability</cbc:NameCode>
-                <cbc:Value>None - Package level only</cbc:Value>
+                <cbc:Name>ParentAuthoringToolId</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">ParentAuthoringToolId</cbc:NameCode>
+                <cbc:Value>1192287</cbc:Value>
+            </cac:AdditionalItemProperty>
+            
+            <cac:AdditionalItemProperty>
+                <cbc:Name>thickness</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">thickness</cbc:NameCode>
+                <cbc:Value>13 mm</cbc:Value>
+                <cbc:ValueQuantity unitCode="MMT">13</cbc:ValueQuantity>
             </cac:AdditionalItemProperty>
         </cac:Item>
     </cac:CatalogueLine>

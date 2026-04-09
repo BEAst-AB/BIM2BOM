@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    Manufacturing BOM: Dumb Recipe with Package-level Articles
+    Manufacturing BOM: Standard Catalogue with Package-level Articles
     
-    Recipe articles are aggregated at package level - NO 1:1 traceability.
+    Child lines are aggregated at package level - NO 1:1 traceability.
     Note from diagram: "Notera här har vi ingen koppling tillbaka på dom unika dörrarna"
     
     Based on diagram: "Manufacturing BOM - Supplier responded with recipe articles on whole package"
@@ -14,9 +14,9 @@
     <cbc:CustomizationID>urn:fdc:peppol.eu:poacc:trns:catalogue:3</cbc:CustomizationID>
     <cbc:ProfileID>urn:fdc:peppol.eu:poacc:bis:catalogue_only:3</cbc:ProfileID>
     
-    <cbc:ID>MBOM-DUMB-001</cbc:ID>
+    <cbc:ID>MBOM-STANDARD-001</cbc:ID>
     <cbc:ActionCode>Add</cbc:ActionCode>
-    <cbc:Name>Manufacturing BOM - Dumma Recept (Ingen Spårbarhet)</cbc:Name>
+    <cbc:Name>Manufacturing BOM - Standard Katalog (Ingen Spårbarhet)</cbc:Name>
     <cbc:IssueDate>2026-02-06</cbc:IssueDate>
     
     <cac:ValidityPeriod>
@@ -57,12 +57,20 @@
         <cbc:ContentUnitQuantity unitCode="MTR">16.06</cbc:ContentUnitQuantity>
         
         <cac:Item>
-            <cbc:Description>Huvudobjekt från BIM-modell. Recept-artiklar utan koppling.</cbc:Description>
+            <cbc:Description>Huvudobjekt från BIM-modell. Katalog-artiklar utan koppling.</cbc:Description>
             <cbc:Name>YV01 350 - Yttre bärande yttervägg</cbc:Name>
+            
+            <cac:BuyersItemIdentification>
+                <cbc:ID>YV01</cbc:ID>
+            </cac:BuyersItemIdentification>
             
             <cac:SellersItemIdentification>
                 <cbc:ID>3pLKJPvHT21uNqX1l9FcUN</cbc:ID>
             </cac:SellersItemIdentification>
+            
+            <cac:StandardItemIdentification>
+                <cbc:ID schemeID="0160">7318937172701</cbc:ID>
+            </cac:StandardItemIdentification>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>AuthoringToolId</cbc:Name>
@@ -74,12 +82,6 @@
                 <cbc:Name>CDEGuid</cbc:Name>
                 <cbc:NameCode listID="ORG:BEAst">CDEGuid</cbc:NameCode>
                 <cbc:Value>3pLKJPvHT21uNqX1l9FcUN</cbc:Value>
-            </cac:AdditionalItemProperty>
-            
-            <cac:AdditionalItemProperty>
-                <cbc:Name>ItemType</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
-                <cbc:Value>BIMObject</cbc:Value>
             </cac:AdditionalItemProperty>
         </cac:Item>
     </cac:CatalogueLine>
@@ -96,9 +98,17 @@
             <cbc:Description>Tegelfasad för hela paketet. INGEN koppling till BIM.</cbc:Description>
             <cbc:Name>Tegelfasad 110mm (paket)</cbc:Name>
             
+            <cac:BuyersItemIdentification>
+                <cbc:ID>YV01</cbc:ID>
+            </cac:BuyersItemIdentification>
+            
             <cac:SellersItemIdentification>
                 <cbc:ID>VE-TEGEL-PKG</cbc:ID>
             </cac:SellersItemIdentification>
+            
+            <cac:StandardItemIdentification>
+                <cbc:ID schemeID="0160">7318937172708</cbc:ID>
+            </cac:StandardItemIdentification>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>AuthoringToolId</cbc:Name>
@@ -134,9 +144,17 @@
             <cbc:Description>Träregelstomme för hela paketet. INGEN koppling till BIM.</cbc:Description>
             <cbc:Name>Regelstomme C24 195mm + mineralull (paket)</cbc:Name>
             
+            <cac:BuyersItemIdentification>
+                <cbc:ID>YV01</cbc:ID>
+            </cac:BuyersItemIdentification>
+            
             <cac:SellersItemIdentification>
                 <cbc:ID>VE-REGEL-PKG</cbc:ID>
             </cac:SellersItemIdentification>
+            
+            <cac:StandardItemIdentification>
+                <cbc:ID schemeID="0160">7318937172715</cbc:ID>
+            </cac:StandardItemIdentification>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>AuthoringToolId</cbc:Name>

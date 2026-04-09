@@ -24,18 +24,42 @@ export interface DocumentReference {
   uri: string;
 }
 
+/** POC-aligned catalogue line shapes (Manufacturing BOM / deliverables). */
+export type CatalogueVariant = 'MbomBimParent' | 'MbomManufacturingChild' | 'MbomPackageArticle';
+
 export interface PeppolExample {
-  id: string; // Running number for cbc:ID on CatalogueLine
-  ifcGuid: string; // IFC Object GUID for cac:BuyersItemIdentification > cbc:ID
+  /** Running number for cbc:ID on CatalogueLine (unique within demo). */
+  id: string;
+  catalogueVariant: CatalogueVariant;
+  /** Short label for badges, e.g. "MBOM Traceable – Engineering BOM". */
+  variantLabel: string;
+  /**
+   * Shared CDE / IFC traceability token (maps to CDEGuid AdditionalItemProperty and often SellersItemIdentification in POC).
+   */
+  ifcGuid: string;
   discipline: string;
   itemName: string;
   description: string;
-  brandName: string;
-  lotNumberId: string; // LotNumberID for batch identification
-  typeId: string; // TypeID for cac:ManufacturersItemIdentification > cbc:ID
-  manufacturerName: string;
+  /** cac:SellersItemIdentification > cbc:ID */
+  sellersItemId: string;
+  orderableUnit: string;
+  contentUnitQuantity: string;
+  contentUnitCode: string;
+  actionCode: string;
+  orderableIndicator: string;
+  /** Parent line cbc:ID for cac:ComponentRelatedItem (traceable child only). */
+  parentCatalogueLineId?: string;
+  componentRelatedQuantity?: string;
+  componentRelatedUnitCode?: string;
+  itemType?: 'ManufacturingArticle' | 'PackageArticle';
+  sourceSystem?: string;
   properties: PeppolProperty[];
-  documentReferences: DocumentReference[];
+  /** Legacy Peppol catalogue-only demo fields (optional). */
+  brandName?: string;
+  lotNumberId?: string;
+  typeId?: string;
+  manufacturerName?: string;
+  documentReferences?: DocumentReference[];
 }
 
 export interface PeppolProperty {

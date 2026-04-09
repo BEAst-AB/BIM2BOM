@@ -69,6 +69,10 @@
             <cbc:Description>Yttre bärande yttervägg, 350 mm. Pris per löpmeter inkl. material och arbete.</cbc:Description>
             <cbc:Name>YV01 350 - Yttre bärande yttervägg</cbc:Name>
             
+            <cac:BuyersItemIdentification>
+                <cbc:ID>YV01</cbc:ID>
+            </cac:BuyersItemIdentification>
+            
             <cac:SellersItemIdentification>
                 <cbc:ID>VE-YV01-350</cbc:ID>
             </cac:SellersItemIdentification>
@@ -76,6 +80,10 @@
             <cac:ManufacturersItemIdentification>
                 <cbc:ID>YVxx</cbc:ID>
             </cac:ManufacturersItemIdentification>
+            
+            <cac:StandardItemIdentification>
+                <cbc:ID schemeID="0160">7318937172101</cbc:ID>
+            </cac:StandardItemIdentification>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>thickness</cbc:Name>
