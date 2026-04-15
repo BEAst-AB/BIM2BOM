@@ -55,13 +55,14 @@ DISALLOWED_BEAST_PROPERTIES = {
 
 KNOWN_BIP_PROPERTIES = {
     "thickness", "height", "width", "length", "net area", "net volume",
-    "weight", "is load bearing", "is external", "floor", "TypeID",
+    "weight", "is load bearing", "is external", "floor", "TypeID", "MMI",
     "FireRating", "AcousticRating", "Colour", "Material",
     "type name id", "Manufacturer", "TypeDescription", "BSAB 96",
     "materials/components", "StatusConstruction",
     "renovation component status", "SystemName",
     "Flow_l/s", "InsulationThickness", "HeatingPower_W",
     "Voltage_V", "Current_A", "PowerElectrical_W", "IPClass",
+    "LotNumberID", "ObjectType",
 }
 
 ITEM_CHILD_ORDER = [
@@ -131,6 +132,22 @@ def validate_file(path):
     if ac and ac not in VALID_HEADER_ACTION_CODES:
         issues.append({"severity": "error", "element": "cbc:ActionCode", "message": f"Invalid header ActionCode '{ac}'. Must be one of {VALID_HEADER_ACTION_CODES} (Ref: Section 2.4)", "line": _line(ac_el)})
 
+    # ValidityPeriod EndDate check (Ref §2.7)
+    vp = root.find("cac:ValidityPeriod", NS)
+    if vp is not None:
+        end_date = vp.find("cbc:EndDate", NS)
+        if end_date is None:
+            issues.append({"severity": "warning", "element": "cac:ValidityPeriod", "message": "Missing cbc:EndDate in ValidityPeriod (Ref: Section 2.7)", "line": _line(vp)})
+
+    # SourceCatalogueReference for seller responses (Ref §2.9)
+    source_cat_ref = root.find("cac:SourceCatalogueReference", NS)
+    cat_name_text, _ = _get_text(root, "cbc:Name")
+    cat_id_text, _ = _get_text(root, "cbc:ID")
+    combined = f"{cat_name_text or ''} {cat_id_text or ''}".lower()
+    is_likely_response = ("response" in combined or "seller" in combined or "svar" in combined)
+    if is_likely_response and source_cat_ref is None:
+        issues.append({"severity": "warning", "element": "cac:SourceCatalogueReference", "message": "Seller response catalogues should include SourceCatalogueReference (Ref: Section 2.9)", "line": _line(root)})
+
     for party_tag, section in [("cac:ProviderParty", "3.1"), ("cac:ReceiverParty", "3.2")]:
         party = root.find(party_tag, NS)
         if party is None:
@@ -182,6 +199,13 @@ def validate_file(path):
         expected_indices = [ITEM_CHILD_ORDER.index(n) for n in filtered]
         if expected_indices != sorted(expected_indices):
             issues.append({"severity": "warning", "element": f"Line {lid}/cac:Item", "message": f"UBL element ordering violation. Found sequence: {filtered} (Ref: Section 7, element ordering)", "line": _line(item)})
+
+        # Minimum item identification (Ref §1.4, §7)
+        has_buyers = item.find("cac:BuyersItemIdentification", NS) is not None
+        has_sellers = item.find("cac:SellersItemIdentification", NS) is not None
+        has_standard = item.find("cac:StandardItemIdentification", NS) is not None
+        if not (has_buyers or has_sellers or has_standard):
+            issues.append({"severity": "warning", "element": f"Line {lid}/cac:Item", "message": "No item identification found. At least one of BuyersItemIdentification, SellersItemIdentification, or StandardItemIdentification should be present (Ref: Section 1.4, 7)", "line": _line(item)})
 
         gtin_el = item.find("cac:StandardItemIdentification/cbc:ID", NS)
         if gtin_el is not None:

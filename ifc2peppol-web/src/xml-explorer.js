@@ -55,6 +55,15 @@ export function parseCatalogueXML(xmlString) {
             keywords: [],
             manufacturer: getTextNS(item, 'BrandName', nsMap.cbc),
             lotNumber: '',
+            buyersItemId: '',
+            sellersItemId: '',
+            standardItemId: '',
+            orderableUnit: getTextNS(line, 'OrderableUnit', nsMap.cbc),
+            contentUnitQuantity: getTextNS(line, 'ContentUnitQuantity', nsMap.cbc),
+            componentRelatedItemId: '',
+            componentRelatedQuantity: '',
+            priceAmount: '',
+            priceCurrency: '',
             properties: {}
         };
         
@@ -62,6 +71,36 @@ export function parseCatalogueXML(xmlString) {
         const keywordElements = getElementsNS(item, 'Keyword', nsMap.cbc);
         for (let j = 0; j < keywordElements.length; j++) {
             lineData.keywords.push(keywordElements[j].textContent);
+        }
+        
+        // Extract item identifications (Ref §7)
+        const buyersIdEl = getElementsNS(item, 'BuyersItemIdentification', nsMap.cac)[0];
+        if (buyersIdEl) lineData.buyersItemId = getTextNS(buyersIdEl, 'ID', nsMap.cbc);
+        
+        const sellersIdEl = getElementsNS(item, 'SellersItemIdentification', nsMap.cac)[0];
+        if (sellersIdEl) lineData.sellersItemId = getTextNS(sellersIdEl, 'ID', nsMap.cbc);
+        
+        const standardIdEl = getElementsNS(item, 'StandardItemIdentification', nsMap.cac)[0];
+        if (standardIdEl) lineData.standardItemId = getTextNS(standardIdEl, 'ID', nsMap.cbc);
+        
+        // Extract ComponentRelatedItem (Ref §5)
+        const compRelEl = getElementsNS(line, 'ComponentRelatedItem', nsMap.cac)[0];
+        if (compRelEl) {
+            lineData.componentRelatedItemId = getTextNS(compRelEl, 'ID', nsMap.cbc);
+            lineData.componentRelatedQuantity = getTextNS(compRelEl, 'Quantity', nsMap.cbc);
+        }
+        
+        // Extract pricing (Ref §6)
+        const reqItemLocQty = getElementsNS(line, 'RequiredItemLocationQuantity', nsMap.cac)[0];
+        if (reqItemLocQty) {
+            const priceEl = getElementsNS(reqItemLocQty, 'Price', nsMap.cac)[0];
+            if (priceEl) {
+                const priceAmountEl = getElementsNS(priceEl, 'PriceAmount', nsMap.cbc)[0];
+                if (priceAmountEl) {
+                    lineData.priceAmount = priceAmountEl.textContent || '';
+                    lineData.priceCurrency = priceAmountEl.getAttribute('currencyID') || '';
+                }
+            }
         }
         
         // Extract lot number from ItemInstance
@@ -81,7 +120,7 @@ export function parseCatalogueXML(xmlString) {
             const propValue = getTextNS(prop, 'Value', nsMap.cbc);
             if (propName && propValue) {
                 lineData.properties[propName] = propValue;
-                allPropertyNames.add(propName); // Track unique property names
+                allPropertyNames.add(propName);
             }
         }
         
@@ -215,8 +254,15 @@ function buildTableHeader(tableHead, propertyNames) {
         { label: 'ID', class: 'col-id', key: 'id' },
         { label: 'Name', class: 'col-name', key: 'name' },
         { label: 'Description', class: 'col-description', key: 'description' },
+        { label: 'Buyer ID', class: 'col-buyer-id', key: 'buyersItemId' },
+        { label: 'Seller ID', class: 'col-seller-id', key: 'sellersItemId' },
+        { label: 'GTIN', class: 'col-gtin', key: 'standardItemId' },
         { label: 'Keywords', class: 'col-keywords', key: 'keywords' },
         { label: 'Manufacturer', class: 'col-manufacturer', key: 'manufacturer' },
+        { label: 'Unit', class: 'col-unit', key: 'orderableUnit' },
+        { label: 'Quantity', class: 'col-qty', key: 'contentUnitQuantity' },
+        { label: 'Parent Line', class: 'col-parent', key: 'componentRelatedItemId' },
+        { label: 'Price', class: 'col-price', key: 'priceAmount' },
         { label: 'Lot Number', class: 'col-lot', key: 'lotNumber' }
     ];
     
@@ -329,18 +375,25 @@ function refreshTable() {
         
         // Fixed columns
         const fixedCells = [
-            escapeHtml(line.id),
-            escapeHtml(line.name),
-            escapeHtml(line.description || ''),
-            escapeHtml(line.keywords.join(', ')),
-            escapeHtml(line.manufacturer || ''),
-            escapeHtml(line.lotNumber || '-')
+            { val: line.id, cls: 'col-id' },
+            { val: line.name, cls: 'col-name' },
+            { val: line.description || '', cls: 'col-description' },
+            { val: line.buyersItemId || '', cls: 'col-buyer-id' },
+            { val: line.sellersItemId || '', cls: 'col-seller-id' },
+            { val: line.standardItemId || '', cls: 'col-gtin' },
+            { val: line.keywords.join(', '), cls: 'col-keywords' },
+            { val: line.manufacturer || '', cls: 'col-manufacturer' },
+            { val: line.orderableUnit || '', cls: 'col-unit' },
+            { val: line.contentUnitQuantity || '', cls: 'col-qty' },
+            { val: line.componentRelatedItemId || '', cls: 'col-parent' },
+            { val: line.priceAmount ? `${line.priceAmount} ${line.priceCurrency}` : '', cls: 'col-price' },
+            { val: line.lotNumber || '-', cls: 'col-lot' }
         ];
         
-        fixedCells.forEach((cellContent, index) => {
+        fixedCells.forEach(({ val, cls }) => {
             const td = document.createElement('td');
-            td.className = `col-${['id', 'name', 'description', 'keywords', 'manufacturer', 'lot'][index]}`;
-            td.textContent = cellContent;
+            td.className = cls;
+            td.textContent = escapeHtml(val);
             row.appendChild(td);
         });
         

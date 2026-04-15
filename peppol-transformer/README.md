@@ -42,6 +42,7 @@ python scripts/transform_ifc_to_peppol.py ../IfcConvert/output/A-40-V-000_BIM2BO
 ```
 
 Detta kommer att:
+
 1. Använda standardstilmallen från `stylesheets/default-stylesheet-bip_to_peppol.xslt`
 2. Generera utdatafil: `A-40-V-000_BIM2BOM_peppol_catalogue.xml`
 3. Skapa 74 katalograder från IFC-indata
@@ -82,8 +83,8 @@ Transformationen skapar Peppol BIS Katalogformat med följande struktur för var
   <cbc:ID>3pLKJPvHT21uNqX1l9FcUN</cbc:ID>  <!-- IFC GlobalID -->
   
   <cac:Item>
-    <cbc:Name>Basic Wall:YV01 350:1192287</cbc:Name>
     <cbc:Description>Yttre bärande yttervägg, 350 mm. Materials: ...</cbc:Description>
+    <cbc:Name>Basic Wall:YV01 350:1192287</cbc:Name>
     <cbc:BrandName>YV01</cbc:BrandName>  <!-- Från BIP.Manufacturer om finns, annars TypeID -->
     <cbc:Keyword>42.A</cbc:Keyword>
     <cbc:Keyword>Basic Wall:YV01 350</cbc:Keyword>
@@ -103,7 +104,7 @@ Transformationen skapar Peppol BIS Katalogformat med följande struktur för var
     <!-- Alla BIP-egenskaper som AdditionalItemProperty -->
     <cac:AdditionalItemProperty>
       <cbc:Name>thickness</cbc:Name>
-      <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
+      <cbc:NameCode listID="SE:BIP-koder">thickness</cbc:NameCode>
       <cbc:Value>350 mm</cbc:Value>
       <cbc:ValueQuantity unitCode="MMT">350</cbc:ValueQuantity>
     </cac:AdditionalItemProperty>
@@ -122,13 +123,15 @@ Transformationen inkluderar automatisk kvalitetskontroll genom MMI-filtrering:
 
 ### MMI-nivåer (enligt svensk standard)
 
-| MMI | Nivå | Beskrivning |
-|-----|------|-------------|
-| 100-200 | Koncept | Grundläggande information och etablerat koncept |
-| 225-300 | Principiell lösning | Interdisciplinärt kontrollerade principiella lösningar |
-| 325-375 | **Detaljerade lösningar** | **Grund för anbud/order (tröskelvärde)** |
-| 400-475 | Arbetsunderlag | Utfört och kontrollerat arbetsunderlag |
-| 500 | As-built | Slutlig dokumentation |
+
+| MMI     | Nivå                      | Beskrivning                                            |
+| ------- | ------------------------- | ------------------------------------------------------ |
+| 100-200 | Koncept                   | Grundläggande information och etablerat koncept        |
+| 225-300 | Principiell lösning       | Interdisciplinärt kontrollerade principiella lösningar |
+| 325-375 | **Detaljerade lösningar** | **Grund för anbud/order (tröskelvärde)**               |
+| 400-475 | Arbetsunderlag            | Utfört och kontrollerat arbetsunderlag                 |
+| 500     | As-built                  | Slutlig dokumentation                                  |
+
 
 Element under MMI 375 anses inte ha tillräcklig detaljeringsgrad för upphandling och materiallistor.
 
@@ -136,37 +139,40 @@ Element under MMI 375 anses inte ha tillräcklig detaljeringsgrad för upphandli
 
 Alla BIP (BIM In Production)-egenskaper mappas till `cac:AdditionalItemProperty`-element:
 
-| BIP-egenskap | Exempelvärde | Enhetskod | Anteckningar |
-|--------------|--------------|-----------|--------------|
-| MMI | 375 | - | **Model Maturity Index - filter ≥375** |
-| type name id | YV01 | - | Används för ManufacturersItemIdentification, fallback för BrandName |
-| Manufacturer | Tillverkare AB | - | Används för BrandName och ManufacturerParty (om finns) |
-| TypeDescription | Yttre bärande yttervägg, 350 mm | - | Används i Description |
-| BSAB 96 | 42.A | - | Används som Keyword |
-| materials/components | Tegel fasad 110 / ... | - | Läggs till i Description |
-| thickness | 350 | MMT | Millimeter |
-| is load bearing | true → Ja | - | Boolesk översatt |
-| is external | true → Ja | - | Boolesk översatt |
-| height | 5628.49 | MMT | Millimeter |
-| length | 16060 | MMT | Millimeter |
-| net area | 79.81 | MTK | Kvadratmeter |
-| net volume | 27.93 | MTQ | Kubikmeter |
-| weight | 54467.20 | KGM | Kilogram |
-| floor | 010 | - | Våningsbeteckning |
-| renovation component status | Ny | - | Ny/Befintlig |
+
+| BIP-egenskap                | Exempelvärde                    | Enhetskod | Anteckningar                                                        |
+| --------------------------- | ------------------------------- | --------- | ------------------------------------------------------------------- |
+| MMI                         | 375                             | -         | **Model Maturity Index - filter ≥375**                              |
+| type name id                | YV01                            | -         | Används för ManufacturersItemIdentification, fallback för BrandName |
+| Manufacturer                | Tillverkare AB                  | -         | Används för BrandName och ManufacturerParty (om finns)              |
+| TypeDescription             | Yttre bärande yttervägg, 350 mm | -         | Används i Description                                               |
+| BSAB 96                     | 42.A                            | -         | Används som Keyword                                                 |
+| materials/components        | Tegel fasad 110 / ...           | -         | Läggs till i Description                                            |
+| thickness                   | 350                             | MMT       | Millimeter                                                          |
+| is load bearing             | true → Ja                       | -         | Boolesk översatt                                                    |
+| is external                 | true → Ja                       | -         | Boolesk översatt                                                    |
+| height                      | 5628.49                         | MMT       | Millimeter                                                          |
+| length                      | 16060                           | MMT       | Millimeter                                                          |
+| net area                    | 79.81                           | MTK       | Kvadratmeter                                                        |
+| net volume                  | 27.93                           | MTQ       | Kubikmeter                                                          |
+| weight                      | 54467.20                        | KGM       | Kilogram                                                            |
+| floor                       | 010                             | -         | Våningsbeteckning                                                   |
+| renovation component status | Ny                              | -         | Ny/Befintlig                                                        |
+
 
 ## 🎨 Skapa Anpassade Stilmallar
 
 För att skapa en anpassad stilmall:
 
 1. Kopiera standardstilmallen:
+
 ```bash
 cp stylesheets/default-stylesheet-bip_to_peppol.xslt stylesheets/min-anpassade.xslt
 ```
 
-2. Modifiera XSLT efter dina behov
+1. Modifiera XSLT efter dina behov
+2. Använd den med transformationen:
 
-3. Använd den med transformationen:
 ```bash
 python scripts/transform_ifc_to_peppol.py input.xml output.xml --stylesheet stylesheets/min-anpassade.xslt
 ```
@@ -184,6 +190,7 @@ python scripts/transform_ifc_to_peppol.py input.xml output.xml --stylesheet styl
 ### XML-strukturvalidering
 
 Verktyget validerar:
+
 - ✓ Välformad XML
 - ✓ Korrekta namespace-deklarationer
 - ✓ Nödvändiga element finns
@@ -192,6 +199,7 @@ Verktyget validerar:
 ### Innehållsvalidering
 
 Kör valideringskontroll:
+
 ```bash
 python -c "from lxml import etree; doc = etree.parse('output/catalogue.xml'); print('Giltig XML')"
 ```
@@ -199,11 +207,12 @@ python -c "from lxml import etree; doc = etree.parse('output/catalogue.xml'); pr
 ### Peppol BIS-validering
 
 Ladda upp genererad katalog till BEAst Supply validator:
-**https://bis.beast.se/**
+**[https://bis.beast.se/](https://bis.beast.se/)**
 
 ## 📈 Prestanda
 
 **Testresultat:**
+
 - Indata: 74 IfcWall-instanser
 - Bearbetningstid: ~2 sekunder
 - Utdatastorlek: ~800 KB
@@ -214,21 +223,27 @@ Ladda upp genererad katalog till BEAst Supply validator:
 ### Vanliga Problem
 
 **1. Stilmall Hittades Inte**
+
 ```
 ERROR: XSLT stylesheet not found
 ```
+
 **Lösning:** Kontrollera stilmallens sökväg. Standardplats är `stylesheets/default-stylesheet-bip_to_peppol.xslt`
 
 **2. lxml Inte Installerad**
+
 ```
 ERROR: lxml library not found
 ```
+
 **Lösning:** Installera lxml: `pip install lxml`
 
 **3. Ogiltig IFC XML**
+
 ```
 ERROR: Invalid XML syntax in input file
 ```
+
 **Lösning:** Se till att IFC-filen exporteras som XML-format (inte binär .ifc)
 
 ## 📚 Dokumentation
@@ -239,10 +254,12 @@ ERROR: Invalid XML syntax in input file
 ## 🧪 Testning
 
 ### Testfiler
+
 - **Indata:** `../IfcConvert/output/A-40-V-000_BIM2BOM.xml`
 - **Utdata:** `output/test_new_template.xml`
 
 ### Kör Tester
+
 ```bash
 # Testa med standardstilmall
 python scripts/transform_ifc_to_peppol.py ../IfcConvert/output/A-40-V-000_BIM2BOM.xml output/test.xml
@@ -254,17 +271,20 @@ python -c "from lxml import etree; doc = etree.parse('output/test.xml'); print(f
 ## 🔄 Versionshistorik
 
 ### Version 2.1 (2025-10-29)
+
 - ✨ MMI-filtrering implementerad (≥375) för kvalitetskontroll
 - ✨ XSLT-stilmall kontrollerar BIP.MMI-egenskap automatiskt
 - 📝 Dokumentation uppdaterad med MMI-information
 - 🔧 Bugfix: XSLT variabelevaluering förbättrad för XSLT 1.0-kompatibilitet
 
 ### Version 1.2 (2025-10-29)
+
 - ✨ ManufacturerParty inkluderas endast om BIP.Manufacturer finns
 - ✨ BrandName använder BIP.Manufacturer om tillgänglig, annars TypeID
 - 📝 Uppdaterad dokumentation till svenska
 
 ### Version 1.1 (2025-10-29)
+
 - ✨ Stöd för flera stilmallar
 - ✨ Omdesignad katalogradstruktur
 - ✨ GlobalID som katalogradID
@@ -273,6 +293,7 @@ python -c "from lxml import etree; doc = etree.parse('output/test.xml'); print(f
 - 🗑️ Borttagna föråldrade element
 
 ### Version 1.0 (2025-10-28)
+
 - Initial release
 - Grundläggande IFC till Peppol-transformation
 - BIP egenskapsmappning
@@ -288,9 +309,9 @@ När du skapar anpassade stilmallar eller modifieringar:
 
 ## 🔗 Länkar
 
-- **BEAst Supply Validator:** https://bis.beast.se/
-- **Peppol BIS Catalogue:** https://peppol.eu/
-- **BIP (BIM In Production):** https://www.bimalliance.se/
+- **BEAst Supply Validator:** [https://bis.beast.se/](https://bis.beast.se/)
+- **Peppol BIS Catalogue:** [https://peppol.eu/](https://peppol.eu/)
+- **BIP (BIM In Production):** [https://www.bimalliance.se/](https://www.bimalliance.se/)
 
 ---
 

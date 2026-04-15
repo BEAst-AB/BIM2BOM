@@ -568,6 +568,67 @@ Until those mappings are normative for BIM2BOM, treat [BIP_Peppol_Property_Mappi
 
 ---
 
+## 9B. Item Instance and Lot Identification (`cac:ItemInstance`)
+
+The UBL `cac:ItemInstance` element, placed inside `cac:Item`, carries per-instance metadata such as production batch or lot numbers. In the BIM2BOM context, this allows tracing a catalogue line back to a specific **manufacturing lot** or **delivery batch** — information that is typically known only at delivery or production time, not at the initial buyer request stage.
+
+### Element Structure
+
+`cac:ItemInstance` is a child of `cac:Item`, placed **after** `cac:ManufacturerParty` and **before** `cac:AdditionalItemProperty` in UBL sequence.
+
+```xml
+<cac:ItemInstance>
+    <cac:LotIdentification>
+        <cbc:LotNumberID>LOT-2026-0042</cbc:LotNumberID>   <!-- (1) -->
+    </cac:LotIdentification>
+</cac:ItemInstance>
+```
+
+| # | Description |
+|---|-------------|
+| 1 | The lot or batch number assigned by the manufacturer or seller. Free text; format depends on the supplier's system. |
+
+### BIM2BOM Usage
+
+`LotNumberID` is an **optional** element. It is most relevant in **seller response** and **manufacturing BOM** catalogues where physical materials have been allocated. It is typically **absent** in buyer request catalogues because no physical lot has been assigned yet.
+
+`cac:ItemInstance` is included in the catalogue when the originating BIM object (or an upstream system such as ERP or logistics) carries a `LotNumberID` property — i.e. when a lot or batch reference has already been assigned to the object.
+
+| Scenario | `cac:ItemInstance` present? | Typical use |
+|----------|----------------------------|-------------|
+| Buyer request (UC1, UC2, UC3) | No | No physical lot assigned yet |
+| Seller response with allocated material | Yes | Lot number from seller's warehouse / ERP |
+| Manufacturing BOM with traceable articles | Yes | Production batch linking mBOM to delivery |
+| IFC model with `BIP.LotNumberID` property | Yes | Pre-assigned lot from design or logistics |
+
+**Example — seller response with lot number:**
+
+```xml
+<cac:Item>
+    <cbc:Description>Tegelfasad 110 mm — Parti levererat 2026-03-15</cbc:Description>
+    <cbc:Name>VE-TEGEL-110</cbc:Name>
+    <cac:SellersItemIdentification>
+        <cbc:ID>VE-TEGEL-110</cbc:ID>
+    </cac:SellersItemIdentification>
+    <!-- ... other item children ... -->
+    <cac:ManufacturerParty>
+        <cac:PartyName>
+            <cbc:Name>Wienerberger</cbc:Name>
+        </cac:PartyName>
+    </cac:ManufacturerParty>
+    <cac:ItemInstance>
+        <cac:LotIdentification>
+            <cbc:LotNumberID>LOT-2026-0042</cbc:LotNumberID>
+        </cac:LotIdentification>
+    </cac:ItemInstance>
+    <cac:AdditionalItemProperty>
+        <!-- ... properties follow ... -->
+    </cac:AdditionalItemProperty>
+</cac:Item>
+```
+
+---
+
 ## 10. Additional Item Properties (`cac:AdditionalItemProperty`)
 
 Additional properties convey product attributes that cannot be expressed through dedicated UBL elements. Each property consists of a name, an optional code, and a value. Properties are grouped by their `cbc:NameCode/@listID` into two families: **BEAst Supply properties** and **BIP properties** (see [§9.4](#94-listid-code-lists-and-data-dictionaries-incl-bsdd) for how `listID` relates to registers, **bSDD**, and other data dictionaries).
@@ -741,6 +802,88 @@ The floor/storey designation from the BIM model.
 </cac:AdditionalItemProperty>
 ```
 
+#### MMI (Model Maturity Index)
+
+The **MMI** (Model Maturity Index, Swedish: *Modellmognadsindex*) is a numeric BIP property that indicates how **complete and reliable** the BIM object's data is. Higher values mean the model object has been refined through more project stages and its geometry, properties, and classification are considered more trustworthy for downstream use (procurement, manufacturing, etc.).
+
+**Role in BIM2BOM:** MMI acts as a **gate-keeping filter**: only BIM objects with `MMI >= 375` are included in a catalogue. This threshold ensures that only objects whose geometry, classification, and quantities have reached a sufficient level of design maturity are considered reliable enough for pricing and ordering. Objects below the threshold are excluded.
+
+| MMI range | Interpretation (approximate) | BIM2BOM action |
+|-----------|------------------------------|----------------|
+| < 375 | Early design, placeholder, or schematic | **Excluded** from catalogue |
+| >= 375 | Quantities, classification, and geometry suitable for procurement | **Included** in catalogue |
+
+**When it appears:** The property is emitted as an `AdditionalItemProperty` on catalogue lines that originate from IFC models. It is carried through as metadata so receivers can assess the source data's maturity. It is **not** something the seller populates — it comes from the BIM model.
+
+```xml
+<cac:AdditionalItemProperty>
+    <cbc:Name>MMI</cbc:Name>
+    <cbc:NameCode listID="SE:BIP-koder">MMI</cbc:NameCode>
+    <cbc:Value>375</cbc:Value>
+    <cbc:ValueQuantity unitCode="C62">375</cbc:ValueQuantity>
+</cac:AdditionalItemProperty>
+```
+
+| Detail | Description |
+|--------|-------------|
+| `cbc:Value` | Text representation of the numeric MMI value. |
+| `cbc:ValueQuantity` | Numeric value. `unitCode="C62"` is the UN/CEFACT code for a dimensionless unit (pure number). |
+
+**Example — buyer request with MMI on a wall line (UC3 pattern):**
+
+```xml
+<cac:CatalogueLine>
+    <cbc:ID>1</cbc:ID>
+    <cbc:ActionCode>Add</cbc:ActionCode>
+    <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
+    <cbc:OrderableUnit>MTR</cbc:OrderableUnit>
+    <cbc:ContentUnitQuantity unitCode="MTR">16.06</cbc:ContentUnitQuantity>
+    <cac:Item>
+        <cbc:Description>Yttre bärande yttervägg, 350 mm. Unik vägg från BIM-modell.</cbc:Description>
+        <cbc:Name>YV01 350 - Yttre bärande yttervägg (Plan 010)</cbc:Name>
+        <cac:BuyersItemIdentification>
+            <cbc:ID>IV01</cbc:ID>
+        </cac:BuyersItemIdentification>
+        <!-- ... other identifications and document references ... -->
+        <cac:AdditionalItemProperty>
+            <cbc:Name>CDEGuid</cbc:Name>
+            <cbc:NameCode listID="ORG:BEAst">CDEGuid</cbc:NameCode>
+            <cbc:Value>3pLKJPvHT21uNqX1l9FcUN</cbc:Value>
+        </cac:AdditionalItemProperty>
+        <cac:AdditionalItemProperty>
+            <cbc:Name>TypeID</cbc:Name>
+            <cbc:NameCode listID="SE:BIP-koder">TypeID</cbc:NameCode>
+            <cbc:Value>IV01</cbc:Value>
+        </cac:AdditionalItemProperty>
+        <cac:AdditionalItemProperty>
+            <cbc:Name>thickness</cbc:Name>
+            <cbc:NameCode listID="SE:BIP-koder">thickness</cbc:NameCode>
+            <cbc:Value>350 mm</cbc:Value>
+            <cbc:ValueQuantity unitCode="MMT">350</cbc:ValueQuantity>
+        </cac:AdditionalItemProperty>
+        <cac:AdditionalItemProperty>
+            <cbc:Name>MMI</cbc:Name>
+            <cbc:NameCode listID="SE:BIP-koder">MMI</cbc:NameCode>
+            <cbc:Value>375</cbc:Value>
+            <cbc:ValueQuantity unitCode="C62">375</cbc:ValueQuantity>
+        </cac:AdditionalItemProperty>
+        <!-- ... remaining BIP properties ... -->
+    </cac:Item>
+</cac:CatalogueLine>
+```
+
+#### ObjectType
+
+The BIP object type classification string from the BIM model (e.g. `Yttervägg`). Carried as informational metadata when present on the IFC element.
+
+```xml
+<cac:AdditionalItemProperty>
+    <cbc:Name>ObjectType</cbc:Name>
+    <cbc:NameCode listID="SE:BIP-koder">ObjectType</cbc:NameCode>
+    <cbc:Value>Yttervägg</cbc:Value>
+</cac:AdditionalItemProperty>
+```
+
 ### 10.3 Unit Codes Reference
 
 | Unit | UN/CEFACT Code | Used for |
@@ -750,6 +893,7 @@ The floor/storey designation from the BIM model.
 | Metre | `MTR` | wall length, orderable unit |
 | Cubic metre | `MTQ` | net volume (in BIP mapping, not in current POC) |
 | Kilogram | `KGM` | weight (in BIP mapping, not in current POC) |
+| Dimensionless | `C62` | MMI (pure numeric index) |
 
 ---
 
@@ -834,10 +978,15 @@ For quick reference, the following table lists every XML element and attribute u
 | `cac:Attachment` | `.../cac:Attachment` | [9.1](#91-external-document-reference-cacitemspecificationdocumentreference) |
 | `cac:ExternalReference` | `.../cac:ExternalReference` | [9.1](#91-external-document-reference-cacitemspecificationdocumentreference) |
 | `cbc:URI` | `.../cbc:URI` | [9.1](#91-external-document-reference-cacitemspecificationdocumentreference) |
+| `cac:ItemInstance` | `.../cac:Item/cac:ItemInstance` | [9B](#9b-item-instance-and-lot-identification-caciteminstance) |
+| `cac:LotIdentification` | `.../cac:ItemInstance/cac:LotIdentification` | [9B](#9b-item-instance-and-lot-identification-caciteminstance) |
+| `cbc:LotNumberID` | `.../cac:LotIdentification/cbc:LotNumberID` | [9B](#9b-item-instance-and-lot-identification-caciteminstance) |
 | `cac:AdditionalItemProperty` | `.../cac:AdditionalItemProperty` | [10](#10-additional-item-properties-cacadditionalitemproperty) |
 | `cbc:NameCode` | `.../cbc:NameCode` | [10](#10-additional-item-properties-cacadditionalitemproperty) |
 | `cbc:Value` | `.../cbc:Value` | [10](#10-additional-item-properties-cacadditionalitemproperty) |
 | `cbc:ValueQuantity` | `.../cbc:ValueQuantity` | [10](#10-additional-item-properties-cacadditionalitemproperty) |
+| MMI (BIP property) | `.../cac:AdditionalItemProperty[cbc:NameCode='MMI']` | [10.2](#102-bip-properties-listidsebip-koder) |
+| ObjectType (BIP property) | `.../cac:AdditionalItemProperty[cbc:NameCode='ObjectType']` | [10.2](#102-bip-properties-listidsebip-koder) |
 
 ---
 

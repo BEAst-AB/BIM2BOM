@@ -204,7 +204,7 @@ python peppol-transformer/scripts/verify_catalogue.py output.xml
 3. ✓ Catalogue ID present
 4. ✓ All lines have Item/Name
 5. ✓ All BIP properties have NameCode
-6. ✓ All NameCodes have SE:BIP listID
+6. ✓ All NameCodes have SE:BIP-koder listID
 
 **Success Criteria:** All 6 checks passed
 
@@ -273,7 +273,7 @@ Status: ALL TESTS PASSED
 3. ✓ Catalogue ID present: `CATALOGUE-001`
 4. ✓ All 74 lines have Item/Name
 5. ✓ All 966 BIP properties have NameCode
-6. ✓ All NameCodes have SE:BIP listID
+6. ✓ All NameCodes have SE:BIP-koder listID
 
 ---
 
@@ -369,7 +369,7 @@ The test suite confirms the BIM2BOM project is ready for:
 5. **Output compliant** ✓
    - Peppol BIS 3.0 format
    - All required elements present
-   - SE:BIP namespace correct
+   - SE:BIP-koder namespace correct
 
 ---
 
@@ -403,7 +403,7 @@ The test suite confirms the BIM2BOM project is ready for:
 ### Compliance Validation
 - ✓ Peppol BIS 3.0 format
 - ✓ UBL schema compliance
-- ✓ SE:BIP namespace usage
+- ✓ SE:BIP-koder namespace usage
 - ✓ Unit codes correct (MMT, MTK, MTQ, KGM)
 
 ---
@@ -611,7 +611,7 @@ Test Started: 2025-10-29 14:30:00
   ✓ Catalogue ID present
   ✓ All lines have Item/Name
   ✓ All BIP props have NameCode
-  ✓ All NameCodes have SE:BIP listID
+  ✓ All NameCodes have SE:BIP-koder listID
   ✓ Verification completed (1.23s) - All checks passed
 
 ▶ Cleanup

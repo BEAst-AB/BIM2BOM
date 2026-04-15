@@ -150,8 +150,10 @@ def verify_catalogue(xml_path):
                       len(catalogue_lines) == len(doc.xpath('//cac:CatalogueLine/cac:Item/cbc:Name', namespaces=ns))))
         checks.append(("All BIP props have NameCode", 
                       len(bip_props) == len(doc.xpath('//cac:AdditionalItemProperty/cbc:NameCode', namespaces=ns))))
-        checks.append(("All NameCodes have SE:BIP listID", 
-                      len(bip_props) == len(doc.xpath('//cac:AdditionalItemProperty/cbc:NameCode[@listID="SE:BIP"]', namespaces=ns))))
+        namecodes_bip = len(doc.xpath('//cac:AdditionalItemProperty/cbc:NameCode[@listID="SE:BIP-koder"]', namespaces=ns))
+        namecodes_beast = len(doc.xpath('//cac:AdditionalItemProperty/cbc:NameCode[@listID="ORG:BEAst"]', namespaces=ns))
+        checks.append(("All NameCodes have SE:BIP-koder or ORG:BEAst listID",
+                      len(bip_props) == namecodes_bip + namecodes_beast))
         
         all_passed = True
         for check_name, check_result in checks:

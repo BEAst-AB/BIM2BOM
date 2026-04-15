@@ -344,7 +344,7 @@ def create_hierarchy_sheet(ws, discipline, example_items):
         
         write_element(2, 'cbc:NameCode', prop_title,
                       'Property code (same as name)', None, value_font, 2)
-        write_element(3, '@listID', 'SE:BIP',
+        write_element(3, '@listID', 'SE:BIP-koder',
                       'Fixed value for BIP properties', None, comment_font, 3)
         
         # Format value with units

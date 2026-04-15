@@ -1,12 +1,16 @@
 import type { Discipline, PeppolExample, PeppolProperty } from '@/types/bip-peppol';
 
 const BEAST = 'ORG:BEAst';
+const BIP = 'SE:BIP-koder';
 
-/** Apply BEAst NameCode listID when missing (POC XML style). */
+const BEAST_PROPERTY_NAMES = new Set(['CDEGuid', 'AuthoringToolId']);
+
+/** Apply correct listID per XML_MESSAGE_REFERENCE §10: ORG:BEAst for BEAst
+ *  properties, SE:BIP-koder for BIP properties. */
 export function withBeastListId(props: PeppolProperty[]): PeppolProperty[] {
   return props.map((p) => ({
     ...p,
-    listID: p.listID || BEAST,
+    listID: p.listID || (BEAST_PROPERTY_NAMES.has(p.name) ? BEAST : BIP),
     nameCode: p.nameCode || p.name,
   }));
 }
@@ -24,10 +28,7 @@ function ensureCoreMbomProps(
   opts: {
     cdeGuidValue: string;
     authoringToolId: string;
-    itemType?: 'ManufacturingArticle' | 'PackageArticle';
-    sourceSystem: string;
     includeCdeGuid: boolean;
-    includePackageTraceability: boolean;
   }
 ): PeppolProperty[] {
   let next = stripCoreIds(props.map((p) => ({ ...p })));
@@ -52,36 +53,19 @@ function ensureCoreMbomProps(
     description: 'System specific identifier of the component in the originating BIM tool',
   });
 
-  // Remove duplicate ItemType / SourceSystem we'll set explicitly
-  next = next.filter((p) => p.name !== 'ItemType' && p.name !== 'SourceSystem' && p.name !== 'Traceability');
-
-  if (opts.itemType) {
-    next.push({
-      name: 'ItemType',
-      nameCode: 'ItemType',
-      listID: BEAST,
-      value: opts.itemType,
-      description: 'Role of the catalogue line item',
-    });
-  }
-
-  next.push({
-    name: 'SourceSystem',
-    nameCode: 'SourceSystem',
-    listID: BEAST,
-    value: opts.sourceSystem,
-    description: 'Originating system for this item',
-  });
-
-  if (opts.includePackageTraceability) {
-    next.push({
-      name: 'Traceability',
-      nameCode: 'Traceability',
-      listID: BEAST,
-      value: 'None',
-      description: 'No BIM instance traceability for package-level articles',
-    });
-  }
+  // Per XML_MESSAGE_REFERENCE §10.1: do NOT populate ItemType, SourceSystem,
+  // Traceability, ParentAuthoringToolId, ParentItemID, RecipeArticle, or
+  // LeadTime as ORG:BEAst AdditionalItemProperty entries.
+  next = next.filter(
+    (p) =>
+      p.name !== 'ItemType' &&
+      p.name !== 'SourceSystem' &&
+      p.name !== 'Traceability' &&
+      p.name !== 'ParentAuthoringToolId' &&
+      p.name !== 'ParentItemID' &&
+      p.name !== 'RecipeArticle' &&
+      p.name !== 'LeadTime'
+  );
 
   return withBeastListId(next);
 }
@@ -123,27 +107,19 @@ export function expandSheetExampleToVariants(
   const parentProps = ensureCoreMbomProps(base.properties, {
     cdeGuidValue: cdeGuid,
     authoringToolId: parentAuthoring,
-    sourceSystem: 'BIM Modellen',
     includeCdeGuid: true,
-    includePackageTraceability: false,
   });
 
   const childProps = ensureCoreMbomProps(base.properties, {
     cdeGuidValue: cdeGuid,
     authoringToolId: childAuthoring,
-    itemType: 'ManufacturingArticle',
-    sourceSystem: 'Selling System',
     includeCdeGuid: true,
-    includePackageTraceability: false,
   });
 
   const packageProps = ensureCoreMbomProps(base.properties, {
     cdeGuidValue: cdeGuid,
     authoringToolId: pkgAuthoring,
-    itemType: 'PackageArticle',
-    sourceSystem: 'Selling System',
     includeCdeGuid: false,
-    includePackageTraceability: true,
   });
 
   const parentLineId = '1';

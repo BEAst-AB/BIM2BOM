@@ -52,7 +52,7 @@
             <xsl:when test="$issueDate">
                 <xsl:value-of select="substring-before($issueDate, 'T')"/>
             </xsl:when>
-            <xsl:otherwise>2025-10-28</xsl:otherwise>
+            <xsl:otherwise>2026-04-15</xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
     
@@ -95,11 +95,14 @@
                 <xsl:value-of select="$catalogueDate"/>
             </cbc:IssueDate>
             
-            <!-- Validity period (optional) -->
+            <!-- Validity period (Ref §2.7) -->
             <cac:ValidityPeriod>
                 <cbc:StartDate>
                     <xsl:value-of select="$catalogueDate"/>
                 </cbc:StartDate>
+                <cbc:EndDate>
+                    <xsl:value-of select="$catalogueDate"/>
+                </cbc:EndDate>
             </cac:ValidityPeriod>
             
             <!-- Referenced Contract (optional placeholder) -->
@@ -184,6 +187,9 @@
             <!-- Orderable Indicator -->
             <cbc:OrderableIndicator>true</cbc:OrderableIndicator>
             
+            <!-- Orderable Unit (Ref §4.4) -->
+            <cbc:OrderableUnit>MTR</cbc:OrderableUnit>
+            
             <!-- Item Details -->
             <cac:Item>
                 <!-- Process in correct UBL 2.1 order: Description BEFORE Name -->
@@ -210,19 +216,14 @@
             <xsl:variable name="propSet" select="key('propertySetById', $propSetId)"/>
             
             <xsl:if test="$propSet[@Name='BIP']">
-                <!-- Extract key properties for structure -->
                 <xsl:variable name="typeDesc" select="$propSet/IfcPropertySingleValue[@Name='TypeDescription']/@NominalValue"/>
                 <xsl:variable name="materials" select="$propSet/IfcPropertySingleValue[@Name='materials/components']/@NominalValue"/>
                 <xsl:variable name="typeId" select="$propSet/IfcPropertySingleValue[@Name='type name id']/@NominalValue"/>
+                <xsl:variable name="bipTypeID" select="$propSet/IfcPropertySingleValue[@Name='TypeID']/@NominalValue"/>
                 <xsl:variable name="bsabCode" select="$propSet/IfcPropertySingleValue[@Name='BSAB 96']/@NominalValue"/>
                 <xsl:variable name="manufacturer" select="$propSet/IfcPropertySingleValue[@Name='Manufacturer']/@NominalValue"/>
                 
-                <!-- 1. Name (REQUIRED) -->
-                <cbc:Name>
-                    <xsl:value-of select="$ifcElement/@Name"/>
-                </cbc:Name>
-                
-                <!-- 2. Description -->
+                <!-- 1. Description (Ref §8.1) -- before Name per UBL 2.1 sequence -->
                 <xsl:if test="$typeDesc">
                     <cbc:Description>
                         <xsl:value-of select="$typeDesc"/>
@@ -233,23 +234,25 @@
                     </cbc:Description>
                 </xsl:if>
                 
-                <!-- 3. BrandName (from BIP.Manufacturer if available) -->
-                <xsl:choose>
-                    <xsl:when test="$manufacturer">
-                        <cbc:BrandName>
-                            <xsl:value-of select="$manufacturer"/>
-                        </cbc:BrandName>
-                    </xsl:when>
-                </xsl:choose>
+                <!-- 2. Name (Ref §8.2 -- REQUIRED) -->
+                <cbc:Name>
+                    <xsl:value-of select="$ifcElement/@Name"/>
+                </cbc:Name>
                 
-                <!-- 4. Keywords (derived from BSAB code, type, and other properties) -->
+                <!-- 3. BrandName -->
+                <xsl:if test="$manufacturer">
+                    <cbc:BrandName>
+                        <xsl:value-of select="$manufacturer"/>
+                    </cbc:BrandName>
+                </xsl:if>
+                
+                <!-- 4. Keywords -->
                 <xsl:if test="$bsabCode">
                     <cbc:Keyword>
                         <xsl:value-of select="$bsabCode"/>
                     </cbc:Keyword>
                 </xsl:if>
                 
-                <!-- Add keyword from element type -->
                 <xsl:variable name="elementType" select="$ifcElement/@ObjectType"/>
                 <xsl:if test="$elementType">
                     <cbc:Keyword>
@@ -257,7 +260,6 @@
                     </cbc:Keyword>
                 </xsl:if>
                 
-                <!-- Add keyword if external/internal -->
                 <xsl:variable name="isExternal" select="$propSet/IfcPropertySingleValue[@Name='is external']/@NominalValue"/>
                 <xsl:if test="$isExternal">
                     <cbc:Keyword>
@@ -268,7 +270,16 @@
                     </cbc:Keyword>
                 </xsl:if>
                 
-                <!-- 5. ManufacturersItemIdentification (from BIP type name id) -->
+                <!-- 5. BuyersItemIdentification (Ref §7.1) -- from BIP TypeID -->
+                <xsl:if test="$bipTypeID">
+                    <cac:BuyersItemIdentification>
+                        <cbc:ID>
+                            <xsl:value-of select="$bipTypeID"/>
+                        </cbc:ID>
+                    </cac:BuyersItemIdentification>
+                </xsl:if>
+                
+                <!-- 6. ManufacturersItemIdentification (Ref §7.3) -->
                 <xsl:if test="$typeId">
                     <cac:ManufacturersItemIdentification>
                         <cbc:ID>
@@ -277,7 +288,7 @@
                     </cac:ManufacturersItemIdentification>
                 </xsl:if>
                 
-                <!-- 6. ManufacturerParty (only if BIP.Manufacturer exists) -->
+                <!-- 7. ManufacturerParty -->
                 <xsl:if test="$manufacturer">
                     <cac:ManufacturerParty>
                         <cac:PartyName>
@@ -288,22 +299,31 @@
                     </cac:ManufacturerParty>
                 </xsl:if>
                 
-                <!-- 7. ItemInstance (Optional - for lot/batch information) -->
+                <!-- 8. ItemInstance -->
                 <xsl:variable name="lotNumber" select="$propSet/IfcPropertySingleValue[@Name='LotNumberID']/@NominalValue"/>
-                
                 <xsl:if test="$lotNumber">
                     <cac:ItemInstance>
-                        <xsl:if test="$lotNumber">
-                            <cac:LotIdentification>
-                                <cbc:LotNumberID>
-                                    <xsl:value-of select="$lotNumber"/>
-                                </cbc:LotNumberID>
-                            </cac:LotIdentification>
-                        </xsl:if>
+                        <cac:LotIdentification>
+                            <cbc:LotNumberID>
+                                <xsl:value-of select="$lotNumber"/>
+                            </cbc:LotNumberID>
+                        </cac:LotIdentification>
                     </cac:ItemInstance>
                 </xsl:if>
                 
-                <!-- 8. AdditionalItemProperty (BIP properties) -->
+                <!-- 9. AdditionalItemProperty -- BEAst (Ref §10.1) -->
+                <cac:AdditionalItemProperty>
+                    <cbc:Name>CDEGuid</cbc:Name>
+                    <cbc:NameCode listID="ORG:BEAst">CDEGuid</cbc:NameCode>
+                    <cbc:Value><xsl:value-of select="$ifcElement/@id"/></cbc:Value>
+                </cac:AdditionalItemProperty>
+                <cac:AdditionalItemProperty>
+                    <cbc:Name>AuthoringToolId</cbc:Name>
+                    <cbc:NameCode listID="ORG:BEAst">AuthoringToolId</cbc:NameCode>
+                    <cbc:Value><xsl:value-of select="$ifcElement/@id"/></cbc:Value>
+                </cac:AdditionalItemProperty>
+                
+                <!-- 10. AdditionalItemProperty -- BIP (Ref §10.2) -->
                 <xsl:apply-templates select="$propSet/IfcPropertySingleValue" mode="bip-property"/>
             </xsl:if>
         </xsl:for-each>
@@ -326,7 +346,7 @@
                 </cbc:Name>
                 
                 <!-- Property Name Code with BIP list identifier -->
-                <cbc:NameCode listID="SE:BIP">
+                <cbc:NameCode listID="SE:BIP-koder">
                     <xsl:value-of select="$propertyName"/>
                 </cbc:NameCode>
                 

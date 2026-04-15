@@ -3,7 +3,7 @@ IFC to Peppol Catalogue Transformer for Pyodide
 Ported from transform_ifc_to_peppol.py for browser execution
 """
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Dict, Optional, Tuple
 
 # Namespaces for Peppol XML
@@ -203,12 +203,20 @@ def create_catalogue_root(metadata: Dict[str, str]):
     name = etree.SubElement(catalogue, '{'+NS_CBC+'}Name')
     name.text = metadata.get('projectName') or 'BIM2BOM Catalogue'
     
+    issue_date_val = metadata.get('issueDate') or datetime.now().strftime('%Y-%m-%d')
     issue_date = etree.SubElement(catalogue, '{'+NS_CBC+'}IssueDate')
-    issue_date.text = metadata.get('issueDate') or datetime.now().strftime('%Y-%m-%d')
+    issue_date.text = issue_date_val
     
     validity_period = etree.SubElement(catalogue, '{'+NS_CAC+'}ValidityPeriod')
     start_date = etree.SubElement(validity_period, '{'+NS_CBC+'}StartDate')
-    start_date.text = metadata.get('issueDate') or datetime.now().strftime('%Y-%m-%d')
+    start_date.text = issue_date_val
+    try:
+        end_dt = datetime.strptime(issue_date_val, '%Y-%m-%d') + timedelta(days=90)
+        end_date_str = end_dt.strftime('%Y-%m-%d')
+    except (ValueError, TypeError):
+        end_date_str = issue_date_val
+    end_date = etree.SubElement(validity_period, '{'+NS_CBC+'}EndDate')
+    end_date.text = end_date_str
     
     ref_contract = etree.SubElement(catalogue, '{'+NS_CAC+'}ReferencedContract')
     contract_id = etree.SubElement(ref_contract, '{'+NS_CBC+'}ID')
@@ -240,26 +248,39 @@ def create_catalogue_root(metadata: Dict[str, str]):
     
     return catalogue
 
-def create_catalogue_line(element, bip_properties: Dict[str, str]):
-    """Create a CatalogueLine element for an IFC element."""
+def create_catalogue_line(element, bip_properties: Dict[str, str], ifc_filename: str = ''):
+    """Create a CatalogueLine element following UBL 2.1 ordering per XML_MESSAGE_REFERENCE.md."""
     from lxml import etree
-    
+
     catalogue_line = etree.Element('{'+NS_CAC+'}CatalogueLine')
-    
+
+    global_id = get_element_global_id(element)
+    element_id = str(element.id()) if hasattr(element, 'id') else ''
+
     line_id = etree.SubElement(catalogue_line, '{'+NS_CBC+'}ID')
-    line_id.text = get_element_global_id(element)
-    
+    line_id.text = global_id
+
     action_code = etree.SubElement(catalogue_line, '{'+NS_CBC+'}ActionCode')
     action_code.text = 'Add'
-    
+
     orderable = etree.SubElement(catalogue_line, '{'+NS_CBC+'}OrderableIndicator')
     orderable.text = 'true'
-    
+
+    orderable_unit = etree.SubElement(catalogue_line, '{'+NS_CBC+'}OrderableUnit')
+    orderable_unit.text = 'MTR'
+
+    length_val = bip_properties.get('length')
+    if length_val:
+        try:
+            length_m = float(length_val) / 1000.0
+            content_qty = etree.SubElement(catalogue_line, '{'+NS_CBC+'}ContentUnitQuantity')
+            content_qty.set('unitCode', 'MTR')
+            content_qty.text = f'{length_m:.2f}'
+        except (ValueError, TypeError):
+            pass
+
     item = etree.SubElement(catalogue_line, '{'+NS_CAC+'}Item')
-    
-    name = etree.SubElement(item, '{'+NS_CBC+'}Name')
-    name.text = get_element_name(element)
-    
+
     type_desc = bip_properties.get('TypeDescription')
     materials = bip_properties.get('materials/components')
     if type_desc:
@@ -268,66 +289,100 @@ def create_catalogue_line(element, bip_properties: Dict[str, str]):
             desc_text += f'. Materials: {materials}'
         description = etree.SubElement(item, '{'+NS_CBC+'}Description')
         description.text = desc_text
-    
+
+    name = etree.SubElement(item, '{'+NS_CBC+'}Name')
+    name.text = get_element_name(element)
+
     manufacturer = bip_properties.get('Manufacturer')
     if manufacturer:
         brand_name = etree.SubElement(item, '{'+NS_CBC+'}BrandName')
         brand_name.text = manufacturer
-    
+
     bsab_code = bip_properties.get('BSAB 96')
     if bsab_code:
         keyword = etree.SubElement(item, '{'+NS_CBC+'}Keyword')
         keyword.text = bsab_code
-    
+
     object_type = get_element_object_type(element)
     if object_type:
         keyword = etree.SubElement(item, '{'+NS_CBC+'}Keyword')
         keyword.text = object_type
-    
+
     is_external = bip_properties.get('is external')
     if is_external:
         keyword = etree.SubElement(item, '{'+NS_CBC+'}Keyword')
         keyword.text = 'external' if is_external.lower() == 'true' else 'internal'
-    
+
+    type_id_val = bip_properties.get('TypeID')
+    if type_id_val:
+        buyers_id = etree.SubElement(item, '{'+NS_CAC+'}BuyersItemIdentification')
+        buyers_id_elem = etree.SubElement(buyers_id, '{'+NS_CBC+'}ID')
+        buyers_id_elem.text = type_id_val
+
     type_id = bip_properties.get('type name id')
     if type_id:
         mfr_id = etree.SubElement(item, '{'+NS_CAC+'}ManufacturersItemIdentification')
         mfr_id_elem = etree.SubElement(mfr_id, '{'+NS_CBC+'}ID')
         mfr_id_elem.text = type_id
-    
+
+    if ifc_filename:
+        doc_ref = etree.SubElement(item, '{'+NS_CAC+'}ItemSpecificationDocumentReference')
+        doc_ref_id = etree.SubElement(doc_ref, '{'+NS_CBC+'}ID')
+        doc_ref_id.text = 'IFC-MODEL-REF'
+        doc_desc = etree.SubElement(doc_ref, '{'+NS_CBC+'}DocumentDescription')
+        doc_desc.text = 'IFC model file - Originating BIM model'
+        attachment = etree.SubElement(doc_ref, '{'+NS_CAC+'}Attachment')
+        ext_ref = etree.SubElement(attachment, '{'+NS_CAC+'}ExternalReference')
+        uri_elem = etree.SubElement(ext_ref, '{'+NS_CBC+'}URI')
+        uri_elem.text = f'https://cde.example.com/models/{ifc_filename}'
+
     if manufacturer:
         mfr_party = etree.SubElement(item, '{'+NS_CAC+'}ManufacturerParty')
         party_name = etree.SubElement(mfr_party, '{'+NS_CAC+'}PartyName')
         name_elem = etree.SubElement(party_name, '{'+NS_CBC+'}Name')
         name_elem.text = manufacturer
-    
+
     lot_number = bip_properties.get('LotNumberID')
     if lot_number:
         item_instance = etree.SubElement(item, '{'+NS_CAC+'}ItemInstance')
         lot_ident = etree.SubElement(item_instance, '{'+NS_CAC+'}LotIdentification')
         lot_id = etree.SubElement(lot_ident, '{'+NS_CBC+'}LotNumberID')
         lot_id.text = lot_number
-    
+
+    beast_cde = etree.SubElement(item, '{'+NS_CAC+'}AdditionalItemProperty')
+    etree.SubElement(beast_cde, '{'+NS_CBC+'}Name').text = 'CDEGuid'
+    cde_nc = etree.SubElement(beast_cde, '{'+NS_CBC+'}NameCode')
+    cde_nc.set('listID', 'ORG:BEAst')
+    cde_nc.text = 'CDEGuid'
+    etree.SubElement(beast_cde, '{'+NS_CBC+'}Value').text = global_id
+
+    beast_auth = etree.SubElement(item, '{'+NS_CAC+'}AdditionalItemProperty')
+    etree.SubElement(beast_auth, '{'+NS_CBC+'}Name').text = 'AuthoringToolId'
+    auth_nc = etree.SubElement(beast_auth, '{'+NS_CBC+'}NameCode')
+    auth_nc.set('listID', 'ORG:BEAst')
+    auth_nc.text = 'AuthoringToolId'
+    etree.SubElement(beast_auth, '{'+NS_CBC+'}Value').text = element_id
+
     for prop_name, prop_value in sorted(bip_properties.items()):
         if prop_value and prop_value != '':
             add_prop = etree.SubElement(item, '{'+NS_CAC+'}AdditionalItemProperty')
-            
+
             prop_name_elem = etree.SubElement(add_prop, '{'+NS_CBC+'}Name')
             prop_name_elem.text = prop_name
-            
+
             name_code = etree.SubElement(add_prop, '{'+NS_CBC+'}NameCode')
-            name_code.set('listID', 'SE:BIP')
+            name_code.set('listID', 'SE:BIP-koder')
             name_code.text = prop_name
-            
+
             value_elem = etree.SubElement(add_prop, '{'+NS_CBC+'}Value')
             value_elem.text = format_value(prop_name, prop_value)
-            
+
             unit_code = get_unit_code(prop_name)
             if unit_code:
                 value_qty = etree.SubElement(add_prop, '{'+NS_CBC+'}ValueQuantity')
                 value_qty.set('unitCode', unit_code)
                 value_qty.text = prop_value
-    
+
     return catalogue_line
 
 def transform_ifc_to_peppol_bytes(ifc_path: str, mmi_threshold: float = 375.0) -> Tuple[str, Dict]:
@@ -352,6 +407,8 @@ def transform_ifc_to_peppol_bytes(ifc_path: str, mmi_threshold: float = 375.0) -
     try:
         # Load IFC model from file path (file already written to Pyodide FS by JavaScript)
         model = ifcopenshell.open(ifc_path)
+        import os
+        ifc_filename = os.path.basename(ifc_path)
         
         # Extract project metadata
         metadata = extract_project_metadata(model)
@@ -389,7 +446,7 @@ def transform_ifc_to_peppol_bytes(ifc_path: str, mmi_threshold: float = 375.0) -
                 filtered_count += 1
                 
                 # Create catalogue line
-                catalogue_line = create_catalogue_line(element, bip_properties)
+                catalogue_line = create_catalogue_line(element, bip_properties, ifc_filename)
                 catalogue.append(catalogue_line)
         
         # Create XML tree

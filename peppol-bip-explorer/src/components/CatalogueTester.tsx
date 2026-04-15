@@ -9,12 +9,23 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 interface ParsedCatalogueLine {
   id: string;
   buyersItemId?: string;
+  sellersItemId?: string;
+  standardItemId?: string;
+  standardItemSchemeID?: string;
   itemName?: string;
   description?: string;
   brandName?: string;
   typeId?: string;
   manufacturerName?: string;
   lotNumberId?: string;
+  orderableUnit?: string;
+  contentUnitQuantity?: string;
+  contentUnitCode?: string;
+  componentRelatedItemId?: string;
+  componentRelatedQuantity?: string;
+  priceAmount?: string;
+  priceCurrency?: string;
+  baseQuantity?: string;
   properties: ParsedProperty[];
   documentReferences: ParsedDocumentReference[];
 }
@@ -92,9 +103,53 @@ export function CatalogueTester() {
       const itemEl = findElement(lineEl, 'Item');
       if (!itemEl) return;
 
-      // Get BuyersItemIdentification > ID
+      // Get BuyersItemIdentification > ID (Ref §7.1)
       const buyersItemIdEl = findElement(itemEl, 'BuyersItemIdentification');
       const buyersItemId = buyersItemIdEl ? getTextContent(buyersItemIdEl, 'ID') : undefined;
+
+      // Get SellersItemIdentification > ID (Ref §7.2)
+      const sellersItemIdEl = findElement(itemEl, 'SellersItemIdentification');
+      const sellersItemId = sellersItemIdEl ? getTextContent(sellersItemIdEl, 'ID') : undefined;
+
+      // Get StandardItemIdentification > ID / GTIN (Ref §7.4)
+      const standardItemIdEl = findElement(itemEl, 'StandardItemIdentification');
+      let standardItemId: string | undefined;
+      let standardItemSchemeID: string | undefined;
+      if (standardItemIdEl) {
+        const stdIdInner = findElement(standardItemIdEl, 'ID');
+        standardItemId = stdIdInner?.textContent?.trim() || undefined;
+        standardItemSchemeID = stdIdInner?.getAttribute('schemeID') || undefined;
+      }
+
+      // Get line-level fields (Ref §4.4, §4.5)
+      const orderableUnit = getTextContent(lineEl, 'OrderableUnit');
+      const contentUnitQtyEl = findElement(lineEl, 'ContentUnitQuantity');
+      const contentUnitQuantity = contentUnitQtyEl?.textContent?.trim() || undefined;
+      const contentUnitCode = contentUnitQtyEl?.getAttribute('unitCode') || undefined;
+
+      // Get ComponentRelatedItem (Ref §5)
+      const compRelEl = findElement(lineEl, 'ComponentRelatedItem');
+      let componentRelatedItemId: string | undefined;
+      let componentRelatedQuantity: string | undefined;
+      if (compRelEl) {
+        componentRelatedItemId = getTextContent(compRelEl, 'ID');
+        componentRelatedQuantity = getTextContent(compRelEl, 'Quantity');
+      }
+
+      // Get pricing (Ref §6)
+      const reqLocQtyEl = findElement(lineEl, 'RequiredItemLocationQuantity');
+      let priceAmount: string | undefined;
+      let priceCurrency: string | undefined;
+      let baseQuantity: string | undefined;
+      if (reqLocQtyEl) {
+        const priceEl = findElement(reqLocQtyEl, 'Price');
+        if (priceEl) {
+          const priceAmountEl = findElement(priceEl, 'PriceAmount');
+          priceAmount = priceAmountEl?.textContent?.trim() || undefined;
+          priceCurrency = priceAmountEl?.getAttribute('currencyID') || undefined;
+          baseQuantity = getTextContent(priceEl, 'BaseQuantity');
+        }
+      }
 
       // Get basic item info
       const itemName = getTextContent(itemEl, 'Name');
@@ -169,12 +224,23 @@ export function CatalogueTester() {
       catalogueLines.push({
         id: lineId,
         buyersItemId,
+        sellersItemId,
+        standardItemId,
+        standardItemSchemeID,
         itemName,
         description,
         brandName,
         typeId,
         manufacturerName,
         lotNumberId,
+        orderableUnit,
+        contentUnitQuantity,
+        contentUnitCode,
+        componentRelatedItemId,
+        componentRelatedQuantity,
+        priceAmount,
+        priceCurrency,
+        baseQuantity,
         properties,
         documentReferences,
       });
@@ -279,12 +345,36 @@ export function CatalogueTester() {
     // Reconstruct the XML for this catalogue line for display
     let xml = `<cac:CatalogueLine>\n`;
     xml += `  <cbc:ID>${line.id}</cbc:ID>\n`;
+    if (line.orderableUnit) xml += `  <cbc:OrderableUnit>${line.orderableUnit}</cbc:OrderableUnit>\n`;
+    if (line.contentUnitQuantity) xml += `  <cbc:ContentUnitQuantity unitCode="${line.contentUnitCode || ''}">${line.contentUnitQuantity}</cbc:ContentUnitQuantity>\n`;
+    if (line.componentRelatedItemId) {
+      xml += `  <cac:ComponentRelatedItem>\n`;
+      xml += `    <cbc:ID schemeID="CatalogueLineID">${line.componentRelatedItemId}</cbc:ID>\n`;
+      if (line.componentRelatedQuantity) xml += `    <cbc:Quantity>${line.componentRelatedQuantity}</cbc:Quantity>\n`;
+      xml += `  </cac:ComponentRelatedItem>\n`;
+    }
+    if (line.priceAmount) {
+      xml += `  <cac:RequiredItemLocationQuantity>\n    <cac:Price>\n`;
+      xml += `      <cbc:PriceAmount currencyID="${line.priceCurrency || 'SEK'}">${line.priceAmount}</cbc:PriceAmount>\n`;
+      if (line.baseQuantity) xml += `      <cbc:BaseQuantity>${line.baseQuantity}</cbc:BaseQuantity>\n`;
+      xml += `    </cac:Price>\n  </cac:RequiredItemLocationQuantity>\n`;
+    }
     xml += `  \n  <cac:Item>\n`;
     
     if (line.buyersItemId) {
       xml += `    \n    <cac:BuyersItemIdentification>\n`;
       xml += `      <cbc:ID>${line.buyersItemId}</cbc:ID>\n`;
       xml += `    </cac:BuyersItemIdentification>\n`;
+    }
+    if (line.sellersItemId) {
+      xml += `    <cac:SellersItemIdentification>\n`;
+      xml += `      <cbc:ID>${line.sellersItemId}</cbc:ID>\n`;
+      xml += `    </cac:SellersItemIdentification>\n`;
+    }
+    if (line.standardItemId) {
+      xml += `    <cac:StandardItemIdentification>\n`;
+      xml += `      <cbc:ID schemeID="${line.standardItemSchemeID || '0160'}">${line.standardItemId}</cbc:ID>\n`;
+      xml += `    </cac:StandardItemIdentification>\n`;
     }
     
     if (line.itemName) {
@@ -518,6 +608,68 @@ export function CatalogueTester() {
                     </p>
                     <p className="font-mono text-sm">{line.buyersItemId}</p>
                   </div>
+                </div>
+              )}
+
+              {/* Item Identifications */}
+              {(line.sellersItemId || line.standardItemId) && (
+                <div className="space-y-3 p-4 bg-teal-50 dark:bg-teal-950/20 rounded-lg border-l-4 border-teal-500">
+                  <h4 className="font-semibold text-sm text-teal-700 dark:text-teal-400 uppercase tracking-wide">
+                    Item Identifications
+                  </h4>
+                  {line.sellersItemId && (
+                    <div className="p-3 rounded-lg bg-background border border-border">
+                      <p className="text-xs font-medium text-muted-foreground mb-2">SellersItemIdentification</p>
+                      <p className="font-mono text-sm">{line.sellersItemId}</p>
+                    </div>
+                  )}
+                  {line.standardItemId && (
+                    <div className="p-3 rounded-lg bg-background border border-border">
+                      <p className="text-xs font-medium text-muted-foreground mb-2">
+                        StandardItemIdentification (GTIN) {line.standardItemSchemeID && <Badge variant="outline" className="ml-1 text-xs">schemeID={line.standardItemSchemeID}</Badge>}
+                      </p>
+                      <p className="font-mono text-sm">{line.standardItemId}</p>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Line-Level Quantities & Hierarchy */}
+              {(line.orderableUnit || line.contentUnitQuantity || line.componentRelatedItemId || line.priceAmount) && (
+                <div className="space-y-3 p-4 bg-amber-50 dark:bg-amber-950/20 rounded-lg border-l-4 border-amber-500">
+                  <h4 className="font-semibold text-sm text-amber-700 dark:text-amber-400 uppercase tracking-wide">
+                    Quantities, Hierarchy &amp; Pricing
+                  </h4>
+                  {line.orderableUnit && (
+                    <div className="p-3 rounded-lg bg-background border border-border">
+                      <p className="text-xs font-medium text-muted-foreground mb-1">OrderableUnit</p>
+                      <p className="font-mono text-sm">{line.orderableUnit}</p>
+                    </div>
+                  )}
+                  {line.contentUnitQuantity && (
+                    <div className="p-3 rounded-lg bg-background border border-border">
+                      <p className="text-xs font-medium text-muted-foreground mb-1">ContentUnitQuantity</p>
+                      <p className="font-mono text-sm">{line.contentUnitQuantity} {line.contentUnitCode}</p>
+                    </div>
+                  )}
+                  {line.componentRelatedItemId && (
+                    <div className="p-3 rounded-lg bg-background border border-border">
+                      <p className="text-xs font-medium text-muted-foreground mb-1">ComponentRelatedItem (parent line)</p>
+                      <p className="font-mono text-sm">{line.componentRelatedItemId}</p>
+                      {line.componentRelatedQuantity && (
+                        <p className="text-xs text-muted-foreground mt-1">Quantity: {line.componentRelatedQuantity}</p>
+                      )}
+                    </div>
+                  )}
+                  {line.priceAmount && (
+                    <div className="p-3 rounded-lg bg-background border border-border">
+                      <p className="text-xs font-medium text-muted-foreground mb-1">Price</p>
+                      <p className="font-mono text-sm">{line.priceAmount} {line.priceCurrency}</p>
+                      {line.baseQuantity && (
+                        <p className="text-xs text-muted-foreground mt-1">Base quantity: {line.baseQuantity}</p>
+                      )}
+                    </div>
+                  )}
                 </div>
               )}
 

@@ -143,8 +143,8 @@ En Peppol BIS Katalog XML-fil med struktur:
   <cac:CatalogueLine>
     <cbc:ID>3pLKJPvHT21uNqX1l9FcUN</cbc:ID>  <!-- GlobalID -->
     <cac:Item>
-      <cbc:Name>Basic Wall:YV01 350:1192287</cbc:Name>
       <cbc:Description>Yttre bärande yttervägg, 350 mm. Materials: ...</cbc:Description>
+      <cbc:Name>Basic Wall:YV01 350:1192287</cbc:Name>
       <cbc:BrandName>YV01</cbc:BrandName>
       <cbc:Keyword>42.A</cbc:Keyword>
       <cac:ManufacturersItemIdentification>
