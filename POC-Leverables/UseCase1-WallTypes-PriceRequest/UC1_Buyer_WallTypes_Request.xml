@@ -60,6 +60,10 @@
             <cbc:Description>Yttre bärande yttervägg, 350 mm. Materials: Tegel fasad 110 / Luft 30 / Vindskydd 9 / Regelstomme C24 195 + mineralull / Ångbroms / Installationsregel 45 + isolering / Gips 13</cbc:Description>
             <cbc:Name>YV01 350 - Yttre bärande yttervägg</cbc:Name>
             
+            <cac:BuyersItemIdentification>
+                <cbc:ID>YV01</cbc:ID>
+            </cac:BuyersItemIdentification>
+            
             <cac:SellersItemIdentification>
                 <cbc:ID>YV01-350</cbc:ID>
             </cac:SellersItemIdentification>
@@ -80,17 +84,20 @@
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>thickness</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">thickness</cbc:NameCode>
                 <cbc:Value>350 mm</cbc:Value>
                 <cbc:ValueQuantity unitCode="MMT">350</cbc:ValueQuantity>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>is load bearing</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">is load bearing</cbc:NameCode>
                 <cbc:Value>Yes</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>is external</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">is external</cbc:NameCode>
                 <cbc:Value>Yes</cbc:Value>
             </cac:AdditionalItemProperty>
         </cac:Item>

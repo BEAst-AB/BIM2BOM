@@ -4,7 +4,7 @@
     
     Scenario: Buyer sends catalogue with a unique wall instance from the BIM model.
               The wall has IFCGuid/CDEGuid for 1:1 traceability back to the model.
-              Seller can respond with either "smart" or "dumb" recipes.
+              Seller can respond with either a traceable or a standard catalogue.
     
     Wall instance from IFC model: A-40-V-000_BIM2BOM.ifc
     IFC GlobalId: 3pLKJPvHT21uNqX1l9FcUN (YV01 350)
@@ -63,6 +63,10 @@
             <cbc:Description>Yttre bärande yttervägg, 350 mm. Unik vägginstans från BIM-modell med full spårbarhet.</cbc:Description>
             <cbc:Name>YV01 350 - Yttre bärande yttervägg (Plan 010)</cbc:Name>
             
+            <cac:BuyersItemIdentification>
+                <cbc:ID>IV01</cbc:ID>
+            </cac:BuyersItemIdentification>
+            
             <!-- IFC GlobalId used as SellersItemIdentification for BIM traceability -->
             <cac:SellersItemIdentification>
                 <cbc:ID>3pLKJPvHT21uNqX1l9FcUN</cbc:ID>
@@ -85,56 +89,66 @@
             <!-- AuthoringToolId (Revit Element ID) -->
             <cac:AdditionalItemProperty>
                 <cbc:Name>AuthoringToolId</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">AuthoringToolId</cbc:NameCode>
                 <cbc:Value>1192287</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <!-- CDEGuid (same as IFC GlobalId) -->
             <cac:AdditionalItemProperty>
                 <cbc:Name>CDEGuid</cbc:Name>
+                <cbc:NameCode listID="ORG:BEAst">CDEGuid</cbc:NameCode>
                 <cbc:Value>3pLKJPvHT21uNqX1l9FcUN</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>TypeID</cbc:Name>
-                <cbc:Value>YVxx</cbc:Value>
+                <cbc:NameCode listID="SE:BIP-koder">TypeID</cbc:NameCode>
+                <cbc:Value>IV01</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>thickness</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">thickness</cbc:NameCode>
                 <cbc:Value>350 mm</cbc:Value>
                 <cbc:ValueQuantity unitCode="MMT">350</cbc:ValueQuantity>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>height</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">height</cbc:NameCode>
                 <cbc:Value>5628 mm</cbc:Value>
                 <cbc:ValueQuantity unitCode="MMT">5628</cbc:ValueQuantity>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>length</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">length</cbc:NameCode>
                 <cbc:Value>16060 mm</cbc:Value>
                 <cbc:ValueQuantity unitCode="MMT">16060</cbc:ValueQuantity>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>net area</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">net area</cbc:NameCode>
                 <cbc:Value>79.81 m2</cbc:Value>
                 <cbc:ValueQuantity unitCode="MTK">79.81</cbc:ValueQuantity>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>is load bearing</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">is load bearing</cbc:NameCode>
                 <cbc:Value>Yes</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>is external</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">is external</cbc:NameCode>
                 <cbc:Value>Yes</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>floor</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">floor</cbc:NameCode>
                 <cbc:Value>010</cbc:Value>
             </cac:AdditionalItemProperty>
         </cac:Item>

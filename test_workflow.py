@@ -428,9 +428,10 @@ class WorkflowTester:
             name_codes = doc.xpath('//cac:AdditionalItemProperty/cbc:NameCode', namespaces=ns)
             checks.append(("All BIP props have NameCode", len(bip_props) == len(name_codes)))
             
-            # Check 6: All NameCodes have SE:BIP listID
-            bip_list_ids = doc.xpath('//cac:AdditionalItemProperty/cbc:NameCode[@listID="SE:BIP"]', namespaces=ns)
-            checks.append(("All NameCodes have SE:BIP listID", len(bip_props) == len(bip_list_ids)))
+            # Check 6: All NameCodes have SE:BIP-koder or ORG:BEAst listID
+            bip_list_ids = doc.xpath('//cac:AdditionalItemProperty/cbc:NameCode[@listID="SE:BIP-koder"]', namespaces=ns)
+            beast_list_ids = doc.xpath('//cac:AdditionalItemProperty/cbc:NameCode[@listID="ORG:BEAst"]', namespaces=ns)
+            checks.append(("All NameCodes have SE:BIP-koder or ORG:BEAst listID", len(bip_props) == len(bip_list_ids) + len(beast_list_ids)))
             
             # Print results
             passed = 0

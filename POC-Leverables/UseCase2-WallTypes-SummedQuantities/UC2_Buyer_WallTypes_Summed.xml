@@ -3,7 +3,7 @@
     Use Case 2: Buyer Wall Type with Summed Quantity
     
     Scenario: Buyer sends wall type with aggregated quantity from BIM model.
-              This is the "dumb" approach - quantity is summed, no individual traceability.
+              This is the standard approach - quantity is summed, no individual traceability.
 -->
 <Catalogue xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2"
            xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
@@ -66,6 +66,10 @@
             <cbc:Description>Yttre bärande yttervägg, 350 mm. Summerad längd från BIM-modell: 16.06 m</cbc:Description>
             <cbc:Name>YV01 350 - Yttre bärande yttervägg</cbc:Name>
             
+            <cac:BuyersItemIdentification>
+                <cbc:ID>YV01</cbc:ID>
+            </cac:BuyersItemIdentification>
+            
             <cac:SellersItemIdentification>
                 <cbc:ID>YV01-350</cbc:ID>
             </cac:SellersItemIdentification>
@@ -76,12 +80,14 @@
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>thickness</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">thickness</cbc:NameCode>
                 <cbc:Value>350 mm</cbc:Value>
                 <cbc:ValueQuantity unitCode="MMT">350</cbc:ValueQuantity>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
                 <cbc:Name>net area</cbc:Name>
+                <cbc:NameCode listID="SE:BIP-koder">net area</cbc:NameCode>
                 <cbc:Value>79.81 m2</cbc:Value>
                 <cbc:ValueQuantity unitCode="MTK">79.81</cbc:ValueQuantity>
             </cac:AdditionalItemProperty>

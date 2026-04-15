@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "hooks": {
+    "afterFileEdit": [
+      {
+        "command": "python .cursor/hooks/validate-xml-on-edit.py",
+        "matcher": "Write",
+        "timeout": 15
+      }
+    ]
+  }
+}

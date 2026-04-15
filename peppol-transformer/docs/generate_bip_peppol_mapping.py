@@ -341,7 +341,7 @@ def create_excel_mapping(json_file, output_file):
             mep,                          # MEP
             prop_title,                    # Peppol cbc:Name
             prop_title,                    # Peppol cbc:NameCode
-            'SE:BIP',                      # Peppol @listID
+            'SE:BIP-koder',                # Peppol @listID
             value_example,                 # Peppol cbc:Value
             quantity_example,              # Peppol cbc:ValueQuantity
             unit_code,                     # Peppol @unitCode

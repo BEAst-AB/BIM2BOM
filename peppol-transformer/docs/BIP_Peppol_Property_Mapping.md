@@ -8,7 +8,7 @@ BIP-egenskapsuppsättningen är en svensk standard för BIM-egenskaper som anvä
 
 ### Viktiga Mappningsprinciper
 
-1. **Egenskapsidentifiering**: BIP-egenskapsnamn används i både `cbc:Name` och `cbc:NameCode` med listidentifieraren `SE:BIP`
+1. **Egenskapsidentifiering**: BIP-egenskapsnamn används i både `cbc:Name` och `cbc:NameCode` med listidentifieraren `SE:BIP-koder`
 2. **Värderepresentation**: 
    - Text/Label-värden använder `cbc:Value`
    - Numeriska värden med enheter använder `cbc:ValueQuantity` med lämplig `@unitCode`
@@ -40,35 +40,35 @@ Följande tabell visar mappningen för vanligt använda egenskaper inom olika di
 
 | Disciplin | BIP-egenskap | BIP DataType | cbc:Name | cbc:NameCode | cbc:Value Exempel | cbc:ValueQuantity | @unitCode | Anteckningar |
 |-----------|--------------|--------------|----------|--------------|-------------------|-------------------|-----------|--------------|
-| **Gemensamt** | type name id | Label | type name id | type name id (@listID="SE:BIP") | TD100 | - | - | Produkttypbeteckning, fallback för BrandName |
-| **Gemensamt** | Manufacturer | Label | Manufacturer | Manufacturer (@listID="SE:BIP") | Lindab | - | - | Tillverkarnamn, används för BrandName och ManufacturerParty |
-| **Gemensamt** | TypeDescription | Label | TypeDescription | TypeDescription (@listID="SE:BIP") | Yttervägg 350mm | - | - | Typbeskrivning |
-| **Gemensamt** | BSAB 96 | Label | BSAB 96 | BSAB 96 (@listID="SE:BIP") | 42.A | - | - | BSAB-klassifikation, används som Keyword |
-| **Gemensamt** | materials/components | Label | materials/components | materials/components (@listID="SE:BIP") | Tegel fasad 110 / Luft 30 | - | - | Materialsammansättning |
-| **Gemensamt** | StatusConstruction | Label | StatusConstruction | StatusConstruction (@listID="SE:BIP") | NYTT | - | - | Byggfasstatus |
-| **Arkitekt** | thickness | PositiveLength | thickness | thickness (@listID="SE:BIP") | 350 mm | 350 | MMT | Tjocklek |
-| **Arkitekt** | height | PositiveLength | height | height (@listID="SE:BIP") | 2100 mm | 2100 | MMT | Höjd |
-| **Arkitekt** | width | PositiveLength | width | width (@listID="SE:BIP") | 900 mm | 900 | MMT | Bredd |
-| **Arkitekt** | length | PositiveLength | length | length (@listID="SE:BIP") | 16060 mm | 16060 | MMT | Längd |
-| **Arkitekt** | FireRating | Label | FireRating | FireRating (@listID="SE:BIP") | EI60 | - | - | Brandklass |
-| **Arkitekt** | AcousticRating | Label | AcousticRating | AcousticRating (@listID="SE:BIP") | 38 | - | - | Ljudreduktion Rw [dB] |
-| **Arkitekt** | Colour | Label | Colour | Colour (@listID="SE:BIP") | RAL 9005 | - | - | Färgspecifikation |
-| **Konstruktion** | is load bearing | Boolean | is load bearing | is load bearing (@listID="SE:BIP") | Ja | - | - | Bärande (Ja/Nej) |
-| **Konstruktion** | is external | Boolean | is external | is external (@listID="SE:BIP") | Ja | - | - | Yttervägg (Ja/Nej), används för Keyword |
-| **Konstruktion** | Material | Label | Material | Material (@listID="SE:BIP") | Betong C30/37 | - | - | Materialkod |
-| **Konstruktion** | weight | Real | weight | weight (@listID="SE:BIP") | 54467.20 kg | 54467.20 | KGM | Objektvikt |
-| **Konstruktion** | net area | Area | net area | net area (@listID="SE:BIP") | 79.81 m² | 79.81 | MTK | Nettoyta |
-| **Konstruktion** | net volume | Volume | net volume | net volume (@listID="SE:BIP") | 27.93 m³ | 27.93 | MTQ | Nettovolym |
-| **Allmänt** | floor | Label | floor | floor (@listID="SE:BIP") | 010 | - | - | Våningsbeteckning |
-| **Allmänt** | renovation component status | Label | renovation component status | renovation component status (@listID="SE:BIP") | Ny | - | - | Ny/Befintlig/Rivs |
-| **VVS** | SystemName | Label | SystemName | SystemName (@listID="SE:BIP") | Tilluft LB101 | - | - | Systembeteckning |
-| **VVS** | Flow_l/s | VolumetricFlowRate | Flow_l/s | Flow_l/s (@listID="SE:BIP") | 5,2 l/s | 5.2 | E97 | Flöde (E97=liter/sekund) |
-| **VVS** | InsulationThickness | PositiveLength | InsulationThickness | InsulationThickness (@listID="SE:BIP") | 40 mm | 40 | MMT | Isoleringstjocklek |
-| **VVS** | HeatingPower_W | Power | HeatingPower_W | HeatingPower_W (@listID="SE:BIP") | 1500 W | 1500 | WTT | Värmeeffekt i Watt |
-| **El** | Voltage_V | ElectricVoltage | Voltage_V | Voltage_V (@listID="SE:BIP") | 230 V | 230 | VLT | Spänning |
-| **El** | Current_A | ElectricCurrent | Current_A | Current_A (@listID="SE:BIP") | 3 A | 3 | AMP | Ström |
-| **El** | PowerElectrical_W | Power | PowerElectrical_W | PowerElectrical_W (@listID="SE:BIP") | 500 W | 500 | WTT | Elektrisk effekt |
-| **El** | IPClass | Label | IPClass | IPClass (@listID="SE:BIP") | IP48 | - | - | IP-klass |
+| **Gemensamt** | type name id | Label | type name id | type name id (@listID="SE:BIP-koder") | TD100 | - | - | Produkttypbeteckning, fallback för BrandName |
+| **Gemensamt** | Manufacturer | Label | Manufacturer | Manufacturer (@listID="SE:BIP-koder") | Lindab | - | - | Tillverkarnamn, används för BrandName och ManufacturerParty |
+| **Gemensamt** | TypeDescription | Label | TypeDescription | TypeDescription (@listID="SE:BIP-koder") | Yttervägg 350mm | - | - | Typbeskrivning |
+| **Gemensamt** | BSAB 96 | Label | BSAB 96 | BSAB 96 (@listID="SE:BIP-koder") | 42.A | - | - | BSAB-klassifikation, används som Keyword |
+| **Gemensamt** | materials/components | Label | materials/components | materials/components (@listID="SE:BIP-koder") | Tegel fasad 110 / Luft 30 | - | - | Materialsammansättning |
+| **Gemensamt** | StatusConstruction | Label | StatusConstruction | StatusConstruction (@listID="SE:BIP-koder") | NYTT | - | - | Byggfasstatus |
+| **Arkitekt** | thickness | PositiveLength | thickness | thickness (@listID="SE:BIP-koder") | 350 mm | 350 | MMT | Tjocklek |
+| **Arkitekt** | height | PositiveLength | height | height (@listID="SE:BIP-koder") | 2100 mm | 2100 | MMT | Höjd |
+| **Arkitekt** | width | PositiveLength | width | width (@listID="SE:BIP-koder") | 900 mm | 900 | MMT | Bredd |
+| **Arkitekt** | length | PositiveLength | length | length (@listID="SE:BIP-koder") | 16060 mm | 16060 | MMT | Längd |
+| **Arkitekt** | FireRating | Label | FireRating | FireRating (@listID="SE:BIP-koder") | EI60 | - | - | Brandklass |
+| **Arkitekt** | AcousticRating | Label | AcousticRating | AcousticRating (@listID="SE:BIP-koder") | 38 | - | - | Ljudreduktion Rw [dB] |
+| **Arkitekt** | Colour | Label | Colour | Colour (@listID="SE:BIP-koder") | RAL 9005 | - | - | Färgspecifikation |
+| **Konstruktion** | is load bearing | Boolean | is load bearing | is load bearing (@listID="SE:BIP-koder") | Ja | - | - | Bärande (Ja/Nej) |
+| **Konstruktion** | is external | Boolean | is external | is external (@listID="SE:BIP-koder") | Ja | - | - | Yttervägg (Ja/Nej), används för Keyword |
+| **Konstruktion** | Material | Label | Material | Material (@listID="SE:BIP-koder") | Betong C30/37 | - | - | Materialkod |
+| **Konstruktion** | weight | Real | weight | weight (@listID="SE:BIP-koder") | 54467.20 kg | 54467.20 | KGM | Objektvikt |
+| **Konstruktion** | net area | Area | net area | net area (@listID="SE:BIP-koder") | 79.81 m² | 79.81 | MTK | Nettoyta |
+| **Konstruktion** | net volume | Volume | net volume | net volume (@listID="SE:BIP-koder") | 27.93 m³ | 27.93 | MTQ | Nettovolym |
+| **Allmänt** | floor | Label | floor | floor (@listID="SE:BIP-koder") | 010 | - | - | Våningsbeteckning |
+| **Allmänt** | renovation component status | Label | renovation component status | renovation component status (@listID="SE:BIP-koder") | Ny | - | - | Ny/Befintlig/Rivs |
+| **VVS** | SystemName | Label | SystemName | SystemName (@listID="SE:BIP-koder") | Tilluft LB101 | - | - | Systembeteckning |
+| **VVS** | Flow_l/s | VolumetricFlowRate | Flow_l/s | Flow_l/s (@listID="SE:BIP-koder") | 5,2 l/s | 5.2 | E97 | Flöde (E97=liter/sekund) |
+| **VVS** | InsulationThickness | PositiveLength | InsulationThickness | InsulationThickness (@listID="SE:BIP-koder") | 40 mm | 40 | MMT | Isoleringstjocklek |
+| **VVS** | HeatingPower_W | Power | HeatingPower_W | HeatingPower_W (@listID="SE:BIP-koder") | 1500 W | 1500 | WTT | Värmeeffekt i Watt |
+| **El** | Voltage_V | ElectricVoltage | Voltage_V | Voltage_V (@listID="SE:BIP-koder") | 230 V | 230 | VLT | Spänning |
+| **El** | Current_A | ElectricCurrent | Current_A | Current_A (@listID="SE:BIP-koder") | 3 A | 3 | AMP | Ström |
+| **El** | PowerElectrical_W | Power | PowerElectrical_W | PowerElectrical_W (@listID="SE:BIP-koder") | 500 W | 500 | WTT | Elektrisk effekt |
+| **El** | IPClass | Label | IPClass | IPClass (@listID="SE:BIP-koder") | IP48 | - | - | IP-klass |
 
 ## XML-strukturexempel
 
@@ -78,7 +78,7 @@ Följande tabell visar mappningen för vanligt använda egenskaper inom olika di
 <cac:Item>
   <cac:AdditionalItemProperty>
     <cbc:Name>type name id</cbc:Name>
-    <cbc:NameCode listID="SE:BIP">type name id</cbc:NameCode>
+    <cbc:NameCode listID="SE:BIP-koder">type name id</cbc:NameCode>
     <cbc:Value>YV01</cbc:Value>
   </cac:AdditionalItemProperty>
 </cac:Item>
@@ -98,7 +98,7 @@ Följande tabell visar mappningen för vanligt använda egenskaper inom olika di
   
   <cac:AdditionalItemProperty>
     <cbc:Name>Manufacturer</cbc:Name>
-    <cbc:NameCode listID="SE:BIP">Manufacturer</cbc:NameCode>
+    <cbc:NameCode listID="SE:BIP-koder">Manufacturer</cbc:NameCode>
     <cbc:Value>Lindab AB</cbc:Value>
   </cac:AdditionalItemProperty>
 </cac:Item>
@@ -110,7 +110,7 @@ Följande tabell visar mappningen för vanligt använda egenskaper inom olika di
 <cac:Item>
   <cac:AdditionalItemProperty>
     <cbc:Name>thickness</cbc:Name>
-    <cbc:NameCode listID="SE:BIP">thickness</cbc:NameCode>
+    <cbc:NameCode listID="SE:BIP-koder">thickness</cbc:NameCode>
     <cbc:Value>350 mm</cbc:Value>
     <cbc:ValueQuantity unitCode="MMT">350</cbc:ValueQuantity>
   </cac:AdditionalItemProperty>
@@ -123,7 +123,7 @@ Följande tabell visar mappningen för vanligt använda egenskaper inom olika di
 <cac:Item>
   <cac:AdditionalItemProperty>
     <cbc:Name>is load bearing</cbc:Name>
-    <cbc:NameCode listID="SE:BIP">is load bearing</cbc:NameCode>
+    <cbc:NameCode listID="SE:BIP-koder">is load bearing</cbc:NameCode>
     <cbc:Value>Ja</cbc:Value>  <!-- Översatt från true/false -->
   </cac:AdditionalItemProperty>
 </cac:Item>
@@ -135,7 +135,7 @@ Följande tabell visar mappningen för vanligt använda egenskaper inom olika di
 <cac:Item>
   <cac:AdditionalItemProperty>
     <cbc:Name>net area</cbc:Name>
-    <cbc:NameCode listID="SE:BIP">net area</cbc:NameCode>
+    <cbc:NameCode listID="SE:BIP-koder">net area</cbc:NameCode>
     <cbc:Value>79.81 m²</cbc:Value>
     <cbc:ValueQuantity unitCode="MTK">79.81</cbc:ValueQuantity>
   </cac:AdditionalItemProperty>
