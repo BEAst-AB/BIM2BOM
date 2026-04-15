@@ -179,18 +179,6 @@
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
-                <cbc:Name>ItemType</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
-                <cbc:Value>RecipeArticle</cbc:Value>
-            </cac:AdditionalItemProperty>
-            
-            <cac:AdditionalItemProperty>
-                <cbc:Name>ParentAuthoringToolId</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">ParentAuthoringToolId</cbc:NameCode>
-                <cbc:Value>1192287</cbc:Value>
-            </cac:AdditionalItemProperty>
-            
-            <cac:AdditionalItemProperty>
                 <cbc:Name>thickness</cbc:Name>
                 <cbc:NameCode listID="SE:BIP-koder">thickness</cbc:NameCode>
                 <cbc:Value>110 mm</cbc:Value>
@@ -253,18 +241,6 @@
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>
-                <cbc:Name>ItemType</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
-                <cbc:Value>RecipeArticle</cbc:Value>
-            </cac:AdditionalItemProperty>
-            
-            <cac:AdditionalItemProperty>
-                <cbc:Name>ParentAuthoringToolId</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">ParentAuthoringToolId</cbc:NameCode>
-                <cbc:Value>1192287</cbc:Value>
-            </cac:AdditionalItemProperty>
-            
-            <cac:AdditionalItemProperty>
                 <cbc:Name>thickness</cbc:Name>
                 <cbc:NameCode listID="SE:BIP-koder">thickness</cbc:NameCode>
                 <cbc:Value>195 mm</cbc:Value>
@@ -324,18 +300,6 @@
                 <cbc:Name>CDEGuid</cbc:Name>
                 <cbc:NameCode listID="ORG:BEAst">CDEGuid</cbc:NameCode>
                 <cbc:Value>3pLKJPvHT21uNqX1l9FcUN</cbc:Value>
-            </cac:AdditionalItemProperty>
-            
-            <cac:AdditionalItemProperty>
-                <cbc:Name>ItemType</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
-                <cbc:Value>RecipeArticle</cbc:Value>
-            </cac:AdditionalItemProperty>
-            
-            <cac:AdditionalItemProperty>
-                <cbc:Name>ParentAuthoringToolId</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">ParentAuthoringToolId</cbc:NameCode>
-                <cbc:Value>1192287</cbc:Value>
             </cac:AdditionalItemProperty>
             
             <cac:AdditionalItemProperty>

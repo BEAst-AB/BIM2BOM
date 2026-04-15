@@ -1,0 +1,27 @@
+---
+description: Validate Peppol catalogue XML against the BIM2BOM XML Message Reference
+globs: POC-Leverables/**/*.xml
+alwaysApply: false
+---
+
+# BIM2BOM XML Message Reference Validation
+
+When creating or modifying Peppol catalogue XML files in `POC-Leverables/`, the agent MUST cross-check against [XML_MESSAGE_REFERENCE.md](POC-Leverables/XML_MESSAGE_REFERENCE.md). Read it before writing any XML.
+
+## Required Checks
+
+1. **Namespaces**: Root `Catalogue` must declare the UBL 2.1 Catalogue default namespace and `cac`/`cbc` prefixes.
+2. **Header elements**: `CustomizationID`, `ProfileID`, `ID`, `ActionCode`, `Name`, `IssueDate`, `ValidityPeriod`, `ReferencedContract`, `ProviderParty`, `ReceiverParty` must all be present.
+3. **ActionCode values**: Header: `Add`/`Replace`/`Update`/`Delete`. Line: `Add`/`Update`/`Delete`. Exact casing required.
+4. **Party structure**: Each party needs `EndpointID` (`@schemeID="0007"`), `PartyIdentification/ID`, `PartyLegalEntity/RegistrationName`.
+5. **UBL element order on `cac:Item`**: `Description` > `Name` > `BuyersItemIdentification` > `SellersItemIdentification` > `ManufacturersItemIdentification` > `StandardItemIdentification` > `ItemSpecificationDocumentReference` > `AdditionalItemProperty`.
+6. **Description and model reference**: When `cac:ItemSpecificationDocumentReference` is present, `cbc:Description` (and where relevant `cbc:Name`) should complement the URI—mention IFC/model context in prose so the line is understandable without opening the link alone; do not contradict the referenced model file unless intentionally superseding a prior catalogue.
+7. **ComponentRelatedItem**: Only on child lines. `cbc:ID[@schemeID="CatalogueLineID"]` must reference an existing `cac:CatalogueLine/cbc:ID` in the same document.
+8. **Traceable catalogue rules**: If child lines share parent's `CDEGuid`, they MUST also have `ComponentRelatedItem`. All children must share the same CDEGuid value as the parent.
+9. **Standard catalogue rules**: Child lines MUST NOT have `CDEGuid` if they lack `ComponentRelatedItem`.
+10. **`listID` values**: `AdditionalItemProperty/NameCode/@listID` must be `ORG:BEAst` or `SE:BIP-koder`.
+11. **GTIN format**: `StandardItemIdentification/ID[@schemeID="0160"]` must be a 13-digit number.
+
+## If Issues Found
+
+Report each issue with the line ID, element path, and which reference section is violated. Suggest the fix based on the reference document.

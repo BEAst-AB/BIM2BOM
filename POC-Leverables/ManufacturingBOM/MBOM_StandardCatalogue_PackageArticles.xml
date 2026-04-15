@@ -117,18 +117,6 @@
             </cac:AdditionalItemProperty>
             
             <!-- NO CDEGuid - this is the key difference -->
-            
-            <cac:AdditionalItemProperty>
-                <cbc:Name>ItemType</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
-                <cbc:Value>PackageArticle</cbc:Value>
-            </cac:AdditionalItemProperty>
-            
-            <cac:AdditionalItemProperty>
-                <cbc:Name>Traceability</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">Traceability</cbc:NameCode>
-                <cbc:Value>None</cbc:Value>
-            </cac:AdditionalItemProperty>
         </cac:Item>
     </cac:CatalogueLine>
     
@@ -162,17 +150,6 @@
                 <cbc:Value>VE-PKG-002</cbc:Value>
             </cac:AdditionalItemProperty>
             
-            <cac:AdditionalItemProperty>
-                <cbc:Name>ItemType</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
-                <cbc:Value>PackageArticle</cbc:Value>
-            </cac:AdditionalItemProperty>
-            
-            <cac:AdditionalItemProperty>
-                <cbc:Name>Traceability</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">Traceability</cbc:NameCode>
-                <cbc:Value>None</cbc:Value>
-            </cac:AdditionalItemProperty>
         </cac:Item>
     </cac:CatalogueLine>
     

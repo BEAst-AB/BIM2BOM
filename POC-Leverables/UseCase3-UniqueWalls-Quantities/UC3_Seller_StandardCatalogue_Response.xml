@@ -157,17 +157,6 @@
             
             <!-- NOTE: NO CDEGuid - this is the key difference from Traceable Catalogue -->
             
-            <cac:AdditionalItemProperty>
-                <cbc:Name>ItemType</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
-                <cbc:Value>PackageArticle</cbc:Value>
-            </cac:AdditionalItemProperty>
-            
-            <cac:AdditionalItemProperty>
-                <cbc:Name>Traceability</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">Traceability</cbc:NameCode>
-                <cbc:Value>None - Package level only</cbc:Value>
-            </cac:AdditionalItemProperty>
         </cac:Item>
     </cac:CatalogueLine>
     
@@ -212,17 +201,6 @@
                 <cbc:Value>VE-PKG-002</cbc:Value>
             </cac:AdditionalItemProperty>
             
-            <cac:AdditionalItemProperty>
-                <cbc:Name>ItemType</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
-                <cbc:Value>PackageArticle</cbc:Value>
-            </cac:AdditionalItemProperty>
-            
-            <cac:AdditionalItemProperty>
-                <cbc:Name>Traceability</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">Traceability</cbc:NameCode>
-                <cbc:Value>None - Package level only</cbc:Value>
-            </cac:AdditionalItemProperty>
         </cac:Item>
     </cac:CatalogueLine>
     
@@ -267,17 +245,6 @@
                 <cbc:Value>VE-PKG-003</cbc:Value>
             </cac:AdditionalItemProperty>
             
-            <cac:AdditionalItemProperty>
-                <cbc:Name>ItemType</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
-                <cbc:Value>PackageArticle</cbc:Value>
-            </cac:AdditionalItemProperty>
-            
-            <cac:AdditionalItemProperty>
-                <cbc:Name>Traceability</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">Traceability</cbc:NameCode>
-                <cbc:Value>None - Package level only</cbc:Value>
-            </cac:AdditionalItemProperty>
         </cac:Item>
     </cac:CatalogueLine>
     

@@ -86,11 +86,6 @@
                 <cbc:Value>3pLKJPvHT21uNqX1l9FcUN</cbc:Value>
             </cac:AdditionalItemProperty>
             
-            <cac:AdditionalItemProperty>
-                <cbc:Name>SourceSystem</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">SourceSystem</cbc:NameCode>
-                <cbc:Value>BIM Modellen</cbc:Value>
-            </cac:AdditionalItemProperty>
         </cac:Item>
     </cac:CatalogueLine>
     
@@ -135,17 +130,6 @@
                 <cbc:Value>3pLKJPvHT21uNqX1l9FcUN</cbc:Value>
             </cac:AdditionalItemProperty>
             
-            <cac:AdditionalItemProperty>
-                <cbc:Name>ItemType</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
-                <cbc:Value>ManufacturingArticle</cbc:Value>
-            </cac:AdditionalItemProperty>
-            
-            <cac:AdditionalItemProperty>
-                <cbc:Name>SourceSystem</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">SourceSystem</cbc:NameCode>
-                <cbc:Value>Selling System</cbc:Value>
-            </cac:AdditionalItemProperty>
         </cac:Item>
     </cac:CatalogueLine>
     
@@ -190,17 +174,6 @@
                 <cbc:Value>3pLKJPvHT21uNqX1l9FcUN</cbc:Value>
             </cac:AdditionalItemProperty>
             
-            <cac:AdditionalItemProperty>
-                <cbc:Name>ItemType</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">ItemType</cbc:NameCode>
-                <cbc:Value>ManufacturingArticle</cbc:Value>
-            </cac:AdditionalItemProperty>
-            
-            <cac:AdditionalItemProperty>
-                <cbc:Name>SourceSystem</cbc:Name>
-                <cbc:NameCode listID="ORG:BEAst">SourceSystem</cbc:NameCode>
-                <cbc:Value>Selling System</cbc:Value>
-            </cac:AdditionalItemProperty>
         </cac:Item>
     </cac:CatalogueLine>
     
