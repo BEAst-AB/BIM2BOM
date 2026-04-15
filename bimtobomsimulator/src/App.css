@@ -1,0 +1,465 @@
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Option B: per-page accents (different "apps") */
+.cdePage {
+  --ui-accent: #0f766e;
+  --ui-accent-hover: #115e59;
+  --ui-accent-soft: #ecfeff;
+}
+
+.buyingSystemPage {
+  --ui-accent: #b45309;
+  --ui-accent-hover: #92400e;
+  --ui-accent-soft: #fffbeb;
+}
+
+.sellingSystemPage {
+  --ui-accent: #be185d;
+  --ui-accent-hover: #9d174d;
+  --ui-accent-soft: #fff1f2;
+}
+
+.appFrame {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.tabsBar {
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--ui-border);
+  background: var(--ui-surface);
+}
+
+.tabButton {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--ui-border);
+  padding: 8px 12px;
+  border-radius: 10px;
+  line-height: 1;
+  color: inherit;
+  text-decoration: none;
+}
+
+.tabButton[aria-current="page"] {
+  background: var(--ui-accent-soft);
+  border-color: var(--ui-accent);
+}
+
+.tabButton:hover {
+  border-color: var(--ui-accent);
+}
+
+.tabContent {
+  flex: 1;
+  min-height: 0;
+}
+
+.appShell {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.viewerPane {
+  flex: 1;
+  min-width: 0;
+}
+
+.viewerCanvas {
+  width: 100%;
+  height: 100%;
+}
+
+.paneSplitter {
+  flex: 0 0 6px;
+  width: 6px;
+  height: 100%;
+  cursor: col-resize;
+  touch-action: none;
+  user-select: none;
+  border-left: 1px solid var(--ui-border);
+  border-right: 1px solid var(--ui-border);
+}
+
+.sidebarPane {
+  flex: 0 0 auto;
+  height: 100%;
+  overflow: hidden;
+}
+
+.pagePane {
+  height: 100%;
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+
+.pageShell {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.pageHeader {
+  padding: 12px 12px;
+  border-bottom: 1px solid var(--ui-border);
+  background: var(--ui-accent-soft);
+}
+
+.pageBody {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.splitShell {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.splitLeft {
+  flex: 0 0 auto;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.splitRight {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.splitColumn {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.rightRows {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  height: 100%;
+  min-height: 0;
+}
+
+.rightRowsBuying {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.rightRowsBuying > * {
+  flex: 1 1 0;
+  min-height: 0;
+}
+
+.buyingSystemPage .rightRowsBuying > .buyingTabsBar {
+  flex: 0 0 auto;
+}
+
+.buyingSystemPage .rightRowsBuying > .buyingTabPanel {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.buyingSystemPage .buyingTabsBar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.buyingSystemPage .buyingTabButton {
+  padding: 0.45em 0.9em;
+  font-size: 0.95em;
+  border-radius: 10px;
+  background: var(--ui-surface);
+  border: 1px solid var(--ui-border);
+  color: var(--ui-text);
+}
+
+.buyingSystemPage .buyingTabButton[aria-selected="true"] {
+  background: var(--ui-accent-soft);
+  border-color: var(--ui-accent);
+}
+
+.buyingSystemPage .buyingTabButton:hover {
+  border-color: var(--ui-accent);
+}
+
+.buyingSystemPage .buyingTabPanel > .panel {
+  flex: 1 1 0;
+  min-height: 0;
+}
+
+.xmlDialog {
+  display: none;
+  margin: auto;
+  padding: 0;
+  border-radius: 10px;
+  border: 1px solid var(--ui-border);
+  background: #ffffff;
+  color: #111111;
+  width: min(900px, 90vw);
+  height: min(700px, 90vh);
+  min-width: 320px;
+  min-height: 240px;
+  resize: both;
+  overflow: hidden;
+}
+
+.xmlDialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.panel {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.panelHeader {
+  padding: 12px 12px;
+  border-bottom: 1px solid var(--ui-border);
+  background: var(--ui-accent-soft);
+  font-weight: 600;
+}
+
+.panelBody {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 12px 12px;
+}
+
+.xmlPre {
+  margin: 0;
+  white-space: pre;
+}
+
+.buyControls {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.buyLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.buyLabelText {
+  opacity: 0.8;
+  font-size: 0.9em;
+}
+
+.buySelect {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--ui-border);
+  background: var(--ui-surface);
+  color: var(--ui-text);
+}
+
+.buySelect:focus,
+.buySelect:focus-visible {
+  outline: 3px solid var(--ui-accent);
+  outline-offset: 2px;
+}
+
+.buyControls > button,
+.pageActions > button {
+  background: var(--ui-accent);
+  border-color: var(--ui-accent);
+  color: #ffffff;
+}
+
+.buyControls > button:hover,
+.pageActions > button:hover {
+  background: var(--ui-accent-hover);
+  border-color: var(--ui-accent-hover);
+}
+
+.pageActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 12px;
+  border-top: 1px solid var(--ui-border);
+}
+
+.pageMeta {
+  opacity: 0.8;
+  font-size: 0.9em;
+}
+
+.pageTitle {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.buyingSystemPage {
+  font-size: 14px;
+}
+
+.buyingSystemPage .pageHeader {
+  padding: 10px 12px;
+}
+
+.buyingSystemPage .pageTitle {
+  font-size: 20px;
+}
+
+.buyingSystemPage .panelHeader {
+  padding: 8px 10px;
+}
+
+.buyingSystemPage .panelBody {
+  padding: 10px 10px;
+}
+
+.buyingSystemPage .wallsTable th,
+.buyingSystemPage .wallsTable td {
+  padding: 6px 8px;
+}
+
+.buyingSystemPage button {
+  padding: 0.45em 0.9em;
+  font-size: 0.95em;
+  border-radius: 6px;
+}
+
+.buyingSystemPage .buySelect {
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+
+.buyingSystemPage .pageActions {
+  padding: 10px 10px;
+}
+
+.buyingSystemPage .splitLeft .splitColumn {
+  padding: 10px;
+}
+
+.buyingSystemPage .splitRight {
+  padding: 10px;
+}
+
+.buyingSystemPage .rightRowsBuying {
+  gap: 10px;
+}
+
+.buyingSystemPage .rightRowsBuying > * {
+  border: 1px solid var(--ui-border);
+  border-radius: 14px;
+  background: var(--ui-surface);
+  color: var(--ui-text);
+  overflow: hidden;
+}
+
+.buyingSystemPage .rightRowsBuying > * .panelHeader {
+  border-bottom: 1px solid var(--ui-border);
+}
+
+.buyingSystemPage .rightRowsBuying > * .wallsTable th,
+.buyingSystemPage .rightRowsBuying > * .wallsTable td {
+  border-bottom: 1px solid var(--ui-border);
+}
+
+.placeholderPane {
+  height: 100%;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  opacity: 0.9;
+  gap: 6px;
+}
+
+.placeholderTitle {
+  font-weight: 600;
+}
+
+.placeholderMeta {
+  opacity: 0.8;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.sidebarHeader {
+  padding: 12px 12px;
+  border-bottom: 1px solid var(--ui-border);
+  background: var(--ui-accent-soft);
+}
+
+.sidebarTitle {
+  font-weight: 600;
+}
+
+.sidebarMeta {
+  opacity: 0.8;
+  font-size: 0.9em;
+}
+
+.tableWrap {
+  flex: 1;
+  overflow: auto;
+}
+
+.wallsTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.wallsTable th,
+.wallsTable td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--ui-border);
+  vertical-align: top;
+}
+
+.wallsTable th {
+  position: sticky;
+  top: 0;
+  background: var(--ui-accent-soft);
+  color: var(--ui-text);
+}
+
+.mono {
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+}
+
+.emptyCell {
+  padding: 14px 10px;
+  opacity: 0.8;
+}
