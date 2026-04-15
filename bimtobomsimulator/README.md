@@ -1,16 +1,66 @@
-# React + Vite
+# BIM2BOM Simulator (React + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a Vite + React app used for simulating BIM-to-BOM flows.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Node.js 18+ (Node 20 LTS recommended)
+- Git
 
-## React Compiler
+## Get the project from Git
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Open a terminal (PowerShell, CMD, or bash) and run:
 
-## Expanding the ESLint configuration
+```bash
+git clone <REPO_URL>
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Then `cd` into the app folder:
+
+```bash
+cd BIM2BOM/bimtobomsimulator
+```
+
+If you cloned into a different parent folder name, adjust the path accordingly.
+
+## Install dependencies
+
+From inside `bimtobomsimulator`:
+
+```bash
+npm install
+```
+
+## Run locally (development)
+
+```bash
+npm run dev
+```
+
+Vite will print the local URL (typically `http://localhost:5173`). Open it in your browser.
+
+## Build for production
+
+```bash
+npm run build
+```
+
+Build output goes to `dist/`.
+
+## Preview the production build
+
+```bash
+npm run preview
+```
+
+## Lint
+
+```bash
+npm run lint
+```
+
+## Notes
+
+- Static assets are served from `public/`.
+- A sample IFC is included at `public/web-ifc/A-40-V-000_BIM2BOM.ifc`.
+- If you get missing/404 errors for `web-ifc` `.wasm` files, make sure you’re running via `npm run dev` or `npm run preview` (not opening `index.html` directly from disk).
