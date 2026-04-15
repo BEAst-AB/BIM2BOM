@@ -2,6 +2,7 @@ import * as XLSX from 'xlsx';
 import type { BIPProperty, PeppolExample, PeppolProperty, Discipline } from '@/types/bip-peppol';
 import { expandSheetExampleToVariants, type BaseSheetExample } from '@/data/catalogueVariantTemplates';
 import { generateIFCGuid } from './ifcGuid';
+import { getHardcodedExamples } from '@/data/hardcodedExamples';
 
 // Helper function to generate TypeID based on discipline
 function generateTypeId(discipline: string, itemIndex: number): string {
@@ -244,6 +245,7 @@ export async function parsePeppolExamples(): Promise<PeppolExample[]> {
           typeId,
           manufacturerName,
           properties: properties.filter((p) => p.name),
+          documentReferenceUri: 'https://cde.example.com/models/A-40-V-000_BIM2BOM.ifc',
         };
 
         const cdeGuid = generateIFCGuid();
@@ -261,7 +263,7 @@ export async function parsePeppolExamples(): Promise<PeppolExample[]> {
     console.log('Total examples parsed:', examples.length);
     return examples;
   } catch (error) {
-    console.error('Error parsing Peppol examples:', error);
-    return [];
+    console.error('Error parsing Peppol examples, falling back to hardcoded examples:', error);
+    return getHardcodedExamples();
   }
 }

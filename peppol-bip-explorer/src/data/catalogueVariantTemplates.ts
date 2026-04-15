@@ -86,10 +86,24 @@ export interface BaseSheetExample {
   typeId: string;
   manufacturerName: string;
   properties: PeppolProperty[];
+  /** cac:ItemSpecificationDocumentReference URI (CDE link to IFC model). */
+  documentReferenceUri?: string;
+}
+
+function generateGtin(seed: number): string {
+  const base = 7318937170000 + (seed * 137) % 10000;
+  return String(base);
 }
 
 /**
  * Expand one Excel row into three POC-shaped catalogue line examples per discipline.
+ *
+ * The generated examples comply with XML_MESSAGE_REFERENCE.md:
+ *  - UBL item identification order: Buyers → Sellers → Manufacturers → Standard (§7)
+ *  - BuyersItemIdentification carries BIP TypeID (§7.1)
+ *  - StandardItemIdentification carries GTIN with schemeID="0160" on seller lines (§7.4)
+ *  - ItemSpecificationDocumentReference on parent lines (§9)
+ *  - ItemInstance/LotIdentification on seller lines when available (§9B)
  */
 export function expandSheetExampleToVariants(
   base: BaseSheetExample,
@@ -126,6 +140,9 @@ export function expandSheetExampleToVariants(
   const childLineId = '2';
   const packageLineId = '3';
 
+  const typeId = base.typeId || 'IV01';
+  const docRefUri = base.documentReferenceUri || 'https://cde.example.com/models/A-40-V-000_BIM2BOM.ifc';
+
   const parent: PeppolExample = {
     id: parentLineId,
     catalogueVariant: 'MbomBimParent',
@@ -134,13 +151,27 @@ export function expandSheetExampleToVariants(
     discipline,
     itemName: base.itemName,
     description: base.description || 'Huvudobjekt från BIM-modell med underliggande tillverkningsartiklar.',
+    buyersItemId: typeId,
     sellersItemId: cdeGuid,
+    manufacturersItemId: `${typeId}xx`,
+    standardItemId: generateGtin(lineIdOffset),
     orderableUnit: 'MTR',
     contentUnitQuantity: '16.06',
     contentUnitCode: 'MTR',
     actionCode: 'Add',
     orderableIndicator: 'true',
     properties: parentProps,
+    brandName: base.brandName || undefined,
+    lotNumberId: base.lotNumberId || undefined,
+    typeId,
+    manufacturerName: base.manufacturerName || undefined,
+    documentReferences: [
+      {
+        id: 'IFC-MODEL-REF',
+        documentDescription: 'IFC model file - Originating BIM model',
+        uri: docRefUri,
+      },
+    ],
   };
 
   const child: PeppolExample = {
@@ -152,7 +183,9 @@ export function expandSheetExampleToVariants(
     itemName: base.itemName,
     description:
       base.description + ' Tillverkningsartikel med 1:1 spårbarhet via delad CDEGuid.',
+    buyersItemId: typeId,
     sellersItemId: cdeGuid,
+    standardItemId: generateGtin(lineIdOffset + 100),
     orderableUnit: 'MTK',
     contentUnitQuantity: '90.31',
     contentUnitCode: 'MTK',
@@ -164,6 +197,8 @@ export function expandSheetExampleToVariants(
     itemType: 'ManufacturingArticle',
     sourceSystem: 'Selling System',
     properties: childProps,
+    typeId,
+    lotNumberId: base.lotNumberId || undefined,
   };
 
   const pkg: PeppolExample = {
@@ -174,7 +209,9 @@ export function expandSheetExampleToVariants(
     discipline,
     itemName: `${base.itemName} (paket)`,
     description: `Paketartikel utan BIM-instans-spårbarhet. ${base.description}`,
+    buyersItemId: typeId,
     sellersItemId: pkgSellersId,
+    standardItemId: generateGtin(lineIdOffset + 200),
     orderableUnit: 'MTK',
     contentUnitQuantity: '90.31',
     contentUnitCode: 'MTK',
@@ -183,6 +220,7 @@ export function expandSheetExampleToVariants(
     itemType: 'PackageArticle',
     sourceSystem: 'Selling System',
     properties: packageProps,
+    typeId,
   };
 
   return [parent, child, pkg];
