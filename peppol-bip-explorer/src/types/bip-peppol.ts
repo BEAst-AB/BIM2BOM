@@ -40,8 +40,14 @@ export interface PeppolExample {
   discipline: string;
   itemName: string;
   description: string;
+  /** cac:BuyersItemIdentification > cbc:ID — BIP TypeID (Ref §7.1) */
+  buyersItemId?: string;
   /** cac:SellersItemIdentification > cbc:ID */
   sellersItemId: string;
+  /** cac:ManufacturersItemIdentification > cbc:ID (Ref §7.3) */
+  manufacturersItemId?: string;
+  /** cac:StandardItemIdentification > cbc:ID — GTIN with schemeID="0160" (Ref §7.4) */
+  standardItemId?: string;
   orderableUnit: string;
   contentUnitQuantity: string;
   contentUnitCode: string;
@@ -54,7 +60,6 @@ export interface PeppolExample {
   itemType?: 'ManufacturingArticle' | 'PackageArticle';
   sourceSystem?: string;
   properties: PeppolProperty[];
-  /** Legacy Peppol catalogue-only demo fields (optional). */
   brandName?: string;
   lotNumberId?: string;
   typeId?: string;
