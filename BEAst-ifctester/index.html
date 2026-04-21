@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BEAst BIM Validator</title>
+    <link rel="stylesheet" href="src/styles/main.css">
+</head>
+<body>
+    <!-- Full page drop zone that appears on initial load -->
+    <div id="fullpage-drop" class="fullpage-drop">
+        <div class="drop-icon">⬇️</div>
+        <p>Dra och släpp en IFC-fil var som helst på sidan</p>
+    </div>
+    
+    <div id="app">
+        <div id="viewer-container"></div>
+        <div id="ui-container">
+            <div id="file-selector">
+                <h2>BEAst BIM Validator</h2>
+                <p>Välj en IFC fil för att validera mot BEAst krav</p>
+                <input type="file" id="file-input" accept=".ifc" hidden />
+                <label for="file-input" class="file-input-label">Välj fil</label>
+            </div>
+            <div id="validation-results" class="hidden">
+                <h3>Valideringsresultat</h3>
+                <div id="results-summary"></div>
+                <div id="results-details"></div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="src/app.ts"></script>
+</body>
+</html> 

@@ -1,0 +1,25 @@
+# Dependencies (install via npm ci)
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Build outputs
+dist/
+build/
+lib/
+*.tsbuildinfo
+
+# Package management (package-lock.json is tracked for reproducible installs)
+
+# TypeScript compiled output
+*.js.map
+*.d.ts
+
+# IDE and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimap Test - BEAst Modelleringskrav</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        
+        #container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        #minimap {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 8px;
+        }
+        
+        .file-input-container {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .file-input-container input[type="file"] {
+            margin-bottom: 0.5rem;
+        }
+        
+        .file-input-container button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 0.5rem;
+        }
+        
+        .file-input-container button:hover {
+            background: #0056b3;
+        }
+        
+        .status {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    
+    <div class="file-input-container">
+        <h3>🗺️ Minimap Test</h3>
+        <p>Load an IFC file to see the minimap in action!</p>
+        <input type="file" id="fileInput" accept=".ifc" />
+        <button onclick="loadFile()">Load IFC</button>
+        <button onclick="clearScene()">Clear Scene</button>
+        <div class="status" id="status">Ready to load IFC file</div>
+    </div>
+
+    <!-- Use the test entry point that properly works with Vite -->
+    <script type="module" src="./src/test-minimap.ts"></script>
+</body>
+</html>
