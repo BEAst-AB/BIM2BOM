@@ -1,4 +1,4 @@
 [submodule "BEAst-ifctester"]
 	path = BEAst-ifctester
-	url = https://github.com/jonatanjacobsson/BEAst-Modelleringskrav.git
+	url = https://github.com/byggstyrning/BEAst-BIM-Validator.git
 	branch = main
