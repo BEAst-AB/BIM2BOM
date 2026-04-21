@@ -1,0 +1,4 @@
+[submodule "BEAst-ifctester"]
+	path = BEAst-ifctester
+	url = https://github.com/jonatanjacobsson/BEAst-Modelleringskrav.git
+	branch = main
