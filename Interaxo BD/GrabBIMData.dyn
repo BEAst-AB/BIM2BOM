@@ -1,0 +1,301 @@
+{
+  "Uuid": "a7c8076e-03fe-46d5-9223-3427a52a146d",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "GrabBIMData",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "import sys\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\nimport json\r\nimport ssl\r\nimport urllib.request\r\nimport urllib.error\r\n\r\nprojectGuid = IN[0]\r\naccess_token = IN[1]\r\ntypeId = IN[2] if len(IN) > 2 and IN[2] is not None else 100\r\n\r\ncategories = IN[3] if len(IN) > 3 and IN[3] is not None else []\r\nmodels = IN[4] if len(IN) > 4 and IN[4] is not None else []\r\nstates = IN[5] if len(IN) > 5 and IN[5] is not None else []\r\nlevels = IN[6] if len(IN) > 6 and IN[6] is not None else []\r\nphases = IN[7] if len(IN) > 7 and IN[7] is not None else []\r\n\r\nbaseUrl = IN[8] if len(IN) > 8 and IN[8] is not None else \"app.bimeye.com\"\r\nelements = IN[9] if len(IN) > 9 and IN[9] is not None else None\r\n\r\nctx = ssl.create_default_context()\r\n\r\n\r\ndef _request_json(method, url, payload=None):\r\n    data = None\r\n    headers = {\r\n        \"content-type\": \"application/json\",\r\n        \"authorization\": access_token,\r\n        \"accept\": \"application/json\",\r\n    }\r\n\r\n    if payload is not None:\r\n        data = json.dumps(payload).encode(\"utf-8\")\r\n\r\n    req = urllib.request.Request(url, data=data, method=method)\r\n    for k, v in headers.items():\r\n        req.add_header(k, v)\r\n\r\n    try:\r\n        with urllib.request.urlopen(req, context=ctx, timeout=60) as r:\r\n            body = r.read().decode(\"utf-8\", errors=\"replace\")\r\n            return json.loads(body)\r\n    except urllib.error.HTTPError as e:\r\n        body = e.read().decode(\"utf-8\", errors=\"replace\")\r\n        raise Exception(\"HTTP {} {} {}\".format(e.code, url, body))\r\n\r\n\r\ndef getParameters():\r\n    url = \"https://{}/services/bim/v1/project/{}/parameter\".format(baseUrl, projectGuid)\r\n    res = _request_json(\"GET\", url)\r\n    return res.get(\"result\", [])\r\n\r\n\r\ndef getMasterParameterNames():\r\n    url = (\r\n        \"https://{}/services/bim/v1/project/{}/parameter\"\r\n        \"?search[typeId]={}&search[relation]=masterParameter\"\r\n    ).format(baseUrl, projectGuid, typeId)\r\n    res = _request_json(\"GET\", url)\r\n    items = res.get(\"result\", []) or []\r\n    return [p.get(\"name\") for p in items if isinstance(p, dict) and p.get(\"name\")]\r\n\r\n\r\ndef getWorktableCount(payload):\r\n    url = \"https://{}/services/bim/v1/project/{}/worktable/count?search%5BtypeId%5D={}\".format(\r\n        baseUrl, projectGuid, typeId\r\n    )\r\n    res = _request_json(\"POST\", url, payload)\r\n    return int(res.get(\"result\", {}).get(\"count\", 0))\r\n\r\n\r\ndef getWorktablePage(payload, limit, skip):\r\n    url = (\r\n        \"https://{}/services/bim/v1/project/{}/worktable\"\r\n        \"?search%5BtypeId%5D={}&limit={}&skip={}\"\r\n    ).format(baseUrl, projectGuid, typeId, limit, skip)\r\n    res = _request_json(\"POST\", url, payload)\r\n    return res.get(\"result\", []) or []\r\n\r\n\r\npayload = {\r\n    \"categories\": categories,\r\n    \"models\": models,\r\n    \"states\": states,\r\n    \"levels\": levels,\r\n    \"phases\": phases,\r\n}\r\n\r\nparameters = getParameters()\r\nparam_lookup = {}\r\nfor p in parameters:\r\n    if isinstance(p, dict) and \"id\" in p:\r\n        param_lookup[p[\"id\"]] = p\r\n\r\nheaders = getMasterParameterNames()\r\nif 'GlobalId' not in headers:\r\n    headers.append('GlobalId')\r\nif 'MMI' not in headers:\r\n    headers.append('MMI')\r\n\r\nheader_row = {h: None for h in headers}\r\nheader_lower_to_key = {str(k).lower(): k for k in header_row.keys()}\r\n\r\ncount = getWorktableCount(payload)\r\nlimit = 1000\r\nskip = 0\r\n\r\nrows = []\r\nwhile skip < count:\r\n    page = getWorktablePage(payload, limit, skip)\r\n    for row in page:\r\n        rowData = dict(header_row)\r\n        props = row.get(\"property\", []) if isinstance(row, dict) else []\r\n        for prop in props:\r\n            pid = prop.get(\"parameterId\") if isinstance(prop, dict) else None\r\n            if pid in param_lookup:\r\n                name = param_lookup[pid].get(\"name\")\r\n                if name is None:\r\n                    continue\r\n                key = header_lower_to_key.get(str(name).lower())\r\n                if key is not None:\r\n                    rowData[key] = prop.get(\"value\")\r\n        rows.append(rowData)\r\n\r\n    skip += limit\r\n    if skip > count:\r\n        skip = count\r\n\r\n\r\ndef _lookup_param(el, names):\r\n    for n in names:\r\n        try:\r\n            p = el.LookupParameter(n)\r\n        except Exception:\r\n            p = None\r\n        if p is not None:\r\n            return p\r\n    return None\r\n\r\n\r\nmmi_by_globalid = {}\r\nfor r in rows:\r\n    if not isinstance(r, dict):\r\n        continue\r\n    gid = r.get('GlobalId')\r\n    if gid is None:\r\n        continue\r\n    mmi_by_globalid[str(gid)] = r.get('MMI')\r\n\r\nupdate = {'attempted': 0, 'updated': 0, 'not_found': 0, 'missing_params': 0, 'errors': 0}\r\nupdate_errors = []\r\n\r\nif elements is not None:\r\n    try:\r\n        clr.AddReference('RevitServices')\r\n        from RevitServices.Persistence import DocumentManager\r\n        from RevitServices.Transactions import TransactionManager\r\n\r\n        clr.AddReference('RevitAPI')\r\n        from Autodesk.Revit.DB import StorageType\r\n\r\n        try:\r\n            clr.AddReference('RevitNodes')\r\n            import Revit\r\n            clr.ImportExtensions(Revit.Elements)\r\n            unwrap = UnwrapElement\r\n        except Exception:\r\n            def unwrap(x):\r\n                return x\r\n\r\n        doc = DocumentManager.Instance.CurrentDBDocument\r\n        els = elements\r\n        if not isinstance(els, list):\r\n            els = [els]\r\n\r\n        TransactionManager.Instance.EnsureInTransaction(doc)\r\n        for el in els:\r\n            update['attempted'] += 1\r\n            try:\r\n                revit_el = unwrap(el)\r\n                if revit_el is None:\r\n                    update['errors'] += 1\r\n                    update_errors.append('UnwrapElement returned None')\r\n                    continue\r\n\r\n                gid_param = _lookup_param(revit_el, ['GlobalId', 'GlobalID', 'IFC GUID', 'IfcGUID', 'Ifc Guid', 'IFC Guid'])\r\n                mmi_param = _lookup_param(revit_el, ['MMI'])\r\n                if gid_param is None or mmi_param is None:\r\n                    update['missing_params'] += 1\r\n                    continue\r\n\r\n                gid_val = gid_param.AsString()\r\n                if gid_val is None:\r\n                    gid_val = gid_param.AsValueString()\r\n                if not gid_val:\r\n                    update['not_found'] += 1\r\n                    continue\r\n\r\n                if gid_val not in mmi_by_globalid:\r\n                    update['not_found'] += 1\r\n                    continue\r\n\r\n                mmi_val = mmi_by_globalid[gid_val]\r\n                st = mmi_param.StorageType\r\n                if st == StorageType.String:\r\n                    mmi_param.Set('' if mmi_val is None else str(mmi_val))\r\n                elif st == StorageType.Double:\r\n                    mmi_param.Set(0.0 if mmi_val is None or mmi_val == '' else float(mmi_val))\r\n                elif st == StorageType.Integer:\r\n                    mmi_param.Set(0 if mmi_val is None or mmi_val == '' else int(float(mmi_val)))\r\n                else:\r\n                    mmi_param.Set('' if mmi_val is None else str(mmi_val))\r\n\r\n                update['updated'] += 1\r\n            except Exception as e:\r\n                update['errors'] += 1\r\n                update_errors.append(str(e))\r\n\r\n        TransactionManager.Instance.TransactionTaskDone()\r\n    except Exception as e:\r\n        update = {'attempted': 0, 'updated': 0, 'not_found': 0, 'missing_params': 0, 'errors': 1}\r\n        update_errors = [str(e)]\r\n\r\ntable = [headers] + [[r.get(h) for h in headers] for r in rows]\r\nmeta = {'count': count, 'headers': len(headers), 'update': update, 'updateErrors': update_errors, 'mmiKeys': len(mmi_by_globalid)}\r\nOUT = (rows, table, meta)\r\n",
+      "Engine": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "38484b96c9ec4bfbbdbb05eedd89e3c8",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "e79d3b9f558f4701830f818a53e63d9c",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "7e817c21e70f4efd978a8e51067809c7",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0454c83f4a5d4916b98d94f28a8f9252",
+          "Name": "IN[2]",
+          "Description": "Input #2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "74b687f1772a4d018a8ae4f60d479543",
+          "Name": "IN[3]",
+          "Description": "Input #3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1ae2375e1f32481b953186ecec52a1ba",
+          "Name": "IN[4]",
+          "Description": "Input #4",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0477f3e2c2954bc890e9e0722f3d4518",
+          "Name": "IN[5]",
+          "Description": "Input #5",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8d63c00e6f5645b1bd8655bf6aadcd8f",
+          "Name": "IN[6]",
+          "Description": "Input #6",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d634749e240949ec8d6a97f1fde0e289",
+          "Name": "IN[7]",
+          "Description": "Input #7",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "74f3cc49701c4cacb1e959d0e5896931",
+          "Name": "IN[8]",
+          "Description": "Input #8",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ea906a42cd8f4015968a9831f8154694",
+          "Name": "IN[9]",
+          "Description": "Input #9",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "35dea53b49dc42b7a001ef542df85407",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "5f6fef60dcc44d41bd61336b83c74990",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "cb421d14eff84a6a8ed85bfb45b01acf",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "\"46715b0b-8873-4983-82ab-811269331363\";"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "6e999d528b444ad3a7e8bcd2cfd6ffcd",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "d18f8a32b5b949389618cba99566aeb8",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "\"Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik5qWTFSRVUyTXpNeE9EQTVOek5EUkRaRU5rSXlRVUpGTnpRNE5EbEJORFU0UVVGRFJEUkZRdyJ9.eyJodHRwczovL29wZXJhdGlvbnMuaW50ZXJheG8uY29tL3JvbGVzIjpbIkludGVyYXhvIE9wZXJhdGlvbnMgU3VwZXIgVXNlciJdLCJodHRwczovL2ludGVyYXhvLmNvbS91aWQiOiJ2aWt0b3IuZnJ5a2x1bmR-dHJpYmlhLmNvbSIsImh0dHBzOi8vaW50ZXJheG8uc2UvdWlkIjoidmlrdG9yLmZyeWtsdW5kfnRyaWJpYS5jb20iLCJ0cmFja2luZ19pZCI6IjhhMTE4YmRlNjNlYzZlYTlhZDJiMjk5MDlkMTQyODU1OGE2M2E0N2UyNGU3MDc3Njg4YTVlZmM3NDk4OWVmMzQiLCJlbWFpbF9kb21haW4iOiJ0cmliaWEuY29tIiwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5jb2xsYWJvcmF0aW9uLXNzby5jb20vIiwic3ViIjoid2FhZHxnRTJrcS1iSkE0dUJTS3gyZTJLRmk3VndmVkszSXZkd05HZktFZ0VVelRJIiwiYXVkIjpbImh0dHBzOi8vYmltZXllLmNvbS9zZXJ2aWNlcy9iaW0vdjEvIiwiaHR0cHM6Ly9zeW1ldHJpLXNzby5ldS5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNzc0MjU1ODE1LCJleHAiOjE3NzQ0Mjg2MTUsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJhenAiOiJmZnlVZFNnQWtVb0xWY24yaGJaUDM1YUczek8xOGZBQyJ9.CqJV58LEAbi_464a7fr89ErLFwVTLvA8cuRmCwYPvU-bLF30E3n2cMwtugRIRNtVojh9SuJI8bqTuSPR2UqD52Q3qvWYAFoeY06wdf7Mm1pBRPgjr9T7p-yhp6ouPa5zaeeexc4gmmekd0FYRvzKUMJLkn9AM-VGYDY-LUM2ziPHbsjkXhWVyigYHzQFIq1d3gKPKlZXZbXYp6GmB9BpH6rEbOL3t-t3xWzDoZwYD50Sg9-NnbfOS49NUJfFC-6QvZ3H3F47yP4wYCEYypF2rnswX5yt4WvDyD14fUDbx56kdL-2yYbcPCouVGMbUeGFFzQb7gFlTg5UaAyJLyWEKQ\";"
+    },
+    {
+      "ConcreteType": "DSRevitNodesUI.ElementsInView, DSRevitNodesUI",
+      "Id": "86b32836f351429f994efae42cf6d86c",
+      "NodeType": "ExtensionNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "6935b70bb3b4494c81a9c5ba7ae1318f",
+          "Name": "elements",
+          "Description": "All visible elements in the active view.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Get all the elements which are visible in the active view."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "cb421d14eff84a6a8ed85bfb45b01acf",
+      "End": "e79d3b9f558f4701830f818a53e63d9c",
+      "Id": "91eac93d365f4d8487f23d542f2ffb0c",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d18f8a32b5b949389618cba99566aeb8",
+      "End": "7e817c21e70f4efd978a8e51067809c7",
+      "Id": "a4454316443242d8a2ebb02a157cc7aa",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "6935b70bb3b4494c81a9c5ba7ae1318f",
+      "End": "ea906a42cd8f4015968a9831f8154694",
+      "Id": "c7cb5a51137d4c1fbaf51a0ab5458eb3",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "3.3.0.6316",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "38484b96c9ec4bfbbdbb05eedd89e3c8",
+        "Name": "Python Script",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1031.3985622341638,
+        "Y": 386.6725
+      },
+      {
+        "Id": "5f6fef60dcc44d41bd61336b83c74990",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 487.41343016344456,
+        "Y": 354.7332714776084
+      },
+      {
+        "Id": "6e999d528b444ad3a7e8bcd2cfd6ffcd",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -490.1310233440286,
+        "Y": 538.7910413101129
+      },
+      {
+        "Id": "86b32836f351429f994efae42cf6d86c",
+        "Name": "All Elements In Active View",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 517.4167701755557,
+        "Y": 706.0194262318527
+      }
+    ],
+    "Annotations": [],
+    "X": -235.43950907133467,
+    "Y": -259.87164916675715,
+    "Zoom": 0.8484107120728125
+  }
+}
