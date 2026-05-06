@@ -8,11 +8,13 @@ BIM2BOM is a monorepo with independent sub-projects (no shared build system). Th
 
 ### Key services
 
-| Service | Path | Run command | Port |
-|---|---|---|---|
-| bimtobomsimulator | `bimtobomsimulator/` | `npm run dev` | 5173 |
-| bim2bom-canvas-app | `bim2bom-canvas-app/` | `npm run dev` | 5174 |
+
+| Service             | Path                   | Run command   | Port |
+| ------------------- | ---------------------- | ------------- | ---- |
+| bimtobomsimulator   | `bimtobomsimulator/`   | `npm run dev` | 5173 |
+| bim2bom-canvas-app  | `bim2bom-canvas-app/`  | `npm run dev` | 5174 |
 | peppol-bip-explorer | `peppol-bip-explorer/` | `npm run dev` | 5175 |
+
 
 ### Python pipeline
 
@@ -38,3 +40,4 @@ BIM2BOM is a monorepo with independent sub-projects (no shared build system). Th
 - Each React app uses `npm` (lockfile: `package-lock.json`). Do not use pnpm or yarn.
 - `peppol-bip-explorer` uses Vite 5 (React 18), while the other two apps use Vite 7 (React 19). They are independent.
 - `behave` binary installs to `~/.local/bin`; ensure it is on `PATH`.
+
